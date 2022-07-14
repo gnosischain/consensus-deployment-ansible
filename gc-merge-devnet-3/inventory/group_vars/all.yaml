@@ -178,3 +178,5 @@ firewall_additional_rules:
   - "iptables -A INPUT -p tcp --dport 3333 -j ACCEPT"
   - "iptables -A INPUT -p tcp --dport 3334 -j ACCEPT"
   - "iptables -A INPUT -p tcp --dport 3000 -d 165.232.93.228 -j ACCEPT"
+
+nethermind_seq_api_key: testdevopsseqapikey
