@@ -3,6 +3,17 @@
 This repository is a minimal set of playbooks and inventories required to set up the merge devnets consisting of execution and
 consensus nodes.
 
+## Requirements
+
+- Ansible `v2.13.1` or higher
+
+- Install Ansible dependencies
+```
+ansible-galaxy install -r requirements.yml
+ansible-galaxy collection install community.docker
+```
+
+
 ## General information
 
 - General folder structure: All testnet relevant configs are under the testnet names. Generic config variables are set under
@@ -115,3 +126,35 @@ playbooks/setup_node_exporter_and_prometheus.yml
 - Deploy ethstats
 - Deploy faucet
 - Deploy landing page
+
+**7. Deploy explorer and Beacon Chain**
+
+- Install Explorer
+```bash
+ansible-playbook --private-key ~/.ssh/YOUR_PRIVATE_KEY -i $testnet/inventory/inventory.ini playbooks/setup_beacon_and_execution_explorer_full.yml --limit=explorer
+```
+
+- Install Nethermind eth1
+```bash
+ansible-playbook --private-key ~/.ssh/YOUR_PRIVATE_KEY -i $testnet/inventory/inventory.ini playbooks/setup_execution_and_consensus_full.yml --limit=eth1client_nethermind
+```
+
+- Install Lighthouse eth2:
+```bash
+ansible-playbook --private-key ~/.ssh/YOUR_PRIVATE_KEY -i $testnet/inventory/inventory.ini playbooks/setup_execution_and_consensus_full.yml --limit=eth2client_lighthouse
+```
+
+- Install Prysm eth2:
+```bash
+ansible-playbook --private-key ~/.ssh/YOUR_PRIVATE_KEY -i $testnet/inventory/inventory.ini playbooks/setup_execution_and_consensus_full.yml --limit=eth2client_prysm
+```
+
+- Install Lodestar eth2:
+```bash
+ansible-playbook --private-key ~/.ssh/YOUR_PRIVATE_KEY -i $testnet/inventory/inventory.ini playbooks/setup_execution_and_consensus_full.yml --limit=eth2client_lodestar
+```
+
+- Install Teku eth2:
+```bash
+ansible-playbook --private-key ~/.ssh/YOUR_PRIVATE_KEY -i $testnet/inventory/inventory.ini playbooks/setup_execution_and_consensus_full.yml --limit=eth2client_teku
+```
