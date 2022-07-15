@@ -10,6 +10,7 @@ github_user_pubkeys:
   - alebanzas
   - igorbarinov
   - parithosh
+  - riccardo-gnosis
 
 ansible_python_interpreter: /usr/bin/python3
 oh_my_zsh_config:
