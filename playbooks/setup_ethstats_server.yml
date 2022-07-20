@@ -11,6 +11,7 @@
         pull: true
         restart_policy: unless-stopped
         network_mode: bridge
+        log_driver: {{ docker_log_driver | default('json-file') }}
         published_ports:
           - "3000:3000"  # just the container port exposed within the host, for the nginx setup
         env:

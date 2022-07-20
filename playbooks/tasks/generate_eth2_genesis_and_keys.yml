@@ -73,11 +73,14 @@
       file:
         path: "{{validator_node_dir}}"
         state: directory
+        owner: "{{ansible_user}}"
+        group: "{{ansible_user}}"
 
     # Grab the right keys for each eth2 client
 
     - name: Copy keys for lighthouse
       when: eth2_client_name == 'lighthouse'
+
       shell: |
         cp -r "{{output_keys_dirpath}}/keys" "{{validator_node_dir}}/validators"
         cp -r "{{output_keys_dirpath}}/secrets" "{{validator_node_dir}}/secrets"

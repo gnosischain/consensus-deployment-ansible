@@ -22,6 +22,7 @@
         image: "{{ txfuzz_image_name }}"
         pull: true
         restart_policy: unless-stopped
+        log_driver: {{ docker_log_driver | default('json-file') }}
         network_mode: host
         restart: "{{ explorer_require_restart | default(false) }}"
         command: "{{txfuzz_rpc_url}} spam {{txfuzz_privkey}} {{txfuzz_address}}"

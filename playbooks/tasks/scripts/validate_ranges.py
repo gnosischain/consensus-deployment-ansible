@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/local/bin/python
 
 import sys
 import json
@@ -60,8 +60,8 @@ eth2_config_file.close()
 min_validator_count = eth2_config_yaml['MIN_GENESIS_ACTIVE_VALIDATOR_COUNT']
 expected_genesis_time = eth2_config_yaml['MIN_GENESIS_TIME'] + eth2_config_yaml['GENESIS_DELAY']
 
-if total_count < min_validator_count:
-  raise Exception("total_count {0} < MIN_GENESIS_ACTIVE_VALIDATOR_COUNT {1}".format(total_count, min_validator_count))
+# if total_count < min_validator_count:
+#   raise Exception("total_count {0} < MIN_GENESIS_ACTIVE_VALIDATOR_COUNT {1}".format(total_count, min_validator_count))
 
 if expected_genesis_time < time.time():
   raise Exception("MIN_GENESIS_TIME + GENESIS_DELAY {0} is in the past".format(expected_genesis_time))

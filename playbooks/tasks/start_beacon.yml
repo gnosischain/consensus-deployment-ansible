@@ -18,6 +18,7 @@
         pull: true
         restart_policy: unless-stopped
         network_mode: host
+        log_driver: {{ docker_log_driver | default('json-file') }}
         restart: "{{ beacon_require_restart | default(false) }}"
         volumes: "{{beacon_volumes}}"
         command: "{{ beacon_start_args }}"

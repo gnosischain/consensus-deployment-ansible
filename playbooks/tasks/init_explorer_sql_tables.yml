@@ -17,6 +17,7 @@
         auto_remove: false
         detach: no
         network_mode: host
+        log_driver: {{ docker_log_driver | default('json-file') }}
         volumes: "{{ explorer_postgres_init_volumes }}"
         command: "{{ explorer_postgres_init_args }}"
         env:

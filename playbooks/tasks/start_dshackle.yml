@@ -10,6 +10,7 @@
         image: "{{ dshackle_image_name }}"
         pull: true
         restart_policy: unless-stopped
+        log_driver: {{ docker_log_driver | default('json-file') }}
         network_mode: bridge
         networks:
           - name: "{{explorer_docker_network_name}}"

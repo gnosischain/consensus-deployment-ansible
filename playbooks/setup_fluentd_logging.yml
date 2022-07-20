@@ -1,0 +1,3 @@
+# Install logging agents
+- import_playbook: tasks/logging/fluentd/install_logging_agent.yml
+- import_playbook: tasks/logging/fluentd/configure_logging_agent.yml

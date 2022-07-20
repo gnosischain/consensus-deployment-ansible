@@ -10,6 +10,7 @@
         image: "{{ snoop_image_name }}"
         pull: true
         restart_policy: unless-stopped
+        log_driver: {{ docker_log_driver | default('json-file') }}
         network_mode: host
         restart: "{{ beacon_require_restart | default(false) }}"
         command: "{{ snoop_command }}"

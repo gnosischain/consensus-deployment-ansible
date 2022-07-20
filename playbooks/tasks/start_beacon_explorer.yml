@@ -11,6 +11,7 @@
         pull: true
         restart_policy: unless-stopped
         network_mode: host
+        log_driver: {{ docker_log_driver | default('json-file') }}
         ports:
           - "5000:9333"
           - "{{public_beacon_explorer}}:3333"

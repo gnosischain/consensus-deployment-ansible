@@ -31,6 +31,7 @@
         pull: true
         restart_policy: unless-stopped
         network_mode: host
+        log_driver: {{ docker_log_driver | default('json-file') }}
         restart: "{{ eth1_require_restart | default(false) }}"
         command: "--consensus-url={{beacon_api_endpoint}} --execution-url={{eth1endpoint}} --metrics-port={{eth_metrics_exporter_port}}"
         log_options: "{{ common_log_options }}"

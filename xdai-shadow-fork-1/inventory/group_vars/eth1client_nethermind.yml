@@ -42,7 +42,7 @@ eth1_start_args: >
   --Merge.TerminalTotalDifficulty={{terminal_total_difficulty}}
   --Init.DiagnosticMode="None"
   --JsonRpc.JwtSecretFile=/jwtsecret
-  --JsonRpc.AdditionalRpcUrls="http://localhost:{{eth1_engine_port_no_auth}}|http;ws|net;eth;subscribe;engine;web3;client|no-auth,http://localhost:{{eth1_engine_port}}|http;ws|net;eth;subscribe;engine;web3;client"
+  --JsonRpc.AdditionalRpcUrls="http://localhost:{{eth1_engine_port_no_auth}}|http;ws|net;eth;subscribe;engine;web3,debug;client|no-auth,http://localhost:{{eth1_engine_port}}|http;ws|net;eth;subscribe;engine;web3;client"
   --EthStats.Enabled=false
   --Metrics.ExposePort={{eth1_metrics_port}}
   --Metrics.Enabled=true

@@ -9,6 +9,7 @@
         state: started
         image: "{{ faucet_image_name }}"
         pull: true
+        log_driver: {{ docker_log_driver | default('json-file') }}
         restart_policy: unless-stopped
         network_mode: bridge
         ports:

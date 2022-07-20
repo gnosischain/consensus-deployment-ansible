@@ -11,6 +11,7 @@
         pull: true
         restart_policy: unless-stopped
         network_mode: host
+        log_driver: {{ docker_log_driver | default('json-file') }}
         restart: "{{ bootnode_require_restart | default(false) }}"
         memory: "{{bootnode_memory}}"
         command: "{{ bootnode_start_args }}"

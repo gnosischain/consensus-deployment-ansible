@@ -13,6 +13,7 @@
         auto_remove: false
         detach: no
         network_mode: host
+        log_driver: {{ docker_log_driver | default('json-file') }}
         volumes: "{{eth1_volumes}}"
         command: "{{ geth_init_args }}"
         env: "{{ eth1_env | default({}) }}"

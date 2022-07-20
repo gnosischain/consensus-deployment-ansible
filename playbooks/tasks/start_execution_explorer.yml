@@ -10,6 +10,7 @@
         image: "{{ execution_explorer_image_name }}"
         pull: true
         restart_policy: unless-stopped
+        log_driver: {{ docker_log_driver | default('json-file') }}
         network_mode: host
         ports:
           - "{{public_execution_explorer}}:4000"
