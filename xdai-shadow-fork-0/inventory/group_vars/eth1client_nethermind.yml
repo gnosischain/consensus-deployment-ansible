@@ -30,7 +30,11 @@ eth1_start_args: >
   --Init.ChainSpecPath="/networkdata/nethermind_genesis.json"
   --Init.WebSocketsEnabled=true
   --JsonRpc.Enabled=true
+  {% if (is_execution_explorer is defined) and is_execution_explorer %}
+  --JsonRpc.EnabledModules="net,eth,consensus,subscribe,web3,admin,trace,txpool"
+  {% else %}
   --JsonRpc.EnabledModules="net,eth,consensus,subscribe,web3,admin"
+  {% endif %}
   --JsonRpc.Port={{eth1_rpc_port}}
   --JsonRpc.WebSocketsPort={{eth1_ws_rpc_port}}
   --JsonRpc.Host=0.0.0.0
