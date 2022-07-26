@@ -3,7 +3,7 @@
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 # Tool to validate
-# xdai-shadow-fork-0/custom_config_data/genesis.ssz
+# gc-shadow-fork-2/custom_config_data/genesis.ssz
 
 docker run --rm \
 -v $SCRIPT_DIR/custom_config_data:/data \

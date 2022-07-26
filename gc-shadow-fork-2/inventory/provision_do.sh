@@ -1,6 +1,6 @@
 #!/bin/bash
 
-TAG=xdai-shadow-fork-0
+TAG=gc-shadow-fork-2
 COUNT=15
 
 for i in $(seq 1 $COUNT);
