@@ -18,7 +18,7 @@
         "image": "{{user `image`}}",
         "commit": true,
         "changes": [
-          "ENV EXAMPLE $EXAMPLE",
+          "ENV CLIENT LIGHTHOUSE",
   
           "ENTRYPOINT /bootstrap"
         ]
