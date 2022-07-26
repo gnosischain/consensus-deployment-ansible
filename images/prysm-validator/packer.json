@@ -1,0 +1,54 @@
+{
+    "variables": {
+      "image": "ghcr.io/gnosischain/gbc-prysm-validator",
+      "profile": "",
+      "aws_account_id": "",
+      "region": "",
+      "tag": "v2.1.2-gbc"
+    },
+    "builders": [
+      {
+        "aws_profile": "{{user `profile`}}",
+        "ecr_login": true,
+        "pull": true,
+        "login_server": "https://{{user `aws_account_id`}}.dkr.ecr.{{user `region`}}.amazonaws.com/",
+        "name": "prysm-validator-{{timestamp}}",
+        "message": "{{build_name}} built at {{isotime \"2006-01-02\"}}",
+        "type": "docker",
+        "image": "{{user `image`}}",
+        "commit": true,
+        "changes": [
+          "ENV CLIENT PRYSM-VALIDATOR",
+  
+          "ENTRYPOINT /bootstrap"
+        ]
+      }
+    ],
+    "provisioners": [
+      {
+        "type": "shell",
+        "inline": "pip install awscli==1.18.165"
+      },
+      {
+        "type": "file",
+        "source": "./bootstrap",
+        "destination": "/bootstrap"
+      }
+    ],
+    "post-processors": [
+      [
+        {
+          "type": "docker-tag",
+          "repository": "{{user `aws_account_id`}}.dkr.ecr.{{user `region`}}.amazonaws.com/prysm-validator",
+          "tag": "{{user `tag`}}",
+          "force": true
+        },
+        {
+          "type": "docker-push",
+          "ecr_login": true,
+          "aws_profile": "{{user `profile`}}",
+          "login_server": "https://{{user `aws_account_id`}}.dkr.ecr.{{user `region`}}.amazonaws.com/"
+        }
+      ]
+    ]
+  }

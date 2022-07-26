@@ -1,0 +1,54 @@
+{
+    "variables": {
+      "image": "chainsafe/lodestar",
+      "profile": "",
+      "aws_account_id": "",
+      "region": "",
+      "tag": "next"
+    },
+    "builders": [
+      {
+        "aws_profile": "{{user `profile`}}",
+        "ecr_login": true,
+        "pull": true,
+        "login_server": "https://{{user `aws_account_id`}}.dkr.ecr.{{user `region`}}.amazonaws.com/",
+        "name": "lodestar-{{timestamp}}",
+        "message": "{{build_name}} built at {{isotime \"2006-01-02\"}}",
+        "type": "docker",
+        "image": "{{user `image`}}",
+        "commit": true,
+        "changes": [
+          "ENV CLIENT LODESTAR",
+  
+          "ENTRYPOINT /bootstrap"
+        ]
+      }
+    ],
+    "provisioners": [
+      {
+        "type": "shell",
+        "inline": "pip install awscli==1.18.165"
+      },
+      {
+        "type": "file",
+        "source": "./bootstrap",
+        "destination": "/bootstrap"
+      }
+    ],
+    "post-processors": [
+      [
+        {
+          "type": "docker-tag",
+          "repository": "{{user `aws_account_id`}}.dkr.ecr.{{user `region`}}.amazonaws.com/lodestar",
+          "tag": "{{user `tag`}}",
+          "force": true
+        },
+        {
+          "type": "docker-push",
+          "ecr_login": true,
+          "aws_profile": "{{user `profile`}}",
+          "login_server": "https://{{user `aws_account_id`}}.dkr.ecr.{{user `region`}}.amazonaws.com/"
+        }
+      ]
+    ]
+  }
