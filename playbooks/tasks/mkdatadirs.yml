@@ -50,7 +50,6 @@
 - name: Init JWT secret
   hosts: [beacon, execution]
   gather_facts: false
-  serial: 20
   tasks:
     - name: Stat JWT path
       register: jwt_path_stat
