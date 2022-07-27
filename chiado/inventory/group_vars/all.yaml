@@ -60,9 +60,9 @@ mining_addresses:
 
 keystores_password: "{{denver_keystores_password}}"
 
-# Genesis. denver_mnemonics is stored in `denver/inventory/group_vars/secrets.yaml`
-genesis_mnemonics: "{{denver_mnemonics}}"
-mnemonic_0: "{{denver_mnemonics[0].mnemonic}}"
+# Genesis. chiado_mnemonics is stored in `denver/inventory/group_vars/secrets.yaml`
+genesis_mnemonics: "{{chiado_mnemonics}}"
+mnemonic_0: "{{chiado_mnemonics[0].mnemonic}}"
 
 # Note: 0 is correct, but due to an underflow bug (being fixed), doesn't work.
 eth1_deposit_contract_first_block: 1
