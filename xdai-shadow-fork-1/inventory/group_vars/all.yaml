@@ -50,12 +50,12 @@ chainID: 100
 # node -e 'console.log(BigInt("7913579842806358152165626263839214415577252614") + BigInt((new Date("Jul 20 2022 12:00:00").getTime() - new Date("July-19-2022 9:52:45 PM"))/5000) * BigInt("0xfffffffffffffffffffffffffffffffe"))'
 # ```
 
-terminal_total_difficulty: "7952702787095992289186937369204859670739550208"
+terminal_total_difficulty: "7957767209562876616338662773487266676675608966"
 fee_recipient: "0x88dFc82CF71fdeb23f82C33a202f6E2D19AC0541"
 # enter bootnodes here if needed
 bootnode_enrs: [
-    "enr:-Ly4QF6M5K5r1JEv6nZyYnwCyBJEZsKYFIwLJTmf429H3dp2VyTH4oi-vebQtJ-1mXOuK_LvyLC-lONuqiQDOdNmDD8Bh2F0dG5ldHOIAAAAAAAAAACEZXRoMpB8EDB0IQAQKQEAAAAAAAAAgmlkgnY0gmlwhI6Ez1uJc2VjcDI1NmsxoQK4HMCCdGQMnpKK0LOPiRV3DKC1KgK9VAycIHi5USJGmIhzeW5jbmV0cwCDdGNwgiMog3VkcIIjKA",
-    "enr:-Ly4QGvmcBnYgloGqx61w5-bsiv3suUvAN5iLqeSatiym2tlGpy-r6Q2AfQJtfFP510BTUwPiUcaTKbZV1CEA21vPYIBh2F0dG5ldHOIAAAAAAAAAACEZXRoMpB8EDB0IQAQKQEAAAAAAAAAgmlkgnY0gmlwhKfrAlSJc2VjcDI1NmsxoQOYsEDxzZzU5b-5aLOz9lUp7WEFaaUQLr1L2zJAKHPANYhzeW5jbmV0cwCDdGNwgiMog3VkcIIjKA"
+    "enr:-Ly4QKH2zzHT0K6g3P-KfjAh8oA0Ow1PngsxvlikZey2djUjPOXP0rxLVoJl_HuJC7uFRgEP0KAF7R9M3TUW5aTJXicBh2F0dG5ldHOIAAAAAAAAAACEZXRoMpB8EDB0IQAQKQEAAAAAAAAAgmlkgnY0gmlwhKfrAlSJc2VjcDI1NmsxoQLKiwtW6oCcoF2-_mVcoXVyy4j111xa6HzR3xs3eO4VNYhzeW5jbmV0cwCDdGNwgiMog3VkcIIjKA",
+    "enr:-Ly4QBZLTsxpfyZDh8vL1x7OUE7vaHDbqN5G8nVXyf2STxJ7fgZdFuwHq84PrCoIIIYQeLtb1_Cc20ENH05VLkuOAnABh2F0dG5ldHOIAAAAAAAAAACEZXRoMpB8EDB0IQAQKQEAAAAAAAAAgmlkgnY0gmlwhI6E-d6Jc2VjcDI1NmsxoQIi-PFtxKX-VWQDSPjAPVb6ThfQdoiyQacLccCTsYzY_ohzeW5jbmV0cwCDdGNwgiMog3VkcIIjKA"
 ]
 
 eth1_bootnode_enode: [
@@ -92,7 +92,7 @@ remote_write_enabled: true
 prometheus_enabled: true
 remote_write_auth: true
 cadvisor_enabled: true
-promtail_enabled: true
+promtail_enabled: false
 promtail_loki_server_url: "https://136217:{{loki_pusher_api_key}}@logs-prod-us-central1.grafana.net/loki/api/v1/push"
 eth2_validator_metrics_enabled: true
 eth_metrics_exporter_enabled: true

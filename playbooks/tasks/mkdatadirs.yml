@@ -1,39 +1,51 @@
 - name: Init beacon data dirs for nodes
-  hosts: beacon
+  hosts: beacon, all
   gather_facts: true
   serial: 20
+  become: true
   tasks:
     - name: Creates beacon dir
       file:
         path: "{{beacon_node_dir}}"
         state: directory
+        owner: "{{ bootstrap_user }}"
+        group: "{{ bootstrap_user }}"
 - name: Init validator data dirs for nodes
-  hosts: validator
+  hosts: validator, all
   gather_facts: false
   serial: 20
+  become: true
   tasks:
     - name: Creates validator dir
       file:
         path: "{{validator_node_dir}}"
         state: directory
+        owner: "{{ bootstrap_user }}"
+        group: "{{ bootstrap_user }}"
 - name: Init eth1 data dirs for nodes
-  hosts: execution
+  hosts: execution, all
   gather_facts: false
   serial: 20
+  become: true
   tasks:
     - name: Creates eth1 dir
       file:
         path: "{{execution_node_dir}}"
         state: directory
+        owner: "{{ bootstrap_user }}"
+        group: "{{ bootstrap_user }}"
 - name: Init testnet data dirs for nodes
   hosts: [beacon, execution, validator]
   gather_facts: false
   serial: 20
+  become: true
   tasks:
     - name: Creates testnet dir
       file:
         path: "{{testnet_dir}}"
         state: directory
+        owner: "{{ bootstrap_user }}"
+        group: "{{ bootstrap_user }}"
 
 - name: Init JWT secret
   hosts: [beacon, execution]
