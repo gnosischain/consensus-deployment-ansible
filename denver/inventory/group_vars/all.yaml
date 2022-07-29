@@ -5,12 +5,17 @@ ansible_user: "devops"
 bootstrap_user: "devops"
 initial_remote_user: "root"
 
+# Gnosis: dapplion, giacomolicari, alebanzas
+# POA: igorbarinov
+# Gateway: mandrigin, sibuser
 github_user_pubkeys:
   - dapplion
   - giacomolicari
   - alebanzas
   - igorbarinov
   - parithosh
+  - mandrigin
+  - sibuser
 
 ansible_python_interpreter: /usr/bin/python3
 oh_my_zsh_config:
