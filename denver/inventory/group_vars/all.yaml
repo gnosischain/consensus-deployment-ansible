@@ -124,7 +124,10 @@ ethstats_password: "gcmergedevnet0"
 # It freezes forever and when it works it's extremely slow.
 # Binaries are downloaded from Github to the ansible controller host, them uploaded from there.
 prometheus_skip_install: true
-prometheus_binary_url: http://146.190.234.59:8080/
+prometheus_binary_url: https://d1zrfxp177ra46.cloudfront.net/prometheus-2.37.0.linux-amd64
+# https://d1zrfxp177ra46.cloudfront.net/prometheus-2.37.0.linux-amd64/prometheus
+# https://d1zrfxp177ra46.cloudfront.net/prometheus-2.37.0.linux-amd64/promtool
+# ^ hosted by Gnosis, deployed by Riccardo
 
 ##############################################
 # ports to configure
