@@ -76,6 +76,17 @@ keystores_password: "{{denver_keystores_password}}"
 # Genesis. denver_mnemonics is stored in `denver/inventory/group_vars/secrets.yaml`
 genesis_mnemonics: "{{denver_mnemonics}}"
 mnemonic_0: "{{denver_mnemonics[0].mnemonic}}"
+mnemonic_1: "{{denver_mnemonics[1].mnemonic}}"
+mnemonic_2: "{{denver_mnemonics[2].mnemonic}}"
+mnemonic_3: "{{denver_mnemonics[3].mnemonic}}"
+mnemonic_4: "{{denver_mnemonics[4].mnemonic}}"
+mnemonic_5: "{{denver_mnemonics[5].mnemonic}}"
+mnemonic_6: "{{denver_mnemonics[6].mnemonic}}"
+mnemonic_7: "{{denver_mnemonics[7].mnemonic}}"
+mnemonic_8: "{{denver_mnemonics[8].mnemonic}}"
+mnemonic_9: "{{denver_mnemonics[9].mnemonic}}"
+mnemonic_10: "{{denver_mnemonics[10].mnemonic}}"
+mnemonic_11: "{{denver_mnemonics[11].mnemonic}}"
 
 # Note: 0 is correct, but due to an underflow bug (being fixed), doesn't work.
 eth1_deposit_contract_first_block: 1
