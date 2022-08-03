@@ -117,6 +117,8 @@ mnemonic_11: "{{denver_mnemonics[11].mnemonic}}"
 
 # Note: 0 is correct, but due to an underflow bug (being fixed), doesn't work.
 eth1_deposit_contract_first_block: 1
+# Block from which to start indexing. Set to a higher value for shadow-forks
+explorer_execution_first_block: 1
 
 ##############################################
 # metric information

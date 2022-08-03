@@ -11,7 +11,7 @@
         restart_policy: unless-stopped
         network_mode: host
         restart: "{{ explorer_require_restart | default(false) }}"
-        memory: "{{explorer_memory}}"
+        memory: "{{ explorer_beacon_memory }}"
         command: "{{ explorer_beacon_start_args }}"
         volumes: "{{explorer_beacon_volumes}}"
         log_options: "{{ common_log_options }}"
