@@ -1,5 +1,5 @@
 - name: Start execution explorer
-  hosts: explorer
+  hosts: explorer_execution
   gather_facts: false
   tasks:
     - name: Start execution explorer

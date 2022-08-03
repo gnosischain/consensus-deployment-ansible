@@ -1,5 +1,5 @@
 - name: Upload execution explorer data
-  hosts: explorer
+  hosts: explorer_execution
   gather_facts: true
   tasks:
     - name: Creates explorer dir

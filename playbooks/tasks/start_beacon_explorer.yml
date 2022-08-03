@@ -1,5 +1,5 @@
 - name: Start explorer
-  hosts: explorer
+  hosts: explorer_consensus
   gather_facts: false
   tasks:
     - name: Start Eth2 explorer

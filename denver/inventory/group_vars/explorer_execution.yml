@@ -1,0 +1,39 @@
+# Block from which to start indexing. Set to a higher value for shadow-forks
+explorer_execution_first_block: 1
+# Execution explorer only needs to connect to an execution node
+explorer_source_node_execution_ip_address: "127.0.0.1"
+
+explorer_docker_network_name: explorernet
+execution_explorer_container_name: blockscout
+execution_explorer_memory: 9000m
+execution_explorer_image_name: "skylenet/blockscout:v4.0.0-beta"
+
+# Set in secrets.yaml
+# explorer_execution_postgres_password: "{{ lookup('pipe', 'keybase fs read /keybase/team/ethereum.devops/eth2/merge-devnets/merge-devnet-3/explorer-postgres') }}"
+
+explorer_execution_postgres_host_dir: "{{home_dir}}/explorer_execution_postgres_data"
+explorer_execution_postgres_volumes:
+  - "{{explorer_execution_postgres_host_dir}}:/postgresql/data"
+explorer_execution_postgres_start_args: "-i -h {{explorer_execution_postgres_ip}}"
+
+explorer_execution_postgres_init_volumes:
+  - "{{explorer_host_dir}}:/src"
+
+explorer_host_dir: "{{home_dir}}/explorer_execution_data"
+
+execution_explorer_genesis_host_path: "{{explorer_host_dir}}/genesis.json"
+execution_explorer_genesis_cont_path: /data/genesis.json
+execution_explorer_volumes:
+  - "{{explorer_host_dir}}:/data"
+execution_explorer_start_args: 'sh -c "echo $DATABASE_URL &&
+  mix do ecto.create, ecto.migrate &&
+  exec mix phx.server" '
+
+# Postgress
+
+explorer_execution_postgres_container_name: postgres_explorer_execution
+explorer_execution_postgres_image_name: "postgres:12.0"
+explorer_execution_postgres_memory: 9000m
+explorer_execution_postgres_port: "5432"
+explorer_execution_postgres_ip: "127.0.0.1"
+explorer_execution_postgres_user: postgres
