@@ -11,7 +11,7 @@
         restart_policy: unless-stopped
         network_mode: host
         restart: "{{ explorer_require_restart | default(false) }}"
-        memory: "{{ explorer_memory }}"
+        memory: "{{ explorer_execution_memory }}"
         command: "{{ explorer_execution_start_args }}"
         volumes: "{{ explorer_execution_volumes }}"
         env_file: "{{explorer_execution_host_dir}}/blockscout.env"
