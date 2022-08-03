@@ -1,5 +1,5 @@
 - name: Start explorer postgres db
-  hosts: explorer_consensus, explorer_execution
+  hosts: explorer_beacon, explorer_execution
   gather_facts: false
   tasks:
     - name: Create postgres storage dir

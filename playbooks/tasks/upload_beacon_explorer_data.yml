@@ -1,5 +1,5 @@
 - name: Upload explorer data
-  hosts: explorer_consensus
+  hosts: explorer_beacon
   gather_facts: false
   tasks:
     - name: Creates explorer dir

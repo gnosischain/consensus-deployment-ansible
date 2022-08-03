@@ -1,5 +1,5 @@
 - name: Start beacon explorer statistics
-  hosts: explorer_consensus
+  hosts: explorer_beacon
   gather_facts: false
   tasks:
     - name: Start beacon explorer statistics
