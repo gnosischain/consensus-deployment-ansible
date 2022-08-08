@@ -1,6 +1,0 @@
-FROM chainsafe/lodestar:latest
-
-
-
-
-
