@@ -11,7 +11,7 @@
     - name: rm beacon node container
       shell: "docker rm -f {{beacon_container_name}}"
     - name: rm beacon dir
-      shell: "rm -f beacon"
+      shell: "rm -rf beacon"
       become: true
 
 - name: Stop validator client
@@ -21,7 +21,7 @@
     - name: rm validator client container
       shell: "docker rm -f {{validator_container_name}}"
     - name: rm validator dir
-      shell: "rm -f validator"
+      shell: "rm -rf validator"
       become: true
 
 - import_playbook: tasks/generate_eth2_keys.yml
