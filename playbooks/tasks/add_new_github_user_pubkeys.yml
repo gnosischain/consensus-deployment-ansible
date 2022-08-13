@@ -1,0 +1,11 @@
+- name: Add github authorized keys
+  hosts: all
+  become: true
+  gather_facts: false
+  tasks:
+    - name: "Add authorized keys"
+      loop: "{{ github_user_pubkeys + (eth1_github_external_user_pubkeys | default('[]')) + (eth2_github_external_user_pubkeys | default('[]')) }}"
+      authorized_key:
+        user: "{{ bootstrap_user }}"
+        state: present
+        key: "https://github.com/{{ item }}.keys"
