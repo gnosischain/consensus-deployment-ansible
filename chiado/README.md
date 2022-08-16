@@ -34,8 +34,8 @@ Execution clients
 
 Consensus clients
 
-- Lighthouse ([repo](https://github.com/dappnode/DAppNodePackage-lighthouse-chiado)) - install link http://my.dappnode/#/installer/%2Fipfs%2FQmSHWFcsanJUCKGwJb3FYuygtu2wVkGmwXY2CQDs2mHX67
-- Teku ([repo](https://github.com/dappnode/DAppNodePackage-teku-chiado)) - install link http://my.dappnode/#/installer/%2Fipfs%2FQmPGjRAyAsLPNM1jrpu1kQxj6gcRy5aDLw8jcnxNQSuThD
+- Lighthouse ([repo](https://github.com/dappnode/DAppNodePackage-lighthouse-chiado)) - install link http://my.dappnode/#/installer/%2Fipfs%2FQmQrCBHhHk2qwNGT1uRmcqj2UNzNXUVJasuj88VVfofRNR
+- Teku ([repo](https://github.com/dappnode/DAppNodePackage-teku-chiado)) - install link http://my.dappnode/#/installer/%2Fipfs%2FQmR3vTEzTY8XF7arGgX1kuVDjmsmn4n5cN5cDUhNLPdowP
 
 Web3Signer package to add keys
 
