@@ -1,0 +1,2 @@
+- import_playbook: tasks/start_beacon.yml
+- import_playbook: tasks/start_validator.yml
