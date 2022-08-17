@@ -4,7 +4,7 @@ explorer_source_node_execution_ip_address: "127.0.0.1"
 explorer_docker_network_name: explorernet
 explorer_execution_container_name: blockscout
 explorer_execution_memory: 9000m
-explorer_execution_image_name: "skylenet/blockscout:v4.0.0-beta"
+explorer_execution_image_name: "skylenet/blockscout:v4.1.5-beta"
 
 # Paths
 explorer_execution_host_dir: "{{home_dir}}/explorer_execution_data"
