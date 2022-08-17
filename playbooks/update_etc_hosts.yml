@@ -1,0 +1,41 @@
+- name: Populate /etc/hosts automatically from inventory
+  hosts: all
+  gather_facts: false
+  vars:
+    header: "# {{inventory_dir}}"
+    header_regex: "{{inventory_dir}}"
+  tasks:
+    - name: Remove matching IPs
+      become: yes
+      delegate_to: localhost
+      run_once: true
+      lineinfile:
+        path: "/etc/hosts"
+        regexp: "{{hostvars[item]['ansible_host']}}"
+        state: absent
+        backup: yes
+      with_items: "{{hostvars.keys() | list}}"
+
+    - name: Add header
+      become: yes
+      delegate_to: localhost
+      run_once: true
+      lineinfile:
+        path: "/etc/hosts"
+        regexp: "{{header_regex}}"
+        line: "{{header}}"
+        state: present
+        backup: yes
+
+    - name: Update the /etc/hosts file with node name
+      become: yes
+      delegate_to: localhost
+      run_once: true
+      lineinfile:
+        path: "/etc/hosts"
+        regexp: ".*\t{{hostvars[item]['ansible_host']}}"
+        line: "{{hostvars[item]['ansible_host']}}\t{{hostvars[item]['inventory_hostname']}}\t{{hostvars[item]['inventory_hostname']}}"
+        insertafter: "{{header_regex}}"
+        state: present
+        backup: yes
+      with_items: "{{hostvars.keys() | list}}"
