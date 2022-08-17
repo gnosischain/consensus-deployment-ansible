@@ -84,5 +84,4 @@ keystores_file_mode: "0700"
 beacon_user_id: "1000:1000"
 validator_user_id: "0:0"
 
-beacon_log_level: debug
 separate_validator_process_enabled: true

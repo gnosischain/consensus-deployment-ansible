@@ -247,7 +247,7 @@ keystore_password_filename: "keystores_password.txt"
 ##############################################
 # common log config
 ##############################################
-beacon_log_level: info
+beacon_log_level: debug
 common_log_options:
   max-file: "10"
   max-size: 500m
