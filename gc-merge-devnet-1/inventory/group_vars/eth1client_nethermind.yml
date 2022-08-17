@@ -1,5 +1,5 @@
 eth1_client_name: nethermind
-eth1_image_name: nethermindeth/hive:latest
+eth1_image_name: nethermindeth/nethermind:gnosis
 execution_endpoint: http://127.0.0.1:{{eth1_engine_snoop_port}}
 snoop_command: "./json_rpc_snoop -p {{eth1_engine_snoop_port}} http://127.0.0.1:{{eth1_engine_port}}"
 
@@ -29,11 +29,13 @@ eth1_start_args: >
   --datadir="/eth1data"
   --Init.ChainSpecPath="/networkdata/nethermind_genesis.json"
   --Init.WebSocketsEnabled=true
-  --JsonRpc.Enabled=true
-  --JsonRpc.EnabledModules="net,eth,consensus,subscribe,web3,admin"
-  --JsonRpc.Port={{eth1_rpc_port}}
-  --JsonRpc.WebSocketsPort={{eth1_ws_rpc_port}}
+  --JsonRpc.EnabledModules="net,eth,consensus,subscribe,web3,admin,txpool,debug"
   --JsonRpc.Host=0.0.0.0
+  --JsonRpc.Port={{eth1_rpc_port}}
+  --JsonRpc.EnginePort={{eth1_engine_port}}
+  --JsonRpc.WebSocketsPort={{eth1_ws_rpc_port}}
+  --JsonRpc.JwtSecretFile=/jwtsecret
+  --JsonRpc.AdditionalRpcUrls="http://localhost:{{eth1_engine_port_no_auth}}|http;ws|net;eth;subscribe;engine;web3;client,debug|no-auth"
   --Network.DiscoveryPort=30303
   --Network.P2PPort=30303
   --Network.DiagTracerEnabled=true
@@ -42,8 +44,6 @@ eth1_start_args: >
   --Merge.Enabled=true
   --Merge.TerminalTotalDifficulty={{terminal_total_difficulty}}
   --Init.DiagnosticMode="None"
-  --JsonRpc.JwtSecretFile=/jwtsecret
-  --JsonRpc.AdditionalRpcUrls="http://localhost:{{eth1_engine_port_no_auth}}|http;ws|net;eth;subscribe;engine;web3;client|no-auth,http://localhost:{{eth1_engine_port}}|http;ws|net;eth;subscribe;engine;web3;client"
   --EthStats.Enabled=true
   --EthStats.Name={{inventory_hostname}}
   --EthStats.Secret={{ethstats_password}}

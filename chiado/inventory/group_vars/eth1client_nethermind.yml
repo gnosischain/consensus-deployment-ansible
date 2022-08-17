@@ -1,5 +1,5 @@
 eth1_client_name: nethermind
-eth1_image_name: nethermindeth/hive:latest
+eth1_image_name: nethermindeth/nethermind:gnosis
 execution_endpoint: http://127.0.0.1:{{eth1_engine_snoop_port}}
 snoop_command: "./json_rpc_snoop -p {{eth1_engine_snoop_port}} http://127.0.0.1:{{eth1_engine_port}}"
 
@@ -25,23 +25,21 @@ eth1_volumes:
   - "{{home_dir}}/jwtsecret:/jwtsecret"
 
 eth1_start_args: >
-  --config=/networkdata/nethermind_config.cfg
+  --config=chiado
   --datadir="/eth1data"
-  --Init.ChainSpecPath="/networkdata/nethermind_genesis.json"
   --Init.WebSocketsEnabled=true
   --Merge.TerminalTotalDifficulty={{terminal_total_difficulty}}
   --JsonRpc.Enabled=true
   --JsonRpc.EnabledModules="net,eth,consensus,subscribe,web3,admin,txpool,debug,tracing,parity"
-  --JsonRpc.Port={{eth1_rpc_port}}
-  --JsonRpc.WebSocketsPort={{eth1_ws_rpc_port}}
   --JsonRpc.Host=0.0.0.0
+  --JsonRpc.Port={{eth1_rpc_port}}
+  --JsonRpc.EnginePort={{eth1_engine_port}}
+  --JsonRpc.WebSocketsPort={{eth1_ws_rpc_port}}
+  --JsonRpc.JwtSecretFile=/jwtsecret
+  --JsonRpc.AdditionalRpcUrls="http://localhost:{{eth1_engine_port_no_auth}}|http;ws|net;eth;subscribe;engine;web3;client,debug|no-auth"
   --Network.DiscoveryPort=30303
   --Network.P2PPort=30303
-  --Network.Bootnodes="{{ eth1_bootnode_enode | join(',') }}"
-  --Discovery.Bootnodes="{{ eth1_bootnode_enode | join(',') }}"
   --Init.DiagnosticMode="None"
-  --JsonRpc.JwtSecretFile=/jwtsecret
-  --JsonRpc.AdditionalRpcUrls="http://localhost:{{eth1_engine_port_no_auth}}|http;ws|net;eth;subscribe;engine;web3;client,debug|no-auth,http://localhost:{{eth1_engine_port}}|http;ws|net;eth;subscribe;engine;web3;client,debug"
   --EthStats.Enabled={{ethstats_nethermind_enabled}}
   --EthStats.Name={{inventory_hostname}}
   --EthStats.Secret={{ethstats_password}}
