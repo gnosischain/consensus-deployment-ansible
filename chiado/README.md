@@ -52,22 +52,22 @@ Keystores already part of the genesis state will be distribute **on demand** to 
 
 | Index range   | mnemonic           | first    | hosts, clients                                                           |
 | ------------- | ------------------ | -------- | ------------------------------------------------------------------------ |
-| 00000 - 10000 | chiado_mnemonic_00 | multiply | external - Stakewise                                                     |
-| 10000 - 20000 | chiado_mnemonic_01 | pilot    | external - Stakewise                                                     |
+| 00000 - 10000 | chiado_mnemonic_00 | multiply | local - chiado-lighthouse-nethermind-{10:19}                             |
+| 10000 - 20000 | chiado_mnemonic_01 | pilot    | local - chiado-prysm-nethermind-{10:19}                                  |
 | 20000 - 30000 | chiado_mnemonic_02 | arctic   | external - Kleros.io                                                     |
 | 30000 - 40000 | chiado_mnemonic_03 | discover | external - Gateway                                                       |
 | 40000 - 50000 | chiado_mnemonic_04 | sentence | local - chiado-lighthouse-nethermind-{00:09}                             |
 | 50000 - 60000 | chiado_mnemonic_05 | rural    | local - chiado-prysm-nethermind-{00:09}                                  |
-| 60000 - 61000 | chiado_mnemonic_06 | clerk    | external - Stakewise                                                     |
-| 61000 - 62000 | chiado_mnemonic_07 | region   | external - Stakewise                                                     |
-| 62000 - 63000 | chiado_mnemonic_08 | situate  | local - denver-teku-nethermind-00                                        |
-| 63000 - 64000 | chiado_mnemonic_09 | carry    | local - denver-teku-nethermind-01                                        |
-| 64000 - 65000 | chiado_mnemonic_10 | remove   | local - denver-teku-nethermind-02                                        |
-| 65000 - 66000 | chiado_mnemonic_11 | unknown  | local - denver-teku-nethermind-03                                        |
-| 66000 - 67000 | chiado_mnemonic_12 | rice     | local - denver-teku-nethermind-04                                        |
-| 67000 - 68000 | chiado_mnemonic_13 | borrow   | local - denver-lodestar-nethermind-00                                    |
-| 68000 - 69000 | chiado_mnemonic_14 | amount   | external - Open distr by dapplion / \*else denver-lodestar-nethermind-00 |
-| 69000 - 70000 | chiado_mnemonic_15 | jump     | external - Open distr by DAppNode / \*else denver-lodestar-nethermind-01 |
+| 60000 - 61000 | chiado_mnemonic_06 | clerk    | local - chiado-teku-nethermind-06                                        |
+| 61000 - 62000 | chiado_mnemonic_07 | region   | local - chiado-teku-nethermind-07                                        |
+| 62000 - 63000 | chiado_mnemonic_08 | situate  | local - chiado-teku-nethermind-00                                        |
+| 63000 - 64000 | chiado_mnemonic_09 | carry    | local - chiado-teku-nethermind-01                                        |
+| 64000 - 65000 | chiado_mnemonic_10 | remove   | local - chiado-teku-nethermind-02                                        |
+| 65000 - 66000 | chiado_mnemonic_11 | unknown  | local - chiado-teku-nethermind-03                                        |
+| 66000 - 67000 | chiado_mnemonic_12 | rice     | local - chiado-teku-nethermind-04                                        |
+| 67000 - 68000 | chiado_mnemonic_13 | borrow   | local - chiado-lodestar-nethermind-00                                    |
+| 68000 - 69000 | chiado_mnemonic_14 | amount   | external - Open distr by dapplion / \*else chiado-lodestar-nethermind-00 |
+| 69000 - 70000 | chiado_mnemonic_15 | jump     | external - Open distr by DAppNode / \*else chiado-lodestar-nethermind-01 |
 
 _\*else: keys not assigned already in the open distribution_
 
