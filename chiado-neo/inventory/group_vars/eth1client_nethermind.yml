@@ -29,30 +29,30 @@ eth1_start_args: >
   --config=chiado
   --datadir="/eth1data"
   --Init.WebSocketsEnabled=true
-  --Merge.TerminalTotalDifficulty={{terminal_total_difficulty}}
+  --Init.DiagnosticMode="None"
   --JsonRpc.Enabled=true
-  --JsonRpc.EnabledModules="net,eth,consensus,subscribe,web3,admin,txpool,debug,tracing,parity"
   --JsonRpc.Host=0.0.0.0
   --JsonRpc.Port={{eth1_rpc_port}}
   --JsonRpc.EnginePort={{eth1_engine_port}}
   --JsonRpc.WebSocketsPort={{eth1_ws_rpc_port}}
   --JsonRpc.JwtSecretFile=/jwtsecret
   --JsonRpc.AdditionalRpcUrls="http://localhost:{{eth1_engine_port_no_auth}}|http;ws|net;eth;consensus;subscribe;web3;admin;txpool;debug;tracing;parity|no-auth"
-  --Network.DiscoveryPort=30303
-  --Network.P2PPort=30303
-  --Init.DiagnosticMode="None"
+  --Merge.Enabled=true
+  --Merge.TerminalTotalDifficulty={{terminal_total_difficulty}}
+  --Network.DiscoveryPort={{eth1_p2p_port}}
+  --Network.P2PPort={{eth1_p2p_port}}
   --EthStats.Enabled={{ethstats_nethermind_enabled}}
   --EthStats.Name={{inventory_hostname}}
   --EthStats.Secret={{ethstats_password}}
   --EthStats.Server=wss://{{ethstats_host}}/api/
   --Metrics.ExposePort={{eth1_metrics_port}}
   --Metrics.Enabled=true
-  --Seq.MinLevel="Info"
-  --Seq.ServerUrl="https://seq.nethermind.io/"
-  --Seq.ApiKey="{{nethermind_seq_api_key}}"
   --Metrics.NodeName={{inventory_hostname}}
   --Metrics.PushGatewayUrl="{{nethermind_push_gateway_url}}"
   --Metrics.IntervalSeconds=5
+  --Seq.MinLevel="Info"
+  --Seq.ServerUrl="https://seq.nethermind.io/"
+  --Seq.ApiKey="{{nethermind_seq_api_key}}"
   {% if mining_keyi is defined %}
   --Init.IsMining=true
   --Mining.Enabled=true
@@ -66,8 +66,10 @@ eth1_start_args: >
   {% if (el_archive_config is defined) and el_archive_config %}
   --Pruning.Mode=None
   --Sync.FastSync=false
+  --JsonRpc.EnabledModules="net,eth,consensus,subscribe,web3,admin,txpool,debug,tracing,parity"
   {% else %}
   --Sync.FastSync=true
+  --JsonRpc.EnabledModules="net,eth,consensus,subscribe,web3,admin"
   {% endif %}
 
 # run as root, the nethermind image doesn't handle running regular user well

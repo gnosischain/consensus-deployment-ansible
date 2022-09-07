@@ -188,6 +188,7 @@ validator_rpc_port: 4002
 node_exporter_web_listen_address: "0.0.0.0:9100"
 prometheus_web_listen_address: "0.0.0.0:9090"
 eth1_metrics_port: 8002
+eth1_p2p_port: 30303
 eth_metrics_exporter_port: 8003
 cadvisor_port: 9280
 promtail_port: 9080
@@ -255,11 +256,11 @@ separate_validator_process_enabled: true
 
 firewall_allowed_tcp_ports:
   - 22
-  - 30303
-  - 9000
   - 80
   - 443
   - 8080
+  - "{{eth1_p2p_port}}"
+  - "{{beacon_p2p_port}}"
   - "{{eth1_rpc_port}}"
   - "{{eth1_metrics_port}}"
   - "{{explorer_execution_public_port}}"
@@ -267,5 +268,5 @@ firewall_allowed_tcp_ports:
   - "{{public_ethstats}}"
 
 firewall_allowed_udp_ports:
-  - 30303
-  - 9000
+  - "{{eth1_p2p_port}}"
+  - "{{beacon_p2p_port}}"
