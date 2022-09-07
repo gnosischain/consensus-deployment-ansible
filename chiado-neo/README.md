@@ -45,11 +45,14 @@ Web3Signer package to add keys
 
 _TBD_
 
-| Index range   | mnemonic           | first    | hosts, clients                               |
-| ------------- | ------------------ | -------- | -------------------------------------------- |
-| 00000 - 03000 | chiado_mnemonic_00 | multiply | local - chiado-lighthouse-nethermind-{10:19} |
-| 03000 - 06000 | chiado_mnemonic_01 | pilot    | local - chiado-prysm-nethermind-{10:19}      |
-| 06000 - 10000 | chiado_mnemonic_02 | arctic   | external - Kleros.io                         |
+| Index range  | mnemonic           | first   | hosts, clients                             |
+| ------------ | ------------------ | ------- | ------------------------------------------ |
+| 0000 - 3000  | chiado_mnemonic_00 | nurse   | external - Nethermind                      |
+| 3000 - 6000  | chiado_mnemonic_01 | leisure | external - Gateway                         |
+| 6000 - 7000  | chiado_mnemonic_02 | fork    | local - chiado-lighthouse-nethermind-{0:3} |
+| 7000 - 8000  | chiado_mnemonic_02 | fork    | local - chiado-prysm-nethermind-{0:3}      |
+| 8000 - 9000  | chiado_mnemonic_02 | fork    | local - chiado-teku-nethermind-{0:3}       |
+| 9000 - 10000 | chiado_mnemonic_02 | fork    | local - chiado-lodestar-nethermind-{0:4}   |
 
 # Testnet data
 

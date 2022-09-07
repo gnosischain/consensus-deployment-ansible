@@ -61,7 +61,7 @@ beacon_start_args: >
   --terminal-total-difficulty-override={{terminal_total_difficulty}}
   --suggested-fee-recipient={{fee_recipient}}
   --jwt-secrets="/jwtsecret"
-  {% if (cl_archive_config is defined) and cl_archive_config %}
+  {% if (cl_archive_config is defined) and cl_archive_config|bool %}
   --slots-per-restore-point=32
   {% endif %}
 

@@ -41,6 +41,8 @@ eth1_start_args: >
   --Merge.TerminalTotalDifficulty={{terminal_total_difficulty}}
   --Network.DiscoveryPort={{eth1_p2p_port}}
   --Network.P2PPort={{eth1_p2p_port}}
+  --Network.Bootnodes="{{ eth1_bootnode_enode | join(',') }}"
+  --Discovery.Bootnodes="{{ eth1_bootnode_enode | join(',') }}"
   --EthStats.Enabled={{ethstats_nethermind_enabled}}
   --EthStats.Name={{inventory_hostname}}
   --EthStats.Secret={{ethstats_password}}
@@ -63,7 +65,10 @@ eth1_start_args: >
   --KeyStore.KeyStoreDirectory=/networkdata/miner_keystores
   --KeyStore.UnlockAccounts={{mining_addresses[mining_keyi]}}
   {% endif %}
-  {% if (el_archive_config is defined) and el_archive_config %}
+  {% if (aura_starter is defined) and aura_starter|bool %}
+  --Aura.AllowAuRaPrivateChains=true
+  {% endif %}
+  {% if (el_archive_config is defined) and el_archive_config|bool %}
   --Pruning.Mode=None
   --Sync.FastSync=false
   --JsonRpc.EnabledModules="net,eth,consensus,subscribe,web3,admin,txpool,debug,tracing,parity"
