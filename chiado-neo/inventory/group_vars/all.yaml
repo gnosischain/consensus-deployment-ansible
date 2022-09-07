@@ -1,0 +1,272 @@
+##############################################
+# generic ansible config information
+##############################################
+ansible_user: "devops"
+bootstrap_user: "devops"
+initial_remote_user: "root"
+
+# Gnosis: dapplion, alebanzas
+# Gnosis devops: giacomolicari, riccardo-gnosis, davidalbela, gMonty030, Stavfilipps
+# POA: igorbarinov
+# Gateway: mandrigin, sibuser
+# EF: gballet, parithosh
+github_user_pubkeys:
+  - dapplion
+  - giacomolicari
+  - alebanzas
+  - igorbarinov
+  - parithosh
+  - mandrigin
+  - sibuser
+  - riccardo-gnosis
+  - davidalbela
+  - gMonty030
+  - Stavfilipps
+  - gballet
+
+ansible_python_interpreter: /usr/bin/python3
+oh_my_zsh_config:
+  PROMPT: "%{$fg[yellow]%}%n%{$fg[white]%}@%{$fg[red]%}%m%{$reset_color%} ${PROMPT}"
+
+##############################################
+# eth1 endpoints
+##############################################
+# nimbus requires a websocket endpoint (http support unstable)
+# note: also used for execution engine endpoint in nimbus
+consensus_endpoint_nimbus: ws://127.0.0.1:8551
+
+eth1endpoint: http://127.0.0.1:8545
+
+beacon_api_endpoint: "http://127.0.0.1:{{beacon_api_port}}"
+
+# Merge Engine endpoints
+# TODO change IP?
+# TODO: some engines might start using the 8550 port (or 8551 for ws)
+
+##############################################
+# testnet specific information
+##############################################
+testnet_type: custom
+eth2_network_name: chiado
+chainID: 10100
+
+# To allow using the deposit contract
+eth2_genesis_eth1data_blockhash: "0x203e164cf3b6f6765abf2f0355a4d09e5eaf6a777243bc4407b569431cd95cb3"
+
+# Projected for Aug 15th ~16h UTC (207360 blocks)
+terminal_total_difficulty: "70560951604725799783765358597051456327101440"
+fee_recipient: "0x88dFc82CF71fdeb23f82C33a202f6E2D19AC0541"
+# enter bootnodes here if needed
+bootnode_enrs: []
+
+eth1_bootnode_enode: []
+
+mining_addresses:
+  - "0xaaa0611623f27b169557d178da5d9cd3e1044ce1"
+  - "0xaaa939c83aa32af422ba0da4a44888c04af65325"
+  - "0xaaa5807408ad28bdbceb2911a6eb9541e880505d"
+  - "0xaaa79fbce01f2ad7cc8424e7a8361bdec0c662c8"
+  - "0xaaa6946c6ec277335cb3ef93bc140489c1b412b4"
+  - "0xaaa732a914b4780e33bcac7f129120a6ceb7ea0e"
+  - "0xaaa0edbec2091470d5a8d8876bf5cf681b0d6468"
+  - "0xaaad85d426c0efeb2ee215d6dd4c6ccc39bb9106"
+  - "0xaaaafb931bf8ebe4af36dca978b94c0efbd300d6"
+  - "0xaaa49c8aeca0afd329012522563b28c75d687ac2"
+
+keystores_password: "{{denver_keystores_password}}"
+
+mnemonic_0: !vault |
+  $ANSIBLE_VAULT;1.1;AES256
+  34386461343938303163363430636436646130313338616132643363643964323635333337653733
+  6361633534303366656264643636323863316661653937390a393232323339393035396337663536
+  65626366666663663763353765336630643630306366363562336663313038643439646365656365
+  6637366164356136340a633265326364373264636463326264623564653165343732363131393064
+  30656538613634666436356262623533346637303962646363356165373161656562306433626231
+  61323634383731316431333365633931613135363934646561666564633939346661353733323831
+  61306535373036366338393738346263386235326439653237366339613430643463383263343438
+  33663536626230333066643736313961636266616562663862373933366633373664343461373930
+  65666635623830366233393763306631356530343435666236613236623432653265373037373231
+  63306338366364323166383561653663333563396533313532623531323839333036643439623762
+  39643734306631646564643664636135633162383064633436343664646462303532366463383630
+  64396662653936353830
+mnemonic_1: !vault |
+  $ANSIBLE_VAULT;1.1;AES256
+  64366239643266306432663563356365663137646164653332623732623366373366353834656466
+  3963313661653262643539326464383565656438623036360a366664616135643739386663626332
+  63633635633131353863393034396262303239623165313233366561386239383562656564613031
+  6561353730623066330a376438616233303962396636623831343765643863636564363464626131
+  30663863646565366333663930633865333637616661666330316165323631333661303262653230
+  34363233366132356564353130626137313436373933393062316139643261373338623330666331
+  62623836396438396564643738383535353736313039393565643566373165353166316136336365
+  31623236316437613230303261353663373731313364623838333762343235326237656162373737
+  32373838643636313165346565643639343038333838306530363566623631393837336336336331
+  35613331356566656463666134353437313932626331346330626661303532326665373238366432
+  66306661363438666562613837656130386664653433323130396432303464316637666165363733
+  35356366333330643130
+mnemonic_2: !vault |
+  $ANSIBLE_VAULT;1.1;AES256
+  66623037396562343136613362353961376139656162333365356139386565636133373637303861
+  3539636534393235656533343163383666623261326264320a613035656236666164393631633535
+  63323261626638646530633765373165363839363133643334356336396165613761613832623834
+  3238326634383063660a646633363664656534383066643738646335636262386633343163393433
+  32353432306234663435396432373962643835623962653363636230323566656265383161366539
+  38353033366239633738346566613337323864393762356532363035346234353331643133643163
+  37333134323764393634343739616337626433643061373236333562653863393931323765623266
+  30366530323536346635363035643530633965393662643932666437393735613934313238356462
+  36323639386362643961613165376463376138613962376537323263333034643736303638376665
+  66393033616430646462636232633238653130636264333430353432356133383839343331366232
+  32663635333031643161373337386434346436313962333362316165366563323361613232363861
+  61666166386364326339
+# Genesis. chiado_mnemonics is stored in `denver/inventory/group_vars/secrets.yaml`
+genesis_mnemonics:
+  - mnemonic: "{{mnemonic_0}}"
+    count: 3000
+  - mnemonic: "{{mnemonic_1}}"
+    count: 3000
+  - mnemonic: "{{mnemonic_2}}"
+    count: 4000
+
+# Note: 0 is correct, but due to an underflow bug (being fixed), doesn't work.
+eth1_deposit_contract_first_block: 1
+# Block from which to start indexing. Set to a higher value for shadow-forks
+explorer_execution_first_block: 1
+
+##############################################
+# metric information
+##############################################
+# enter pushgateway config if needed
+prometheus_config_file: "prometheus/prometheus.yml.j2"
+
+prometheus_remote_write_configs:
+  # NOTE: For some reason DO hosts can't resolve themerge-monitoring.gnosischainscan.com domain
+  - url: https://themerge-monitoring.gnosischainscan.com/prometheus/api/v1/write/
+    username: themergeprometheusremotewrite
+    password: "{{themergemonitoring_remote_write_password}}"
+  - url: https://hostedmetrics.com/s/cQ4UMmFc/prometheus/remote/write/
+    username: cQ4UMmFc
+    password: "{{hostedmetrics_remote_write_password}}"
+
+prometheus_enabled: true
+remote_write_auth: true
+cadvisor_enabled: true
+promtail_enabled: true
+promtail_loki_server_url: "https://136217:{{loki_pusher_api_key}}@logs-prod-us-central1.grafana.net/loki/api/v1/push"
+eth2_validator_metrics_enabled: true
+eth_metrics_exporter_enabled: true
+eth_metrics_exporter_name: "metrics-exporter"
+eth_metrics_exporter_image: samcm/ethereum-metrics-exporter:0.11.0
+
+no_validator_keys: false
+ethstats_host: "ethstats.chiado.gnosischain.com"
+ethstats_nethermind_enabled: true
+ethstats_besu_enabled: false
+ethstats_erigon_enabled: false
+ethstats_geth_enabled: false
+
+# Skip "propagate official prometheus and promtool binaries" step.
+# It freezes forever and when it works it's extremely slow.
+# Binaries are downloaded from Github to the ansible controller host, them uploaded from there.
+prometheus_skip_install: true
+prometheus_binary_url: https://d1zrfxp177ra46.cloudfront.net/prometheus-2.37.0.linux-amd64
+
+##############################################
+# ports to configure
+##############################################
+eth1_rpc_port: 8545
+eth1_ws_rpc_port: 8546
+eth1_engine_port_no_auth: 8550
+eth1_engine_port: 8551
+eth1_engine_snoop_port: 8560
+eth1_engine_ws_port: 8552
+nimbus_rpc_port: 4009
+beacon_api_port: 4000
+beacon_grpc_port: 4001
+beacon_metrics_port: 8000
+beacon_p2p_port: 9000
+validator_metrics_port: 8001
+validator_rpc_port: 4002
+node_exporter_web_listen_address: "0.0.0.0:9100"
+prometheus_web_listen_address: "0.0.0.0:9090"
+eth1_metrics_port: 8002
+eth1_p2p_port: 30303
+eth_metrics_exporter_port: 8003
+cadvisor_port: 9280
+promtail_port: 9080
+explorer_execution_public_port: 3334
+explorer_beacon_public_port: 3333
+public_ethstats: 3000
+
+##############################################
+# Command for JSON RPC snooper
+##############################################
+snoop_image_name: parithoshj/json_rpc_snoop:v1.0.0-x86
+snoop_container_name: snooper
+
+##############################################
+# name of the validator to display
+##############################################
+graffiti: "{{eth2_client_name}}-{{eth1_client_name}}"
+
+##############################################
+# local data directories
+##############################################
+local_explorerdata_host_dir: "{{inventory_dir}}/../explorerdata"
+local_explorerdata_host_archive: "{{inventory_dir}}/../explorerdata.tar.gz"
+local_forkmondata_host_dir: "{{inventory_dir}}/../forkmondata"
+local_forkmondata_host_archive: "{{inventory_dir}}/../forkmondata.tar.gz"
+local_custom_config_data_host_dir: "{{inventory_dir}}/../custom_config_data"
+local_custom_config_data_host_archive: "{{inventory_dir}}/../custom_config_data.tar.gz"
+local_eth2_config_filepath: "{{local_custom_config_data_host_dir}}/config.yaml"
+local_eth1_genesis_filepath: "{{local_custom_config_data_host_dir}}/nethermind_genesis.json"
+local_mnemonics_filepath: "{{local_custom_config_data_host_dir}}/mnemonics.yaml"
+# private dirs
+# Validator assignments
+local_validator_host_dir: "{{inventory_dir}}/../validator_prep/{{inventory_hostname}}"
+local_validator_host_archive: "{{inventory_dir}}/../validator_prep/{{inventory_hostname}}.tar.gz"
+
+##############################################
+# remote host data directories
+##############################################
+home_dir: "/home/{{ansible_user}}"
+beacon_node_dir: "{{home_dir}}/beacon"
+validator_node_dir: "{{home_dir}}/validator"
+testnet_dir: "{{home_dir}}/custom_config_data"
+execution_node_dir: "{{home_dir}}/execution"
+keystore_password_filename: "keystores_password.txt"
+
+##############################################
+# common log config
+##############################################
+beacon_log_level: debug
+common_log_options:
+  max-file: "10"
+  max-size: 500m
+  mode: non-blocking
+  max-buffer-size: 4m
+common_log_driver: json-file
+
+##############################################
+# container names
+##############################################
+beacon_container_name: beacon
+validator_container_name: validator
+execution_container_name: execution
+hi_peer_count: 100
+separate_validator_process_enabled: true
+
+firewall_allowed_tcp_ports:
+  - 22
+  - 80
+  - 443
+  - 8080
+  - "{{eth1_p2p_port}}"
+  - "{{beacon_p2p_port}}"
+  - "{{eth1_rpc_port}}"
+  - "{{eth1_metrics_port}}"
+  - "{{explorer_execution_public_port}}"
+  - "{{explorer_beacon_public_port}}"
+  - "{{public_ethstats}}"
+
+firewall_allowed_udp_ports:
+  - "{{eth1_p2p_port}}"
+  - "{{beacon_p2p_port}}"
