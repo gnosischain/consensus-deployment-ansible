@@ -9,6 +9,8 @@ initial_remote_user: "root"
 # Gnosis devops: giacomolicari, riccardo-gnosis, davidalbela, gMonty030, Stavfilipps
 # POA: igorbarinov
 # Gateway: mandrigin, sibuser
+# EF: gballet, parithosh
+# Nethermind: jmederosalvarado
 github_user_pubkeys:
   - dapplion
   - giacomolicari
@@ -21,6 +23,8 @@ github_user_pubkeys:
   - davidalbela
   - gMonty030
   - Stavfilipps
+  - gballet
+  - jmederosalvarado
 
 ansible_python_interpreter: /usr/bin/python3
 oh_my_zsh_config:
