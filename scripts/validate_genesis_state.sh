@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# scripts/validate_genesis_state.sh chiado
 NETWORK_DIR=$1
 
 # Tool to validate
@@ -7,5 +8,4 @@ NETWORK_DIR=$1
 
 docker run --rm --network host \
 -v $PWD/$NETWORK_DIR/custom_config_data:/data \
-sigp/lighthouse lighthouse --testnet-dir="/data" beacon_node \
-  --http --http-address=0.0.0.0 --http-port=4000
+sigp/lighthouse lighthouse --testnet-dir="/data" beacon_node
