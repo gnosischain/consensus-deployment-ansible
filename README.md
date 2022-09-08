@@ -238,7 +238,7 @@ denver-lighthouse-nethermind-04 | CHANGED | rc=0 >>
 ## Execution head of all nodes
 
 ```
-ansible -i $INVENTORY execution -m shell -a "curl -s -X POST --data '{\"jsonrpc\":\"2.0\",\"method\":\"eth_getBlockByNumber\",\"params\":[\"latest\"],\"id\":0}' http://localhost:8545 | jq '.result.number, .result.hash'"
+ansible -i $ANSIBLE_INVENTORY execution -m shell -a "curl -s -X POST --data '{\"jsonrpc\":\"2.0\",\"method\":\"eth_getBlockByNumber\",\"params\":[\"latest\"],\"id\":0}' http://localhost:8545 | jq '.result.number, .result.hash'"
 ```
 
 Print current head of each node, slot + root
