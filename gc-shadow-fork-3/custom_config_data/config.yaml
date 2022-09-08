@@ -10,11 +10,11 @@ CONFIG_NAME: "gc-shadow-fork-3"
 # The issue is with `current_epoch_attestations` offsets which instead of being empty, they have a random value:
 # Expected: (3713677,3713677), actual (3713677,4713677). The cause is unknown, not able to recreate.
 MIN_GENESIS_ACTIVE_VALIDATOR_COUNT: 18000
-# Sep 08 2022 15:00:00 GMT+0000
-MIN_GENESIS_TIME: 1662649200
+# Sep 08 2022 16:00:00 GMT+0000
+MIN_GENESIS_TIME: 1662652800
 GENESIS_DELAY: 300
 
-TERMINAL_TOTAL_DIFFICULTY: 7955842572495571788389313926707632595671626792
+TERMINAL_TOTAL_DIFFICULTY: 7962649921245825162350898735729305118741764062
 
 # Deposit contract
 # ---------------------------------------------------------------
