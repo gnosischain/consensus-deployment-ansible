@@ -36,6 +36,12 @@
         dest: "{{testnet_dir}}/{{keystore_password_filename}}"
         content: "{{keystores_password}}"
 
+    - name: Copy deploy_block.txt
+      become: true
+      copy:
+        dest: "{{testnet_dir}}/deploy_block.txt"
+        content: "{{explorer_execution_first_block}}"
+
     - name: Modify permissions to match user-group inside docker image
       shell: chown -R 777 "{{ testnet_dir }}"
       become: true

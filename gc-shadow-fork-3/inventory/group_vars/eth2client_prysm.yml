@@ -66,8 +66,8 @@ beacon_start_args: >
   --grpc-gateway-port={{beacon_api_port}}
   --enable-debug-rpc-endpoints
   --jwt-secret=/jwtsecret
-  --suggested-fee-recipient={{ fee_recipient }}
-  --contract-deployment-block=14675001
+  --suggested-fee-recipient={{fee_recipient}}
+  --contract-deployment-block={{explorer_execution_first_block}}
 
 validator_start_args: >
   --accept-terms-of-use=true
