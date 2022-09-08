@@ -44,8 +44,8 @@ beacon_start_args: >
   --paramsFile=/custom_config_data/config.yaml
   --genesisStateFile=/custom_config_data/genesis.ssz
   {% if (bootnode_enrs is defined) and bootnode_enrs %}
-  {% for bootnode_enrs in bootnode_enrs %}
-  --bootnodes="{{bootnode_enrs[0]}}"
+  {% for bootnode_enr in bootnode_enrs %}
+  --bootnodes="{{bootnode_enr}}"
   {% endfor %}
   {% endif %}
   --network.connectToDiscv5Bootnodes
