@@ -45,7 +45,7 @@ beacon_start_args: >
   --genesisStateFile=/custom_config_data/genesis.ssz
   {% if (bootnode_enrs is defined) and bootnode_enrs %}
   {% for bootnode_enrs in bootnode_enrs %}
-  --bootnodes="{{ bootnode_enrs[0] }}"
+  --bootnodes="{{bootnode_enrs[0]}}"
   {% endfor %}
   {% endif %}
   --network.connectToDiscv5Bootnodes
@@ -54,18 +54,18 @@ beacon_start_args: >
   --jwt-secret="/jwtsecret"
   --execution.urls={{execution_endpoint}}
   --eth1.providerUrls={{eth1endpoint}}
-  --eth1.depositContractDeployBlock=14675001
+  --eth1.depositContractDeployBlock={{eth1_deposit_contract_first_block}}
   --enr.ip={{ansible_host}}
+  --rest
   --rest.port={{beacon_api_port}}
-  --rest.enabled=true
-  --rest.host=0.0.0.0
-  --rest.api="*"
-  --logLevel={{ beacon_log_level | lower }}
+  --rest.address=0.0.0.0
+  --rest.namespace="*"
+  --logLevel={{beacon_log_level | lower}}
   --logFile=/beacondata/beacon.log
   --logFileLevel=debug
   --logFileDailyRotate=5
   --metrics
-  --metrics.serverPort={{ beacon_metrics_port }}
+  --metrics.serverPort={{beacon_metrics_port}}
 
 validator_start_args: >
   validator
