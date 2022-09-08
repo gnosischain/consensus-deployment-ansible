@@ -122,6 +122,7 @@ validator_rpc_port: 4002
 node_exporter_web_listen_address: "0.0.0.0:9100"
 prometheus_web_listen_address: "0.0.0.0:9090"
 eth1_metrics_port: 8002
+eth1_p2p_port: 30303
 eth_metrics_exporter_port: 8003
 cadvisor_port: 9280
 promtail_port: 9080
