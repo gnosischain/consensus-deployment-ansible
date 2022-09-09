@@ -238,7 +238,7 @@ denver-lighthouse-nethermind-04 | CHANGED | rc=0 >>
 ## Execution head of all nodes
 
 ```
-ansible -i denver/inventory/inventory.ini execution -m shell -a "curl -s -X POST --data '{\"jsonrpc\":\"2.0\",\"method\":\"eth_getBlockByNumber\",\"params\":[\"latest\"],\"id\":0}' http://localhost:8545 | jq '.result.number, .result.hash'"
+ansible -i $ANSIBLE_INVENTORY execution -m shell -a "curl -s -X POST --data '{\"jsonrpc\":\"2.0\",\"method\":\"eth_getBlockByNumber\",\"params\":[\"latest\"],\"id\":0}' http://localhost:8545 | jq '.result.number, .result.hash'"
 ```
 
 Print current head of each node, slot + root
@@ -251,3 +251,18 @@ denver-lighthouse-nethermind-11 | CHANGED | rc=0 >>
 "0x0"
 "0x203e164cf3b6f6765abf2f0355a4d09e5eaf6a777243bc4407b569431cd95cb3"
 ```
+
+# How to shadow-fork
+
+- Pick a TTD value at some time in the future. Set in `gc-shadow-fork-3/custom_config_data/config.yaml:17` and `gc-shadow-fork-3/inventory/group_vars/all.yaml:66`. Must allow enough time for nodes to sync mainnet.
+- Change `eth2_network_name` value
+
+# Tricks + suggestions
+
+When working on a network for a while set the inventory file as an env to not have to `-i chiado/inventory/inventory.ini` every time
+
+```
+export ANSIBLE_INVENTORY=chiado/inventory/inventory.ini
+```
+
+Ref https://docs.ansible.com/ansible/latest/reference_appendices/config.html#envvar-ANSIBLE_INVENTORY
