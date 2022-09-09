@@ -39,8 +39,8 @@ eth1_start_args: >
   --JsonRpc.Port={{eth1_rpc_port}}
   --JsonRpc.WebSocketsPort={{eth1_ws_rpc_port}}
   --JsonRpc.Host=0.0.0.0
-  --Network.DiscoveryPort=30303
-  --Network.P2PPort=30303
+  --Network.DiscoveryPort={{eth1_p2p_port}}
+  --Network.P2PPort={{eth1_p2p_port}}
   --Merge.Enabled=true
   --Merge.TerminalTotalDifficulty={{terminal_total_difficulty}}
   --Init.DiagnosticMode="None"

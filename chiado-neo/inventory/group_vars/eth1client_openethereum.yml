@@ -1,0 +1,41 @@
+eth1_client_name: openethereum
+eth1_image_name: openethereum/openethereum
+execution_endpoint: http://127.0.0.1:{{eth1_engine_snoop_port}}
+snoop_command: "./json_rpc_snoop -p {{eth1_engine_snoop_port}} http://127.0.0.1:{{eth1_engine_port}}"
+
+home_dir: "/home/{{ansible_user}}"
+
+eth1_github_external_user_pubkeys: []
+
+eth1_memory: 5000M
+eth1_kernel_memory: 5500M
+
+# websocket with upgrade
+eth1endpoint_ws: http://127.0.0.1:8546
+
+eth1_volumes:
+  - "{{execution_node_dir}}:/execution"
+  - "{{testnet_dir}}:/networkdata"
+  - "{{home_dir}}/jwtsecret:/jwtsecret"
+
+eth1_start_args: >
+  openethereum
+  --chain xdai
+  --base-path /eth1data
+  --jsonrpc-port {{eth1_rpc_port}}
+  --jsonrpc-interface 0.0.0.0
+  --jsonrpc-apis web3,eth,net,parity
+  --jsonrpc-hosts all
+  --jsonrpc-cors all
+  --bootnodes {{eth1_bootnode_enode | join(',')}}
+  --port {{eth1_p2p_port}}
+  --ws-interface 0.0.0.0
+  --ws-port 8546
+  --ws-hosts all
+  --ws-max-connections 1000
+  --metrics
+  --metrics-interface all
+  --metrics-port {{eth1_metrics_port}}
+
+# run as root, the nethermind image doesn't handle running regular user well
+eth1_user_id: "0:0"
