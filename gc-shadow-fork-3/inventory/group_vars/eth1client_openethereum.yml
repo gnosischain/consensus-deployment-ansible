@@ -14,14 +14,11 @@ eth1_kernel_memory: 5500M
 eth1endpoint_ws: http://127.0.0.1:8546
 
 eth1_volumes:
-  - "{{execution_node_dir}}:/execution"
-  - "{{testnet_dir}}:/networkdata"
-  - "{{home_dir}}/jwtsecret:/jwtsecret"
+  - "{{execution_node_dir}}:/home/openethereum/execution"
 
 eth1_start_args: >
-  openethereum
   --chain xdai
-  --base-path /eth1data
+  --base-path /home/openethereum/execution
   --jsonrpc-port {{eth1_rpc_port}}
   --jsonrpc-interface 0.0.0.0
   --jsonrpc-apis web3,eth,net,parity
@@ -36,5 +33,4 @@ eth1_start_args: >
   --metrics-interface all
   --metrics-port {{eth1_metrics_port}}
 
-# run as root, the nethermind image doesn't handle running regular user well
-eth1_user_id: "0:0"
+eth1_user_id: "1000:1000"

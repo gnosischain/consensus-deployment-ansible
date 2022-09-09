@@ -22,6 +22,10 @@
       file:
         path: "{{execution_node_dir}}"
         state: directory
+    - name: Modify permissions to match user-group inside docker image
+      shell: chown -R "{{ eth1_user_id }}" "{{ execution_node_dir }}"
+      become: true
+
 - name: Init testnet data dirs for nodes
   hosts: [beacon, execution, validator]
   gather_facts: false
