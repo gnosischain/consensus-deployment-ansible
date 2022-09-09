@@ -18,6 +18,6 @@ done
 
 while true; do 
   echo "-----"
-	doctl compute droplet list --tag-name $TAG --no-header --format PublicIPv4
+	doctl compute droplet list --tag-name chiado-neo --no-header --format PublicIPv4,Name
   sleep 2
 done
