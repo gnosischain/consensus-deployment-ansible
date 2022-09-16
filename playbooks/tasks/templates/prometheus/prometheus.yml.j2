@@ -4,8 +4,12 @@ global:
   scrape_timeout: 20s
 
   external_labels:
+{% if eth2_client_name is defined %}
     consensus_client: "{{ eth2_client_name }}"
+{% endif %}
+{% if eth1_client_name is defined %}
     execution_client: "{{ eth1_client_name }}"
+{% endif %}
     instance: "{{ inventory_hostname }}"
     testnet: "{{ eth2_network_name }}"
     ip_address: "{{ ansible_host }}"
