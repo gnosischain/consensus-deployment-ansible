@@ -6,7 +6,7 @@ bootstrap_user: "devops"
 initial_remote_user: "root"
 
 # Gnosis: dapplion, alebanzas
-# Gnosis devops: giacomolicari, riccardo-gnosis, davidalbela, gMonty030, Stavfilipps
+# Gnosis devops: giacomolicari, riccardo-gnosis, gMonty030, Stavfilipps
 # POA: igorbarinov
 # Gateway: mandrigin, sibuser
 # EF: gballet, parithosh
@@ -20,7 +20,6 @@ github_user_pubkeys:
   - mandrigin
   - sibuser
   - riccardo-gnosis
-  - davidalbela
   - gMonty030
   - Stavfilipps
   - gballet
