@@ -57,13 +57,8 @@ eth1_start_args: >
   --Metrics.NodeName={{inventory_hostname}}
   --Metrics.PushGatewayUrl="{{nethermind_push_gateway_url}}"
   --Metrics.IntervalSeconds=5
-  {% if (use_snap_sync is defined) and use_snap_sync %}
-  --Sync.SnapSync=true
-  --Sync.FastSync=false
-  {% else %}
-  --Sync.SnapSync=false
   --Sync.FastSync=true
-  {% endif %}
+# Do not use SnapSync in Nethermind-only networks
 
 # run as root, the nethermind image doesn't handle running regular user well
 eth1_user_id: "0:0"
