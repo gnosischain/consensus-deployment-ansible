@@ -55,6 +55,10 @@ chainID: 100
 fee_recipient: "0x88dFc82CF71fdeb23f82C33a202f6E2D19AC0541"
 # enter bootnodes here if needed
 
+# Set in baked in configs
+bootnode_enrs: []
+eth1_bootnode_enode: []
+
 # Note: 0 is correct, but due to an underflow bug (being fixed), doesn't work.
 eth1_deposit_contract_first_block: 1
 # Block from which to start indexing. Set to a higher value for shadow-forks
@@ -161,7 +165,6 @@ beacon_node_dir: "{{home_dir}}/beacon"
 validator_node_dir: "{{home_dir}}/validator"
 testnet_dir: "{{home_dir}}/custom_config_data"
 execution_node_dir: "{{home_dir}}/execution"
-keystore_password_filename: "keystores_password.txt"
 
 ##############################################
 # common log config
