@@ -1,0 +1,235 @@
+##############################################
+# generic ansible config information
+##############################################
+ansible_user: "devops"
+bootstrap_user: "devops"
+initial_remote_user: "root"
+
+# Gnosis: dapplion, alebanzas
+# Gnosis devops: giacomolicari, riccardo-gnosis, gMonty030, Stavfilipps
+# POA: igorbarinov
+# Gateway: mandrigin, sibuser
+# EF: gballet, parithosh
+# Nethermind: jmederosalvarado
+github_user_pubkeys:
+  - dapplion
+  - giacomolicari
+  - alebanzas
+  - igorbarinov
+  - parithosh
+  - mandrigin
+  - sibuser
+  - riccardo-gnosis
+  - gMonty030
+  - Stavfilipps
+  - gballet
+  - jmederosalvarado
+
+ansible_python_interpreter: /usr/bin/python3
+oh_my_zsh_config:
+  PROMPT: "%{$fg[yellow]%}%n%{$fg[white]%}@%{$fg[red]%}%m%{$reset_color%} ${PROMPT}"
+
+##############################################
+# eth1 endpoints
+##############################################
+# nimbus requires a websocket endpoint (http support unstable)
+# note: also used for execution engine endpoint in nimbus
+consensus_endpoint_nimbus: ws://127.0.0.1:8551
+
+eth1endpoint: http://127.0.0.1:8545
+
+beacon_api_endpoint: "http://127.0.0.1:{{beacon_api_port}}"
+
+# Merge Engine endpoints
+# TODO change IP?
+# TODO: some engines might start using the 8550 port (or 8551 for ws)
+
+##############################################
+# testnet specific information
+##############################################
+testnet_type: custom
+eth2_network_name: gc-shadow-fork-4
+chainID: 1
+
+# TBD
+terminal_total_difficulty: "115792089237316195423570985008687907853269984665640564039457584007913129639935"
+fee_recipient: "0x88dFc82CF71fdeb23f82C33a202f6E2D19AC0541"
+# enter bootnodes here if needed
+bootnode_enrs:
+  [
+    "enr:-Ly4QDjIEUTAL1KumoE5SqPcYIaxZ11lZpfV3PhqKR2CHc_uQLfQ5K3gWMPg21r01JPSw66u8W5hGPSRmZX97IK2bsoBh2F0dG5ldHOIAAAAAAAAAACEZXRoMpCl858vAQAAb1oAAAAAAAAAgmlkgnY0gmlwhIuQNruJc2VjcDI1NmsxoQPzE9N8RozpVRhRCbspJBJoatL0ZkfJaZHR9dCdrY5IG4hzeW5jbmV0cwCDdGNwgiMog3VkcIIjKA",
+    "enr:-Ly4QNCO_WW9l7rPvrz5jByLvNnyan2LhzCOm4KkbuNs15HEYOSpc0oBhPEtJ6rL9_jbrkXuAPKWZLXcUcxWQ39oGPUBh2F0dG5ldHOIAAAAAAAAAACEZXRoMpCl858vAQAAb1oAAAAAAAAAgmlkgnY0gmlwhK3_24SJc2VjcDI1NmsxoQOBrADhbH2d65qVBjQcVnfF1xum04TwcvxCfe_-B7led4hzeW5jbmV0cwCDdGNwgiMog3VkcIIjKA",
+    "enr:-Ly4QP9YUsbyG2kgcecIyd128RAmrTkBnh_SMKfGOdRxhTUVZ0kxeSB_AWOtctmrwaTCRWs-YTbfVr3sm-esuP67FnQBh2F0dG5ldHOIAAAAAAAAAACEZXRoMpCl858vAQAAb1oAAAAAAAAAgmlkgnY0gmlwhIui0k2Jc2VjcDI1NmsxoQIJN7an4B8uP_ydf1A8kZFfw1WBIwHXiI-3_THqSvRT7IhzeW5jbmV0cwCDdGNwgiMog3VkcIIjKA",
+    "enr:-Ly4QLPJoBw7JvJf6GuahL-8NqM_PgPgjG1XKHUYbALgaA7FaeE1GimIHPpW0IUoMro55RB2mjPZqBFYjhOS8NjqkIoBh2F0dG5ldHOIAAAAAAAAAACEZXRoMpCl858vAQAAb1oAAAAAAAAAgmlkgnY0gmlwhMLD-WqJc2VjcDI1NmsxoQLfsGdY662_AR9FBXcF-UtMg5vNskORieYocVn5nRAxkohzeW5jbmV0cwCDdGNwgiMog3VkcIIjKA",
+    "enr:-LK4QPlpqXGZo6gbqnfUFnyEbgX9jM3isu603Jd7_4pbnp-2QcgQA54QaidsReF_zxp8gXuHVxSiitBxWwIEpszT_EMGh2F0dG5ldHOIAAAAAAAAAACEZXRoMpCl858vAQAAb1oAAAAAAAAAgmlkgnY0gmlwhIuQNsCJc2VjcDI1NmsxoQPiifkUpm6KcKbwZUn70Y6LpZZopeYb3QDHwZhDvlPKFoN0Y3CCIyiDdWRwgiMo",
+    "enr:-LK4QG90B_b3hGKprZgV6TwzSwiRB1fJTP4J3sQtx775AkeMB-NG87Jwf2e5CZe1_iqfGr2TtFKUXrr8c1QZqnneNRMGh2F0dG5ldHOIAAAAAAAAAACEZXRoMpCl858vAQAAb1oAAAAAAAAAgmlkgnY0gmlwhC1P-zSJc2VjcDI1NmsxoQNJ6Z7DCJPUzur23szbhZs1MxmfFxljxcrt1Yqk2K0n3oN0Y3CCIyiDdWRwgiMo",
+    "enr:-LK4QN9I8AqZm7o5ZORuHRKXxOcpDqKMoI-cKQMN9d3Ps0i9Md6__5QZ5a03Mv3M4WSzxXYXBDCnNUQmi6BTyPZG154Gh2F0dG5ldHOIAAAAAAAAAACEZXRoMpCl858vAQAAb1oAAAAAAAAAgmlkgnY0gmlwhKxpoqCJc2VjcDI1NmsxoQPHnz2z-upYqad9ddCtGql_DpYleYW-H-p6rkRNbmjgD4N0Y3CCIyiDdWRwgiMo",
+    "enr:-MK4QHwdIMmuCgioLT8mPtweEitNK5d5TtERSIK0TsBpDfDzdJsjiMbdvhEsFjaz-p1nCxDiv9SUZ7EpHOipztVcB-eGAYR4l9CMh2F0dG5ldHOIAAAAAAAAAACEZXRoMpCl858vAQAAb1oAAAAAAAAAgmlkgnY0gmlwhC0hbVaJc2VjcDI1NmsxoQLKqz5J_ApEWjInIkb8k7jsRR3TbgvnrrCYCln61WKzOIhzeW5jbmV0cwCDdGNwgiMog3VkcIIjKA==",
+    "enr:-MK4QCNbLDOdSWIrecFX7j2rwuRLljzxWLnTnSt5bx47kUWFKOHqKgXlI0Z1a3lepKCLT71LDxYER4hrtD6-bsPg4-aGAYR4mA-qh2F0dG5ldHOIAAAAAAAAAACEZXRoMpCl858vAQAAb1oAAAAAAAAAgmlkgnY0gmlwhIui0mGJc2VjcDI1NmsxoQLKru85ZLLyLIN4fCyi7nuKCJGbi75hobwbqQF9KaEeLIhzeW5jbmV0cwCDdGNwgiMog3VkcIIjKA==",
+    "enr:-KG4QIjSvPjypiWMQ7RW4BFQrQGU-EH_XKXF8dptudUl_JrkXgQoH_ft9F8q2Qg27sF5DaBRjNW2vq1KShm6qV_B0ZEDhGV0aDKQpfOfLwEAAG9aAAAAAAAAAIJpZIJ2NIJpcISLkDasiXNlY3AyNTZrMaEDR-91rerPCCpN4VmYXeRC3GLvAAlEtkyXnpCGozjsHr-DdGNwgiMog3VkcIIjKA",
+    "enr:-KG4QJGxEc4QfQaZX5gQ5jUpuWXmtcHqdTeQrn-qnHqjyXUqJKfbLmkdahuS1pmdkvqQ4uB2_6ASZy8cPmCRKSaBY3wDhGV0aDKQpfOfLwEAAG9aAAAAAAAAAIJpZIJ2NIJpcIQtIW1biXNlY3AyNTZrMaEDSC4K6PlnjARnh8vU8nf4ZpPN-LfINlYhnqe2zlHCGpWDdGNwgiMog3VkcIIjKA",
+    "enr:-KG4QHJM-0Nq6KM9kXiEPdacp0KqJIxf1C2e4Dn4wy-KmQNBUM2bzebLf_PlixDC7ksL3uBZ1r-5iBAGKVjHaqTH0XsDhGV0aDKQpfOfLwEAAG9aAAAAAAAAAIJpZIJ2NIJpcISLoqvGiXNlY3AyNTZrMaEDcn3bdB2ZXrWay10iRyttPFRWYCs4owjtrXjFd6zSb2yDdGNwgiMog3VkcIIjKA",
+  ]
+
+eth1_bootnode_enode:
+  [
+    "enode://eab52761e4e13c5c82529e1357ab83b2593fdcc0e2ea3fbec496c78f5ca8ab8fe1322aa89057472a281bd36fd2e0affac1b5078a09caaf56b63004b22881d873@139.144.54.187:30303",
+    "enode://f4f406af11bf00a77ef7b1aaa505696d6567f3b77e72a189584676d71c1a849b6eac0bdb253f706107ebd49466f0c7d744dd8decab65513386d0384be8951f16@173.255.219.132:30303",
+    "enode://8bd3ff8fd83ca2efe72a8ee57963db524163352b356eff9a09a1c1e01f890f4a8436bb7bf5ceb3c2c1b884d42af8c39c65afb118fdca9b89cc5537a020168fbe@139.162.210.77:30303",
+    "enode://a7fa02ebc172744e59a645f1c66c874994a072d4577aae4e3f84ecac92242609dee5aaaf9648247c8c5d8abbe8ead6318ba02b70dea4fa6027d5f76a210e33de@194.195.249.106:30303",
+    "enode://2c9509e50ad51dd1bddaaea3f964b0e322b1d850daa8d3724f46528075567e5d6b1f3f0045611175a6143837906c551cd231876f720f36ebe31dab5bbb59b0ec@139.144.54.192:30303",
+    "enode://ccffc3ae5c136cad32b3885fd42865ac331f3c0f346f0a86286e82f9cde0332a4181fef94e07073063769a24f186c41d52507c60ce2f0664ea185602d0cea0d4@45.79.251.52:30303",
+    "enode://cd0bdb5dbcf6922ee97b793236a4b4a571c80ff2a69968ba6539cf8b2a13b9dc4a95bb47ad7d3f92099b8fe697bc1d59a3b48fd7e95db5cf6945a618fc01ba0b@172.105.162.160:30303",
+    "enode://1e7058397e8a3464e4fe5af4da3d828842055620a34082a90d6785c59628b804c3e35fe98c0dcc23e4b2db7af6f4d33779356354529348182fdbef32c53bb1e9@45.33.109.86:30303",
+    "enode://6984f2d4d06a3a7a961d98b9ff38eb66714929f3fc44b4032ece2c0c32ae93e7cf32c2129d840881eed735a2b2211a5d0ad4fd3f6df16a8e54946f7130e55232@139.162.210.97:30303",
+    "enode://7a322f1d71c8ef3a8ec9204a4458381566fa8d2e209a1389080f64629bb6e4627c42c0a9e1ed1c3789db2310e2aff5ec575dabd7c595608643068db7e81938dc@139.144.54.172:30303",
+    "enode://d0e7dc739bb2e33e6a3282bf7fd683833ba488065607b53b083d71e1e4ce1acd1f5ed75b192fb0512eb32647b1af57d4cd0f7a8c749bf85cdc6aa3085cf1849a@45.33.109.91:30303",
+    "enode://bcfd7fed3ffa784149c7473ffa2fce3d3a70643934ab41330da05c3bc24c7faa79e47996ac3f296d776f2779f68c22766f5501b296322caef398ee2ccce24dc8@139.162.171.198:30303",
+  ]
+
+mining_addresses: []
+
+# Note: 0 is correct, but due to an underflow bug (being fixed), doesn't work.
+eth1_deposit_contract_first_block: 1
+# Block from which to start indexing. Set to a higher value for shadow-forks
+explorer_execution_first_block: 24096194
+
+##############################################
+# metric information
+##############################################
+# enter pushgateway config if needed
+prometheus_config_file: "prometheus/prometheus.yml.j2"
+prometheus_enabled: true
+prometheus_remote_write_configs:
+  # NOTE: For some reason DO hosts can't resolve themerge-monitoring.gnosischainscan.com domain
+  - url: https://themerge-monitoring.gnosischainscan.com/prometheus/api/v1/write/
+    username: themergeprometheusremotewrite
+    password: "{{themergemonitoring_remote_write_password}}"
+  - url: https://hostedmetrics.com/s/cQ4UMmFc/prometheus/remote/write/
+    username: cQ4UMmFc
+    password: "{{hostedmetrics_remote_write_password}}"
+
+cadvisor_enabled: true
+promtail_enabled: false
+promtail_loki_server_url: "https://136217:{{loki_pusher_api_key}}@logs-prod-us-central1.grafana.net/loki/api/v1/push"
+eth2_validator_metrics_enabled: true
+eth_metrics_exporter_enabled: true
+eth_metrics_exporter_name: "metrics-exporter"
+eth_metrics_exporter_image: samcm/ethereum-metrics-exporter:0.11.0
+
+no_validator_keys: false
+ethstats_host: "ethstats.gcmergedevnet0.ethdevops.io"
+
+##############################################
+# ports to configure
+##############################################
+eth1_rpc_port: 8545
+eth1_ws_rpc_port: 8546
+eth1_engine_port_no_auth: 8550
+eth1_engine_port: 8551
+eth1_engine_snoop_port: 8560
+eth1_engine_ws_port: 8552
+nimbus_rpc_port: 4009
+beacon_api_port: 4000
+beacon_grpc_port: 4001
+beacon_metrics_port: 8000
+beacon_p2p_port: 9000
+validator_metrics_port: 8001
+validator_rpc_port: 4002
+node_exporter_web_listen_address: "0.0.0.0:9100"
+prometheus_web_listen_address: "0.0.0.0:9090"
+eth1_metrics_port: 8002
+eth1_p2p_port: 30303
+eth_metrics_exporter_port: 8003
+cadvisor_port: 9280
+promtail_port: 9080
+explorer_execution_public_port: 3334
+explorer_beacon_public_port: 3333
+public_ethstats: 3000
+
+##############################################
+# Command for JSON RPC snooper
+##############################################
+snoop_image_name: parithoshj/json_rpc_snoop:v1.0.0-x86
+snoop_container_name: snooper
+
+##############################################
+# name of the validator to display
+##############################################
+graffiti: "{{eth2_client_name}}-{{eth1_client_name}}"
+
+##############################################
+# local data directories
+##############################################
+local_explorerdata_host_dir: "{{inventory_dir}}/../explorerdata"
+local_explorerdata_host_archive: "{{inventory_dir}}/../explorerdata.tar.gz"
+local_forkmondata_host_dir: "{{inventory_dir}}/../forkmondata"
+local_forkmondata_host_archive: "{{inventory_dir}}/../forkmondata.tar.gz"
+local_custom_config_data_host_dir: "{{inventory_dir}}/../custom_config_data"
+local_custom_config_data_host_archive: "{{inventory_dir}}/../custom_config_data.tar.gz"
+local_eth2_config_filepath: "{{local_custom_config_data_host_dir}}/config.yaml"
+local_eth1_genesis_filepath: "{{local_custom_config_data_host_dir}}/nethermind_genesis.json"
+local_mnemonics_filepath: "{{local_custom_config_data_host_dir}}/mnemonics.yaml"
+# private dirs
+# Validator assignments
+local_validator_host_dir: "{{inventory_dir}}/../validator_prep/{{inventory_hostname}}"
+local_validator_host_archive: "{{inventory_dir}}/../validator_prep/{{inventory_hostname}}.tar.gz"
+
+##############################################
+# remote host data directories
+##############################################
+home_dir: "/home/{{ansible_user}}"
+beacon_node_dir: "{{home_dir}}/beacon"
+validator_node_dir: "{{home_dir}}/validator"
+testnet_dir: "{{home_dir}}/custom_config_data"
+execution_node_dir: "{{home_dir}}/execution"
+
+##############################################
+# common log config
+##############################################
+beacon_log_level: info
+common_log_options:
+  max-file: "10"
+  max-size: 500m
+  mode: non-blocking
+  max-buffer-size: 4m
+common_log_driver: json-file
+
+##############################################
+# container names
+##############################################
+beacon_container_name: beacon
+validator_container_name: validator
+execution_container_name: execution
+hi_peer_count: "{{ groups['beacon'] | length }}"
+separate_validator_process_enabled: true
+
+# To fix sources.list issues
+# Only for DO: http://mirrors.digitalocean.com/ubuntu/
+# Generic but slower: http://archive.ubuntu.com/ubuntu/
+ubuntu_archive_url: http://mirrors.digitalocean.com/ubuntu/
+
+# Firewall
+firewall_allowed_tcp_ports:
+  - 22
+  - 80
+  - 443
+  - 8080
+  - "{{eth1_p2p_port}}"
+  - "{{beacon_p2p_port}}"
+  - "{{eth1_rpc_port}}"
+  - "{{eth1_metrics_port}}"
+  - "{{explorer_execution_public_port}}"
+  - "{{explorer_beacon_public_port}}"
+  - "{{public_ethstats}}"
+
+firewall_allowed_udp_ports:
+  - "{{eth1_p2p_port}}"
+  - "{{beacon_p2p_port}}"
+
+firewall_additional_rules:
+  - "iptables -A INPUT -p tcp --dport 4000 -d 165.232.93.228 -j ACCEPT"
+  - "iptables -A INPUT -p tcp --dport 8545 -d 165.232.93.228 -j ACCEPT"
+  - "iptables -A INPUT -p tcp --dport 3333 -j ACCEPT"
+  - "iptables -A INPUT -p tcp --dport 3334 -j ACCEPT"
+  - "iptables -A INPUT -p tcp --dport 3000 -d 165.232.93.228 -j ACCEPT"
