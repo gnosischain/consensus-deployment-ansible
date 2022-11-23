@@ -1,0 +1,33 @@
+# Deploy Grafana
+- hosts: all
+  gather_facts: false
+  become: true
+  vars:
+    grafana_docker_data_dir: /var/lib/grafana
+    prometheus_endpoint: http://127.0.0.1:{{prometheus_web_port}}
+
+  tasks:
+    - name: Create docker volume data
+      docker_volume:
+        name: grafana_data
+    - name: Start Grafana
+      docker_container:
+        name: grafana
+        state: started
+        image: grafana/grafana:8.4.2
+        pull: true
+
+        command: >
+          --packaging=docker
+
+        volumes:
+          - "grafana_data:/var/lib/grafana"
+
+        restart_policy: unless-stopped
+        network_mode: host
+        log_driver: json-file
+        log_options:
+          max-file: "10"
+          max-size: 30m
+          mode: non-blocking
+          max-buffer-size: 4m
