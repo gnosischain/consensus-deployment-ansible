@@ -1,6 +1,7 @@
 import { execSync } from "node:child_process";
 
 const tag = "gc-shadow-fork-4";
+const indexOffset = 72000;
 
 // gc-shadow-fork-4-lodestar-nethermind-2      159.65.48.13
 // gc-shadow-fork-4-lodestar-nethermind-1      146.190.94.227
@@ -23,8 +24,8 @@ const hosts = txt
 
 const inventoryList = hosts
   .map(({ name, ip }, i) => {
-    const from = i * 1000;
-    const to = (i + 1) * 1000;
+    const from = indexOffset + i * 1000;
+    const to = indexOffset + (i + 1) * 1000;
     return `${name}\t ansible_host=${ip}\t mnemonic={{mnemonic_0}} indexes=${from}..${to}`;
   })
   .join("\n");
