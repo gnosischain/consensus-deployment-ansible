@@ -52,6 +52,10 @@ beacon_start_args: >
   {% endif %}
   --jwt-secret=/jwtsecret
   --dump:on
+  {% if (checkpoint_sync is defined) and checkpoint_sync|bool %}
+  trustedNodeSync
+  --trusted-node-url=https://checkpoint.gnosischain.com
+  {% endif %}
 
 ##############################################
 # file permissions and user ids

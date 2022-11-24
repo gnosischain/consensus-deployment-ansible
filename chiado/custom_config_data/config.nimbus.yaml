@@ -1,6 +1,6 @@
 # Extends the mainnet preset
 # NOTE: Nimbus requires "mainnet" as PRESET_BASE
-PRESET_BASE: "gnosis"
+PRESET_BASE: "mainnet"
 # needs to exist because of Prysm. Otherwise it conflicts with mainnet genesis
 CONFIG_NAME: "chiado"
 
