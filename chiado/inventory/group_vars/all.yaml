@@ -10,6 +10,7 @@ initial_remote_user: "root"
 # POA: igorbarinov
 # Gateway: mandrigin, sibuser
 # EF: gballet, parithosh
+# Nethermind: jmederosalvarado
 github_user_pubkeys:
   - dapplion
   - giacomolicari
@@ -22,6 +23,7 @@ github_user_pubkeys:
   - gMonty030
   - Stavfilipps
   - gballet
+  - jmederosalvarado
 
 ansible_python_interpreter: /usr/bin/python3
 oh_my_zsh_config:
@@ -47,94 +49,28 @@ beacon_api_endpoint: "http://127.0.0.1:{{beacon_api_port}}"
 ##############################################
 testnet_type: custom
 eth2_network_name: chiado
-chainID: 100100
+chainID: 10100
 
 # To allow using the deposit contract
-eth2_genesis_eth1data_blockhash: "0x203e164cf3b6f6765abf2f0355a4d09e5eaf6a777243bc4407b569431cd95cb3"
+eth2_genesis_eth1data_blockhash: "0xc293f148710642320209fa0f2d630ee54df5468b1eff25e972a468271157510e"
 
 # Projected for Aug 15th ~16h UTC (207360 blocks)
 terminal_total_difficulty: "70560951604725799783765358597051456327101440"
 fee_recipient: "0x88dFc82CF71fdeb23f82C33a202f6E2D19AC0541"
 # enter bootnodes here if needed
-bootnode_enrs: [
-    # Local (new, from Aug 16th)
-    "enr:-Ly4QIU1Dx10YTI2TwT2K_Q4F1ndzM66qL0UANk0ykTbSHudTuQCdafzduiOMuW5rDbuCB-Ghf4qPDtVC-Qg89PY9TpPh2F0dG5ldHOI__________-EZXRoMpDx7Hf9AgAAb___________gmlkgnY0gmlwhES3U7iJc2VjcDI1NmsxoQNYuaXoECG_MAw_LMa1ST3vVuJUQiaOqHIvTiUhoAPLOYhzeW5jbmV0cweDdGNwgiMog3VkcIIjKA",
-    "enr:-Ly4QHs5ldBMGDK71AE3VoEfNibRdxzVyk1UMnxEWveLaEYfHZJUOJDDmcKCy-tT5yD_V9cIJnB80X7It0N2r9elCg5Nh2F0dG5ldHOI__________-EZXRoMpDx7Hf9AgAAb___________gmlkgnY0gmlwhJ_LJMCJc2VjcDI1NmsxoQMAQwSXGZbvkgrQrRvH4joalSxXOtCdih0OMRtHDtQoU4hzeW5jbmV0cweDdGNwgiMog3VkcIIjKA",
-    "enr:-Ly4QEFtAkpJhDYt0vsXrtB-8g1Vm8VK4og08mY6SOG_8y28OecSuKi50LVHloz2by0lfMMvvYI2ZpvWgBwTnE2qrUlTh2F0dG5ldHOI__________-EZXRoMpDx7Hf9AgAAb___________gmlkgnY0gmlwhJ_fM6-Jc2VjcDI1NmsxoQPgk8u6ovWd95LWHGinONa-rS9A_mcX2_L45S0VhQoQ0YhzeW5jbmV0cwuDdGNwgiMog3VkcIIjKA",
-    "enr:-Ly4QLU8f4Wwfc5rlE9bXtb5EEQDFWrHP7_896NSAdTe4pN-BA2-vAWPCfxrz3eN_IGhIy73rAZesDdpplcuMY3jFkVPh2F0dG5ldHOI__________-EZXRoMpDx7Hf9AgAAb___________gmlkgnY0gmlwhLymbsOJc2VjcDI1NmsxoQLgJ3a46Kl1pVLi_kGS6YZXUVzRqB4N1WGU0_V3KeMRZYhzeW5jbmV0cwuDdGNwgiMog3VkcIIjKA",
-    "enr:-Ly4QBt28Vj6vdzPCyKDK-e1gUR71CAPirYTjWlKZEFmNcr-JybKd0pvHqv6RF3OqjE8SCsv9z8_3ncZ3LH-0bvTLt5Uh2F0dG5ldHOI__________-EZXRoMpDx7Hf9AgAAb___________gmlkgnY0gmlwhI5dxlqJc2VjcDI1NmsxoQNjIUIWjjHUwjIuSFZ9S_ykD17JVGApixe33OKFDqWq2YhzeW5jbmV0cw-DdGNwgiMog3VkcIIjKA",
-    "enr:-Ly4QDGOHFxjK4cnE16S3ejUxnoGROgbYq-sQkasuC7A__vVHOrIHOIdj2bkRp1ztfu9IO8IF6Ubk1CRF2dlnZn3MPlLh2F0dG5ldHOI__________-EZXRoMpDx7Hf9AgAAb___________gmlkgnY0gmlwhI5dfvaJc2VjcDI1NmsxoQOeYq7S8a1lhmqgkjhhtwBYwgRDahzIpaF58Ij_wj_YrYhzeW5jbmV0cweDdGNwgiMog3VkcIIjKA",
-    "enr:-Ly4QCT7LJp2DGYuWAybZNn_n0hXUvBFssQ10I2zuJNWjJ9dMmaw-zr4a0vhwWcMAqogsAK-aN_7tug8gmJ0yDXQLqRNh2F0dG5ldHOI__________-EZXRoMpDx7Hf9AgAAb___________gmlkgnY0gmlwhIbRyJmJc2VjcDI1NmsxoQNirwCaRwgDJo1dUHX_q1aWkFE8RGslvO8gSaEBDXDYA4hzeW5jbmV0cwuDdGNwgiMog3VkcIIjKA",
-    "enr:-MK4QO6NkRWirD2D6PJZgDlAWuAJq4jYd2LE2L8Kc_Fys5B5LXMV_C1SFf9-PmRvjd819JRsOJSI2x5kE4MEyOczYu2GAYKWd6bah2F0dG5ldHOI__________-EZXRoMpDx7Hf9AgAAb___________gmlkgnY0gmlwhIbRykyJc2VjcDI1NmsxoQKgpgO0gqduYfHNCr0sd0W0mnJ2DksKwkdD2y0dboXbKYhzeW5jbmV0cw-DdGNwgiMog3VkcIIjKA==",
-    "enr:-MK4QJi8hsv7q1dTMmHvreou23GtZ2_NNXoMWwMIZbc4YUfNKBmc_38_OjWFCdLdgSSlT-rKJoLdcjHgGGAqtBe-WRqGAYKWd6fFh2F0dG5ldHOI__________-EZXRoMpDx7Hf9AgAAb___________gmlkgnY0gmlwhIbRytaJc2VjcDI1NmsxoQOIL4nsJXxUvxQ7y4c3vKWs5oRmd8ECiyOxWzSdo0e454hzeW5jbmV0cw6DdGNwgiMog3VkcIIjKA==",
-    "enr:-Ly4QHt81fiBhU13Bl5fMCpj4N8gBZ8DxcG45DlMDRA4r8LKVGgBDRPrLaFsUwvWdaazFlCKK4WreIin9EjQfnAXi5Ueh2F0dG5ldHOI__________-EZXRoMpDx7Hf9AgAAb___________gmlkgnY0gmlwhI_Gbl2Jc2VjcDI1NmsxoQPWB9x7P_gvlgiWCju3vP1_N56QlNvp9TsMgmpejHVjrohzeW5jbmV0cw-DdGNwgiMog3VkcIIjKA",
-    "enr:-Ly4QC2NH0OgF16Nt0U9tFihaRMuSOgz-regecl4CwLxgNFuDinXA5kx1Kdkk6RsXU9dFw6Q7rBVusCbKCO_G-TAxyY0h2F0dG5ldHOI__________-EZXRoMpDx7Hf9AgAAb___________gmlkgnY0gmlwhJO2wIOJc2VjcDI1NmsxoQLvceYFycNkMFp0dtmypvF1UWS3Lj7r4TMz-yySkWJGFYhzeW5jbmV0cw-DdGNwgiMog3VkcIIjKA",
-    "enr:-Ly4QFM4tKidZqhHTTFwbBHSty61PUF0gptEHx4U4KDcO113URCCGZ90hUIgiIkYr6KXj0B_kXIrV-4C1qvUJYATmiMeh2F0dG5ldHOI__________-EZXRoMpDx7Hf9AgAAb___________gmlkgnY0gmlwhI_0vzCJc2VjcDI1NmsxoQLVdmpEAcINa_pF_TtImigQh_YxhEhD_D6qadqkzjonRYhzeW5jbmV0cweDdGNwgiMog3VkcIIjKA",
-    "enr:-Ly4QAnWMik-0YaOhvdC-Wd50wrJ0Lxf6PIQjj2Ox-dSyHUlUt54FPUjwPK8-cdAOa-NHn6TsMkRfc_FFN8uJn1iRy8xh2F0dG5ldHOI__________-EZXRoMpDx7Hf9AgAAb___________gmlkgnY0gmlwhI_0v4SJc2VjcDI1NmsxoQIkYRn8cx3v3f1DBoqcijVJ33PtZYYdsbOjDX2NynRV3IhzeW5jbmV0cw-DdGNwgiMog3VkcIIjKA",
-    "enr:-Ly4QFEiI77xVFa3nBTOdo2PtclXBF-1723UCixUbrXgFZlfUHvhl0veJzVnx1Pf8Jv-Dsz_6Wq9IQiyeZ_Vh4EHBogbh2F0dG5ldHOI__________-EZXRoMpDx7Hf9AgAAb___________gmlkgnY0gmlwhJO2yCOJc2VjcDI1NmsxoQKJ7eKs25-Cs-AzNom536OOogi-SwHGBYvPp6pX8YTOT4hzeW5jbmV0cw-DdGNwgiMog3VkcIIjKA",
-    # From Igor (Gateway)
-    "enr:-Ly4QKURsQNoND5tazZhAsKi4x1dxo4gWOktdpygSK6LfzT_D0b7jPWqcN5kCTUMnzwMEbH0N-ZK0dSJGy0dE62s2PUCh2F0dG5ldHOIAAAAAAAAAACEZXRoMpD1_S08AQAAb1oAAAAAAAAAgmlkgnY0gmlwhEEVxd6Jc2VjcDI1NmsxoQLLeV4mhW1Nsd2FpBXyj6JMsYQ8yYBSKTSUqNa-go0tlIhzeW5jbmV0cwCDdGNwgkpug3VkcIJKbg",
-    "enr:-KG4QD8IsAMCVkRT73pLYm5Mh3o7Uk83Op4NPGi_qzy18xFJLYwA5cHrFaVw5apyu7Bc2xjhJHgfwXIrfG-SYCzZarEIhGV0aDKQ9f0tPAEAAG9aAAAAAAAAAIJpZIJ2NIJpcITJ7oKxiXNlY3AyNTZrMaECVZ5eL4ypBnJLN1jbP7PKFw0OruAF_dEx7zJDjSc28vODdGNwgkpvg3VkcIJKbw",
-    "enr:-Ly4QIvbpjd7AcFjmY8Uj24uAZKAdRP3Hkur5no8K4bCTYZJMqVyEVS3UYmYJkLQnjWTS8FiL3fLTuk5Bx4BBCaAnkECh2F0dG5ldHOIAAAAAAAAAACEZXRoMpD1_S08AQAAb1oAAAAAAAAAgmlkgnY0gmlwhE-b1uSJc2VjcDI1NmsxoQKUkP2cx6GR9B6Kx9sf06TLRcwHy31ztU9bfjSJh7QpG4hzeW5jbmV0cwCDdGNwgkpug3VkcIJKbg",
-    "enr:-Ly4QBpr_RcSPoXuHzcE6QbmPsM_ZRF8RVgNirwNgXumkroaRa3R0H33XtxDb4MgohVDAHmi3ocFCWR8gcJoZJD8I5MCh2F0dG5ldHOIAAAAAAAAAACEZXRoMpD1_S08AQAAb1oAAAAAAAAAgmlkgnY0gmlwhF9oXeCJc2VjcDI1NmsxoQPAW1a61k9_aCHpgOCNcLmi7mRFWZjXT2skaQb5_eLkHYhzeW5jbmV0cwCDdGNwgkpug3VkcIJKbg",
-    "enr:-Ly4QOb7zmr8HUKayFJBSDJ2c2dM3-EhQDwSvYus27YoI7QDUxK9TTQCzcgING-i_h82bZOaxzrfZ3ft5ECP2dSVZLcCh2F0dG5ldHOIAAAAAAAAAACEZXRoMpD1_S08AQAAb1oAAAAAAAAAgmlkgnY0gmlwhK35IbCJc2VjcDI1NmsxoQOnaeYq_IE7LRiYCA2hyPqzePsGEToUKRyeAPyhLPr2oYhzeW5jbmV0cwCDdGNwgkpug3VkcIJKbg",
-    "enr:-LK4QH5g33cHBTlnRsEegTWbgYvmK4PGIaND8x0C5wneDIirYeZY6Ej4DgnNoVmd7KsN7R_VpgBzJVEwuKAv5q8j4ikGh2F0dG5ldHOIAAIIIhEgAQaEZXRoMpDoY5pvAgAAb7QAAAAAAAAAgmlkgnY0gmlwhFmFZSGJc2VjcDI1NmsxoQJktmZm0Ex8MpliguydcMakW0K_H2NeRbG5Mi5rTDg3nYN0Y3CCSm-DdWRwgkpv",
-  ]
-
-eth1_bootnode_enode:
+bootnode_enrs:
   [
-    "enode://feb6ed6e80a85ff4aa8eac795f83d893397c00207ed7d317b39f304c47cb6605beec40cb927ab1cb31d05a6838d2becd14e4c5b755f68dcebf631e089ddfa2ca@68.183.5.97:30303",
-    "enode://51cc7be00e462cc9677662607dcea3a1249aada71dec8887be3516fe4655f3bf997a7eea02e76126737efdd6a1c916386248a3fd0d518155fecda98899938ab7@146.190.17.210:30303",
-    "enode://2cf87f0e92afa650b58c7e20d53b09a928e11fb1f360b0e75d7003860f5364dd55e9ceea14ad0bb2e1b1602656613eb01c462ea97386cc18080bfad484cec74e@134.209.200.153:30303",
-    "enode://14a299e1f766cfabaf20ee0e8f0a4fb6f595f55f8271d8a1f3468846d908cb04a9ffcaf123e62cea84a02b9d03380caabe9bfd5a12c687310dfa299dbe4a2327@134.209.82.117:30303",
-    "enode://4ed9f80e3c0cd0c1abd88ddcfaa9bb01281a7bf9c921670215b8e5dc8a64c9101e2558c2c87074146c18ec03d8229930e711dda7280687dfb957d5e3ec213e85@134.209.198.195:30303",
-    "enode://f5e559f9276584d0224d626879243cb8214da749b9d2aa75039e4ca1964096ae37cbbdc95d502efd763bff38f1be99c480a49e76d724a8f4e2945d126889c1c5@104.248.87.225:30303",
-    "enode://50916e4a531cb7c0a29398dee7a12775d7a168e4cd0d80e475b73744555cd49d19497fff9021829acc80c0899453d5143ca5ecc880272eb6163b8791a69e7df8@134.209.202.76:30303",
-    "enode://79835167bca8dfe62b3b0712a379b6f6f09eda30acdd16f43ecff7f7d20a39046bcbdd18551dc383d937117cc3767a14b557beebcee1430cc9c5ecb142b3989f@134.209.202.214:30303",
-    "enode://01ed82614d5298904f36ad4a448c067a7fff547432b74b2a6ee92475b9b51ee76007e2dcb1337622d77304978edecc5f6797d747d152a58161df058bd28163c4@134.209.202.136:30303",
-    "enode://b6a751e14739a54abc6b6f89018086f56404e5731aa49cce63c08bbc0438c218f7b27ace36d228f6bc2aad32de213a06906150fb2b9ac3feae824036b86321ab@134.209.206.142:30303",
-    "enode://9b209963688e9001bafe84ed363549daa52d5bdc9aa0c53330dfaa0fe11e7e6524db284d26ca770bd7723f476da9a6def530ba04cbcd0e8e96b0c4198f4852cd@143.198.110.93:30303",
-    "enode://befe0e772d0f09347dc6ffead35c83c1ec0d356ea19e360be05f07e9b1925b54145a97e86661affce1e8b1e2b6fa377e4a1c3a77ec5520b748001c2978ac3546@147.182.192.131:30303",
-    "enode://5521715abbe026fe5d68fd83a7d2a6c7a23f5bf95b147814b421f6b4f334f8e9d420d4de16374879ccff6fa6903cd16ddb3708cc93f0d1e8bdedde4788fc2a96@143.244.191.48:30303",
-    "enode://3a8a1e89d90a514697d5ab0a6389b7a398db2a16d0a577005d28ecda70745987c47aa5a3939e3c6cfa935057e84149e4e49b8ac888b6da5b293e06ae1e05f5e8@143.244.191.132:30303",
-    "enode://bf4982f707df1a776cc934ceaae3b61aa0d951f4559c847194476d5c6382e19564cdcb8a8c5536864d5d89effbbb533fca2e8cd58d4e8d8b422d152a3eb34706@147.182.200.35:30303",
-    "enode://95776fafeeb23208cd13486ffefa227837ac37aab2e3aa83f6e619d4d7a342d68271ae72dbce1c9d7b836abfa28c7da7b907f62e3475bf764f6d7372eb45452d@143.244.191.146:30303",
-    "enode://13c502c2a352f07bb9ff965447ab187b9f5a734b37656e7b796020a8df527a11f7a4d16fd1ce560f1820b597db69483f0732b60ea8ee40d121ac72d52a8e4578@143.110.210.203:30303",
-    "enode://59a0556e663402a5cac52d67a254831b0e379326d71c57576eead6de1b3bbad4bec3500eca7eb6048ccf62d99bf194efe473c46871fdcacf38edb9bf7a02222b@143.110.210.241:30303",
+    "enr:-L64QOijsdi9aVIawMb5h5PWueaPM9Ai6P17GNPFlHzz7MGJQ8tFMdYrEx8WQitNKLG924g2Q9cCdzg54M0UtKa3QIKCMxaHYXR0bmV0c4j__________4RldGgykDE2cEMCAABv__________-CaWSCdjSCaXCEi5AaWYlzZWNwMjU2azGhA8CjTkD4m1s8FbKCN18LgqlYcE65jrT148vFtwd9U62SiHN5bmNuZXRzD4N0Y3CCIyiDdWRwgiMo",
+    "enr:-L64QKYKGQj5ybkfBxyFU5IEVzP7oJkGHJlie4W8BCGAYEi4P0mmMksaasiYF789mVW_AxYVNVFUjg9CyzmdvpyWQ1KCMlmHYXR0bmV0c4j__________4RldGgykDE2cEMCAABv__________-CaWSCdjSCaXCEi5CtNolzZWNwMjU2azGhAuA7BAwIijy1z81AO9nz_MOukA1ER68rGA67PYQ5pF1qiHN5bmNuZXRzD4N0Y3CCIyiDdWRwgiMo",
+    "enr:-Ly4QJJUnV9BxP_rw2Bv7E9iyw4sYS2b4OQZIf4Mu_cA6FljJvOeSTQiCUpbZhZjR4R0VseBhdTzrLrlHrAuu_OeZqgJh2F0dG5ldHOI__________-EZXRoMpAxNnBDAgAAb___________gmlkgnY0gmlwhIuQGnOJc2VjcDI1NmsxoQPT_u3IjDtB2r-nveH5DhUmlM8F2IgLyxhmwmqW4L5k3ohzeW5jbmV0cw-DdGNwgiMog3VkcIIjKA",
+    "enr:-MK4QCkOyqOTPX1_-F-5XVFjPclDUc0fj3EeR8FJ5-hZjv6ARuGlFspM0DtioHn1r6YPUXkOg2g3x6EbeeKdsrvVBYmGAYQKrixeh2F0dG5ldHOIAAAAAAAAAACEZXRoMpAxNnBDAgAAb___________gmlkgnY0gmlwhIuQGlWJc2VjcDI1NmsxoQKdW3-DgLExBkpLGMRtuM88wW_gZkC7Yeg0stYDTrlynYhzeW5jbmV0cwCDdGNwgiMog3VkcIIjKA==",
+    "enr:-Ly4QLYLNqrjvSxD3lpAPBUNlxa6cIbe79JqLZLFcZZjWoCjZcw-85agLUErHiygG2weRSCLnd5V460qTbLbwJQsfZkoh2F0dG5ldHOI__________-EZXRoMpAxNnBDAgAAb___________gmlkgnY0gmlwhKq7mu-Jc2VjcDI1NmsxoQP900YAYa9kdvzlSKGjVo-F3XVzATjOYp3BsjLjSophO4hzeW5jbmV0cw-DdGNwgiMog3VkcIIjKA",
+    "enr:-Ly4QCGeYvTCNOGKi0mKRUd45rLj96b4pH98qG7B9TCUGXGpHZALtaL2-XfjASQyhbCqENccI4PGXVqYTIehNT9KJMQgh2F0dG5ldHOI__________-EZXRoMpAxNnBDAgAAb___________gmlkgnY0gmlwhIuQrVSJc2VjcDI1NmsxoQP9iDchx2PGl3JyJ29B9fhLCvVMN6n23pPAIIeFV-sHOIhzeW5jbmV0cw-DdGNwgiMog3VkcIIjKA",
   ]
 
-mining_addresses:
-  - "0xaaa0611623f27b169557d178da5d9cd3e1044ce1"
-  - "0xaaa939c83aa32af422ba0da4a44888c04af65325"
-  - "0xaaa5807408ad28bdbceb2911a6eb9541e880505d"
-  - "0xaaa79fbce01f2ad7cc8424e7a8361bdec0c662c8"
-  - "0xaaa6946c6ec277335cb3ef93bc140489c1b412b4"
-  - "0xaaa732a914b4780e33bcac7f129120a6ceb7ea0e"
-  - "0xaaa0edbec2091470d5a8d8876bf5cf681b0d6468"
-  - "0xaaad85d426c0efeb2ee215d6dd4c6ccc39bb9106"
-  - "0xaaaafb931bf8ebe4af36dca978b94c0efbd300d6"
-  - "0xaaa49c8aeca0afd329012522563b28c75d687ac2"
+eth1_bootnode_enode: []
 
 keystores_password: "{{denver_keystores_password}}"
-
-# Genesis. chiado_mnemonics is stored in `denver/inventory/group_vars/secrets.yaml`
-genesis_mnemonics: "{{chiado_mnemonics}}"
-mnemonic_0: "{{chiado_mnemonics[0].mnemonic}}"
-mnemonic_1: "{{chiado_mnemonics[1].mnemonic}}"
-mnemonic_2: "{{chiado_mnemonics[2].mnemonic}}"
-mnemonic_3: "{{chiado_mnemonics[3].mnemonic}}"
-mnemonic_4: "{{chiado_mnemonics[4].mnemonic}}"
-mnemonic_5: "{{chiado_mnemonics[5].mnemonic}}"
-mnemonic_6: "{{chiado_mnemonics[6].mnemonic}}"
-mnemonic_7: "{{chiado_mnemonics[7].mnemonic}}"
-mnemonic_8: "{{chiado_mnemonics[8].mnemonic}}"
-mnemonic_9: "{{chiado_mnemonics[9].mnemonic}}"
-mnemonic_10: "{{chiado_mnemonics[10].mnemonic}}"
-mnemonic_11: "{{chiado_mnemonics[11].mnemonic}}"
-mnemonic_12: "{{chiado_mnemonics[12].mnemonic}}"
-mnemonic_13: "{{chiado_mnemonics[13].mnemonic}}"
-mnemonic_14: "{{chiado_mnemonics[14].mnemonic}}"
-mnemonic_15: "{{chiado_mnemonics[15].mnemonic}}"
 
 # Note: 0 is correct, but due to an underflow bug (being fixed), doesn't work.
 eth1_deposit_contract_first_block: 1
@@ -198,6 +134,7 @@ validator_rpc_port: 4002
 node_exporter_web_listen_address: "0.0.0.0:9100"
 prometheus_web_listen_address: "0.0.0.0:9090"
 eth1_metrics_port: 8002
+eth1_p2p_port: 30303
 eth_metrics_exporter_port: 8003
 cadvisor_port: 9280
 promtail_port: 9080
@@ -265,11 +202,11 @@ separate_validator_process_enabled: true
 
 firewall_allowed_tcp_ports:
   - 22
-  - 30303
-  - 9000
   - 80
   - 443
   - 8080
+  - "{{eth1_p2p_port}}"
+  - "{{beacon_p2p_port}}"
   - "{{eth1_rpc_port}}"
   - "{{eth1_metrics_port}}"
   - "{{explorer_execution_public_port}}"
@@ -277,5 +214,5 @@ firewall_allowed_tcp_ports:
   - "{{public_ethstats}}"
 
 firewall_allowed_udp_ports:
-  - 30303
-  - 9000
+  - "{{eth1_p2p_port}}"
+  - "{{beacon_p2p_port}}"

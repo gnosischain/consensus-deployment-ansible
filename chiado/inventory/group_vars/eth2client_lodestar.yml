@@ -40,45 +40,45 @@ beacon_start_args: >
   beacon
   --preset=gnosis
   --network=gnosis
-  --rootDir=/beacondata
+  --dataDir=/beacondata
   --paramsFile=/custom_config_data/config.yaml
   --genesisStateFile=/custom_config_data/genesis.ssz
   {% if (bootnode_enrs is defined) and bootnode_enrs %}
-  --network.discv5.bootEnrs="{{ bootnode_enrs[0] }}"
+  {% for bootnode_enr in bootnode_enrs %}
+  --bootnodes="{{bootnode_enr}}"
+  {% endfor %}
   {% endif %}
   --network.connectToDiscv5Bootnodes
-  --network.discv5.enabled=true
-  --eth1.enabled=true
-  --api.rest.port={{beacon_api_port}}
-  --eth1.providerUrls={{eth1endpoint}}
-  --execution.urls={{execution_endpoint}}
-  --api.rest.enabled=true
-  --api.rest.host=0.0.0.0
-  --api.rest.api="*"
-  --logLevel={{ beacon_log_level | lower }}
-  --logLevelFile=debug
-  --logFile=/beacondata/beacon.log
-  --logRotate
-  --logMaxFiles=5
-  --enr.ip={{ansible_host}}
-  --metrics.enabled
-  --metrics.serverPort={{ beacon_metrics_port }}
-  --eth1.depositContractDeployBlock=14675001
+  --discv5
+  --eth1
   --jwt-secret="/jwtsecret"
+  --execution.urls={{execution_endpoint}}
+  --eth1.providerUrls={{eth1endpoint}}
+  --eth1.depositContractDeployBlock={{eth1_deposit_contract_first_block}}
+  --enr.ip={{ansible_host}}
+  --rest
+  --rest.port={{beacon_api_port}}
+  --rest.address=0.0.0.0
+  --rest.namespace="*"
+  --logLevel={{beacon_log_level | lower}}
+  --logFile=/beacondata/beacon.log
+  --logFileLevel=debug
+  --logFileDailyRotate=5
+  --metrics
+  --metrics.port={{beacon_metrics_port}}
 
 validator_start_args: >
   validator
   --preset=gnosis
   --network=gnosis
-  --rootDir=/validatordata
+  --dataDir=/validatordata
   --paramsFile=/custom_config_data/config.yaml
   --keystoresDir=/validatordata/keystores
   --secretsDir=/validatordata/secrets/
   --server={{beacon_endpoint}}
   --logFile=/validatordata/validator.log
-  --logLevelFile=debug
-  --logRotate
-  --logMaxFiles=5
+  --logFileLevel=debug
+  --logFileDailyRotate=5
   --graffiti={{graffiti}}
 
 ##############################################

@@ -2,8 +2,8 @@
 
 Chiado testnet is meant to prepare the staking community of the Gnosis Beacon Chain for the upcoming merge.
 
-- TTD: `70560951604725799783765358597051456327101440`. Projected for Aug 15th ~16h UTC (207360 blocks)
-- Conensus layer genesis: `1660132800` Aug 10 2022 12:00:00 GMT+0000, root `0x71eb8c2b9d7ad58733bfdd1008e7a35f70303833f1ac308fd53d1b4799f15db7`
+- TTD: `TBD`. Projected for Aug 15th ~16h UTC (207360 blocks)
+- Conensus layer genesis: `1662717600` Sep 09 2022 10:00:00 GMT+0000, root `TBD`
 - Altair fork: epoch 90 (2h after CL genesis)
 - Bellatrix fork: epoch 180 (4h after CL genesis)
 
@@ -43,33 +43,16 @@ Web3Signer package to add keys
 
 ## Getting staking keys
 
-Keystores already part of the genesis state will be distribute **on demand** to anyone that requests them. To request:
+_TBD_
 
-- Fill out this simple form https://forms.gle/42tBLFW6HzAqLQ74A or [long link](https://docs.google.com/forms/d/e/1FAIpQLSeWfYgWagVBIOeEwn36VO3xm1LYIaL_29oYzf-_071LO6nJXg/viewform?usp=sf_link)
-- Reach out, DM [@dapplion](https://twitter.com/dapplion) on twitter
-- Join DAppNode discord ([invite](https://discord.gg/c28an8dA5k)) and request in the #gnosis-beacon-chain channel
-- Join Gnosis Chain discord ([invite](https://discord.com/invite/3CtNAqVMRV)) and request there
-
-| Index range   | mnemonic           | first    | hosts, clients                                                           |
-| ------------- | ------------------ | -------- | ------------------------------------------------------------------------ |
-| 00000 - 10000 | chiado_mnemonic_00 | multiply | local - chiado-lighthouse-nethermind-{10:19}                             |
-| 10000 - 20000 | chiado_mnemonic_01 | pilot    | local - chiado-prysm-nethermind-{10:19}                                  |
-| 20000 - 30000 | chiado_mnemonic_02 | arctic   | external - Kleros.io                                                     |
-| 30000 - 40000 | chiado_mnemonic_03 | discover | external - Gateway                                                       |
-| 40000 - 50000 | chiado_mnemonic_04 | sentence | local - chiado-lighthouse-nethermind-{00:09}                             |
-| 50000 - 60000 | chiado_mnemonic_05 | rural    | local - chiado-prysm-nethermind-{00:09}                                  |
-| 60000 - 61000 | chiado_mnemonic_06 | clerk    | local - chiado-teku-nethermind-06                                        |
-| 61000 - 62000 | chiado_mnemonic_07 | region   | local - chiado-teku-nethermind-07                                        |
-| 62000 - 63000 | chiado_mnemonic_08 | situate  | local - chiado-teku-nethermind-00                                        |
-| 63000 - 64000 | chiado_mnemonic_09 | carry    | local - chiado-teku-nethermind-01                                        |
-| 64000 - 65000 | chiado_mnemonic_10 | remove   | local - chiado-teku-nethermind-02                                        |
-| 65000 - 66000 | chiado_mnemonic_11 | unknown  | local - chiado-teku-nethermind-03                                        |
-| 66000 - 67000 | chiado_mnemonic_12 | rice     | local - chiado-teku-nethermind-04                                        |
-| 67000 - 68000 | chiado_mnemonic_13 | borrow   | local - chiado-lodestar-nethermind-00                                    |
-| 68000 - 69000 | chiado_mnemonic_14 | amount   | external - Open distr by dapplion / \*else chiado-lodestar-nethermind-00 |
-| 69000 - 70000 | chiado_mnemonic_15 | jump     | external - Open distr by DAppNode / \*else chiado-lodestar-nethermind-01 |
-
-_\*else: keys not assigned already in the open distribution_
+| Index range  | mnemonic           | first   | hosts, clients                             |
+| ------------ | ------------------ | ------- | ------------------------------------------ |
+| 0000 - 3000  | chiado_mnemonic_00 | nurse   | external - Nethermind                      |
+| 3000 - 6000  | chiado_mnemonic_01 | leisure | external - Gateway                         |
+| 6000 - 7000  | chiado_mnemonic_02 | fork    | local - chiado-lighthouse-nethermind-{0:3} |
+| 7000 - 8000  | chiado_mnemonic_02 | fork    | local - chiado-prysm-nethermind-{0:3}      |
+| 8000 - 9000  | chiado_mnemonic_02 | fork    | local - chiado-teku-nethermind-{0:3}       |
+| 9000 - 10000 | chiado_mnemonic_02 | fork    | local - chiado-lodestar-nethermind-{0:4}   |
 
 # Testnet data
 
