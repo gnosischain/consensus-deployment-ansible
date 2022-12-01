@@ -54,8 +54,6 @@ chainID: 10100
 # To allow using the deposit contract
 eth2_genesis_eth1data_blockhash: "0xc293f148710642320209fa0f2d630ee54df5468b1eff25e972a468271157510e"
 
-# Projected for Aug 15th ~16h UTC (207360 blocks)
-terminal_total_difficulty: "70560951604725799783765358597051456327101440"
 fee_recipient: "0x88dFc82CF71fdeb23f82C33a202f6E2D19AC0541"
 # enter bootnodes here if needed
 bootnode_enrs: [
@@ -213,6 +211,8 @@ firewall_allowed_tcp_ports:
   - "{{explorer_execution_public_port}}"
   - "{{explorer_beacon_public_port}}"
   - "{{public_ethstats}}"
+  # For checkpoint sync
+  - "{{beacon_api_port}}"
 
 firewall_allowed_udp_ports:
   - "{{eth1_p2p_port}}"

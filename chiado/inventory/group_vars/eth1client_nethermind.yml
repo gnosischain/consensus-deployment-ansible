@@ -38,7 +38,6 @@ eth1_start_args: >
   --JsonRpc.JwtSecretFile=/jwtsecret
   --JsonRpc.AdditionalRpcUrls="http://localhost:{{eth1_engine_port_no_auth}}|http;ws|net;eth;consensus;subscribe;web3;admin;txpool;debug;tracing;parity|no-auth"
   --Merge.Enabled=true
-  --Merge.TerminalTotalDifficulty={{terminal_total_difficulty}}
   --Network.DiscoveryPort={{eth1_p2p_port}}
   --Network.P2PPort={{eth1_p2p_port}}
   --Network.Bootnodes="{{ eth1_bootnode_enode | join(',') }}"

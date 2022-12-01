@@ -4,8 +4,8 @@
 eth2_client_name: lodestar
 
 # TODO: switch to merge f2f, but mainnet preset
-beacon_image_name: chainsafe/lodestar:next
-validator_image_name: chainsafe/lodestar:next
+beacon_image_name: chainsafe/lodestar:v1.2.2
+validator_image_name: chainsafe/lodestar:v1.2.2
 beacon_endpoint: "http://127.0.0.1:{{beacon_api_port}}"
 
 eth2_github_external_user_pubkeys:
@@ -59,6 +59,9 @@ beacon_start_args: >
   --logFileDailyRotate=5
   --metrics
   --metrics.port={{beacon_metrics_port}}
+  {% if checkpoint_sync_url is defined %}
+  --checkpointSyncUrl={{checkpoint_sync_url}}
+  {% endif %}
 
 validator_start_args: >
   validator
