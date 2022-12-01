@@ -60,6 +60,9 @@ beacon_start_args: >
   {% if (cl_archive_config is defined) and cl_archive_config|bool %}
   --slots-per-restore-point=32
   {% endif %}
+  {% if checkpoint_sync_url is defined %}
+  --checkpoint-sync-url={{checkpoint_sync_url}}
+  {% endif %}
 
 # in case of eth1 deposit endpoint problems: --dummy-eth1
 
