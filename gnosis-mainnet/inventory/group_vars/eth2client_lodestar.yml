@@ -41,6 +41,11 @@ beacon_start_args: >
   --preset=gnosis
   --network=gnosis
   --dataDir=/beacondata
+  {% if (bootnode_enrs is defined) and bootnode_enrs %}
+  {% for bootnode_enr in bootnode_enrs %}
+  --bootnodes="{{bootnode_enr}}"
+  {% endfor %}
+  {% endif %}
   --network.connectToDiscv5Bootnodes
   --discv5
   --eth1
