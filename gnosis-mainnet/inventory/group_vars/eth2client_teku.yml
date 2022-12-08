@@ -56,9 +56,11 @@ beacon_start_args: >
   --validators-keystore-locking-enabled=false
   {% endif %}
   --ee-jwt-secret-file="/jwtsecret"
-  --Xnetwork-total-terminal-difficulty-override="{{terminal_total_difficulty}}"
   --Xlog-include-p2p-warnings-enabled
   --Xmetrics-block-timing-tracking-enabled
+  {% if checkpoint_sync_url is defined %}
+  --initial-state={{checkpoint_sync_url}}/eth/v2/debug/beacon/states/finalized
+  {% endif %}
 
 ##############################################
 # memory limits
