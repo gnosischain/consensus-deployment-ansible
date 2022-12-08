@@ -36,6 +36,7 @@ validator_volumes:
 ##############################################
 # arguments to run the containers with
 ##############################################
+# Note: persistInvalidSszObjectsDir creates dir if not existent
 beacon_start_args: >
   beacon
   --preset=gnosis
@@ -63,10 +64,11 @@ beacon_start_args: >
   --logFileLevel=debug
   --logFileDailyRotate=5
   --metrics
-  --metrics.port={{beacon_metrics_port}}
+  --metrics.port={{beacon_metrics_port}} 
   {% if checkpoint_sync_url is defined %}
   --checkpointSyncUrl={{checkpoint_sync_url}}
   {% endif %}
+  --persistInvalidSszObjectsDir=/beacondata/invalid_ssz
 
 validator_start_args: >
   validator
