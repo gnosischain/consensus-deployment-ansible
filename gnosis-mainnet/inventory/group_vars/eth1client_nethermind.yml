@@ -54,6 +54,9 @@ eth1_start_args: >
   --Seq.MinLevel="Info"
   --Seq.ServerUrl="https://seq.nethermind.io/"
   --Seq.ApiKey="{{nethermind_seq_api_key}}"
+  {% if ttd_infinite %}
+  --Merge.TerminalTotalDifficulty=9999999999999999999999999999999999999999999999999
+  {% endif %}
   {% if (el_archive_config is defined) and el_archive_config|bool %}
   --Pruning.Mode=None
   --Sync.FastSync=false
