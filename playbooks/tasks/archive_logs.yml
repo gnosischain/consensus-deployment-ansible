@@ -26,10 +26,10 @@
     # ~ ls eth1data/logs
     # log.27.txt  log.28.txt
     - name: Archive nethermind logs
-      when: eth1_client_name == 'nethermind'
+      when: execution_client_name == 'nethermind'
       shell: cp -r {{execution_node_dir}}/logs/. {{archived_logs_dir}}/execution/
     - name: Archive non-nethermind logs
-      when: not eth1_client_name == 'nethermind'
+      when: not execution_client_name == 'nethermind'
       shell: docker logs {{execution_container_name}} >& {{archived_logs_dir}}/beacon/docker_logs.txt
       args:
         executable: /bin/bash

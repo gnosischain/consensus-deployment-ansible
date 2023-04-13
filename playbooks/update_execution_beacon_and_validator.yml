@@ -26,11 +26,10 @@
 #        (testnet_type == 'prater' and eth2_client_name == 'prysm')
 
 #- import_playbook: tasks/init_geth_node.yml
-#  when: eth1_client_name == 'geth' or eth1_client_name == 'erigon'
+#  when: execution_client_name == 'geth' or execution_client_name == 'erigon'
 
 ## starts execution node docker container
 - import_playbook: tasks/start_execution_node.yml
-
 # starts the json rpc snooper
 #- import_playbook: tasks/start_snooper.yml
 

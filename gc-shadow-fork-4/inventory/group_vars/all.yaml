@@ -71,7 +71,7 @@ bootnode_enrs:
     "enr:-KG4QKL3TjHug7nPWtafzhUF71COSc345_DdGDQMOUvFBowpErLIkcQ734U_71JxpoGVO2gkekaM84uayq3Z8svgnZYDhGV0aDKQpfOfLwEAAG9aAAAAAAAAAIJpZIJ2NIJpcISLoqvGiXNlY3AyNTZrMaEDziIORbA1ui4z0JdtxzbVBlDz9yEHT4VDJnCFI9pjTRODdGNwgiMog3VkcIIjKA",
   ]
 
-eth1_bootnode_enode:
+execution_bootnode_enode:
   [
     "enode://eab52761e4e13c5c82529e1357ab83b2593fdcc0e2ea3fbec496c78f5ca8ab8fe1322aa89057472a281bd36fd2e0affac1b5078a09caaf56b63004b22881d873@139.144.54.187:30303",
     "enode://f4f406af11bf00a77ef7b1aaa505696d6567f3b77e72a189584676d71c1a849b6eac0bdb253f706107ebd49466f0c7d744dd8decab65513386d0384be8951f16@173.255.219.132:30303",
@@ -90,7 +90,7 @@ eth1_bootnode_enode:
 mining_addresses: []
 
 # Note: 0 is correct, but due to an underflow bug (being fixed), doesn't work.
-eth1_deposit_contract_first_block: 1
+execution_deposit_contract_first_block: 1
 # Block from which to start indexing. Set to a higher value for shadow-forks
 explorer_execution_first_block: 24096194
 
@@ -123,12 +123,12 @@ ethstats_host: "ethstats.gcmergedevnet0.ethdevops.io"
 ##############################################
 # ports to configure
 ##############################################
-eth1_rpc_port: 8545
-eth1_ws_rpc_port: 8546
-eth1_engine_port_no_auth: 8550
-eth1_engine_port: 8551
-eth1_engine_snoop_port: 8560
-eth1_engine_ws_port: 8552
+execution_rpc_port: 8545
+execution_ws_rpc_port: 8546
+execution_engine_port_no_auth: 8550
+execution_engine_port: 8551
+execution_engine_snoop_port: 8560
+execution_engine_ws_port: 8552
 nimbus_rpc_port: 4009
 beacon_api_port: 4000
 beacon_grpc_port: 4001
@@ -138,8 +138,8 @@ validator_metrics_port: 8001
 validator_rpc_port: 4002
 node_exporter_web_listen_address: "0.0.0.0:9100"
 prometheus_web_listen_address: "0.0.0.0:9090"
-eth1_metrics_port: 8002
-eth1_p2p_port: 30303
+execution_metrics_port: 8002
+execution_p2p_port: 30303
 eth_metrics_exporter_port: 8003
 cadvisor_port: 9280
 promtail_port: 9080
@@ -156,7 +156,7 @@ snoop_container_name: snooper
 ##############################################
 # name of the validator to display
 ##############################################
-graffiti: "{{eth2_client_name}}-{{eth1_client_name}}"
+graffiti: "{{eth2_client_name}}-{{execution_client_name}}"
 
 ##############################################
 # local data directories
@@ -168,7 +168,7 @@ local_forkmondata_host_archive: "{{inventory_dir}}/../forkmondata.tar.gz"
 local_custom_config_data_host_dir: "{{inventory_dir}}/../custom_config_data"
 local_custom_config_data_host_archive: "{{inventory_dir}}/../custom_config_data.tar.gz"
 local_eth2_config_filepath: "{{local_custom_config_data_host_dir}}/config.yaml"
-local_eth1_genesis_filepath: "{{local_custom_config_data_host_dir}}/nethermind_genesis.json"
+local_execution_genesis_filepath: "{{local_custom_config_data_host_dir}}/nethermind_genesis.json"
 local_mnemonics_filepath: "{{local_custom_config_data_host_dir}}/mnemonics.yaml"
 # private dirs
 # Validator assignments
@@ -215,16 +215,16 @@ firewall_allowed_tcp_ports:
   - 80
   - 443
   - 8080
-  - "{{eth1_p2p_port}}"
+  - "{{execution_p2p_port}}"
   - "{{beacon_p2p_port}}"
-  - "{{eth1_rpc_port}}"
-  - "{{eth1_metrics_port}}"
+  - "{{execution_rpc_port}}"
+  - "{{execution_metrics_port}}"
   - "{{explorer_execution_public_port}}"
   - "{{explorer_beacon_public_port}}"
   - "{{public_ethstats}}"
 
 firewall_allowed_udp_ports:
-  - "{{eth1_p2p_port}}"
+  - "{{execution_p2p_port}}"
   - "{{beacon_p2p_port}}"
 
 firewall_additional_rules:
