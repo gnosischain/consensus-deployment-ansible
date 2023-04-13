@@ -21,8 +21,8 @@ explorer_beacon_postgres_init_args: >
   -p {{explorer_beacon_postgres_port}}
   -U {{explorer_beacon_postgres_user}}
 
-explorer_beacon_config_host_path: "{{explorer_beacon_host_dir}}/eth2_config.yaml"
-explorer_beacon_config_cont_path: /data/eth2_config.yaml
+explorer_beacon_config_host_path: "{{explorer_beacon_host_dir}}/beacon_config.yaml"
+explorer_beacon_config_cont_path: /data/beacon_config.yaml
 explorer_beacon_volumes:
   - "{{explorer_beacon_host_dir}}:/data"
 explorer_beacon_start_args: "./explorer --config=/data/config.yaml"

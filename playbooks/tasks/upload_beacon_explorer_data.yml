@@ -10,7 +10,7 @@
     - name: Load config
       delegate_to: localhost
       set_fact:
-        eth2_config: "{{ lookup('file', local_eth2_config_filepath) | from_yaml }}"
+        beacon_config: "{{ lookup('file', local_beacon_config_filepath) | from_yaml }}"
 
     - name: Template config
       template:
@@ -26,5 +26,5 @@
         dest: "{{explorer_beacon_host_dir}}/tables.sql"
     - name: Copy eth2 config
       copy:
-        src: "{{local_eth2_config_filepath}}"
-        dest: "{{explorer_beacon_host_dir}}/eth2_config.yaml"
+        src: "{{local_beacon_config_filepath}}"
+        dest: "{{explorer_beacon_host_dir}}/beacon_config.yaml"

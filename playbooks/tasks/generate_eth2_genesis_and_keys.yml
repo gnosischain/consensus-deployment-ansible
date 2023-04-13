@@ -1,3 +1,3 @@
-# Run generate_eth2_genesis.yml as it validates the ranges
-- import_playbook: generate_eth2_genesis.yml
-- import_playbook: generate_eth2_keys.yml
+# Run generate_beacon_genesis.yml as it validates the ranges
+- import_playbook: generate_beacon_genesis.yml
+- import_playbook: generate_beacon_keys.yml
