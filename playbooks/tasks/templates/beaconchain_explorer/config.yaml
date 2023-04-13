@@ -46,7 +46,7 @@ indexer:
     port: {{beacon_api_port}} # GRPC port of the Prysm node
     type: "lighthouse" # can be either prysm or lighthouse
     pageSize: 100 # the amount of entries to fetch per paged rpc call, TODO set to 500
-  eth1Endpoint: "http://{{explorer_source_node_execution_ip_address}}:{{eth1_rpc_port}}"
+  eth1Endpoint: "http://{{explorer_source_node_execution_ip_address}}:{{execution_rpc_port}}"
   eth1DepositContractAddress: "{{eth2_config['DEPOSIT_CONTRACT_ADDRESS']}}"
   # Note: 0 is correct, but due to an underflow bug (being fixed), doesn't work.
-  eth1DepositContractFirstBlock: {{eth1_deposit_contract_first_block}}
+  eth1DepositContractFirstBlock: {{execution_deposit_contract_first_block}}

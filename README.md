@@ -39,7 +39,7 @@ consensus nodes.
 1. Clone this repository
 2. Ensure `ansible` is installed
 3. Make changes in the required variable, e.g: Change the `pithos-testnet/inventory/group_vars/eth1client_ethereumjs.yaml`
-   with the new docker image or the `eth1_start_args` for commands to run the container with
+   with the new docker image or the `execution_start_args` for commands to run the container with
 4. The `update_execution_beacon_and_validator.yml` will stop the execution, beacon and validator containers and restart them
    with the new configurations specified as variables. Please use the `limit=eth1/2_xxxx` flag to limit the playbook execution to just update
    the nodes you have access to (otherwise it won't change the config on the others, but will show a lot of errors).
@@ -165,7 +165,7 @@ ansible-playbook -i $network/inventory/inventory.ini playbooks/deploy_devnet_fro
 
 **3. Set bootnodes**
 
-Grab execution node's endoes with command below and paste some of them into `$network/inventory/group_vars/all.yaml` to act as bootnodes in variable `eth1_bootnode_enode`
+Grab execution node's endoes with command below and paste some of them into `$network/inventory/group_vars/all.yaml` to act as bootnodes in variable `execution_bootnode_enode`
 
 ```
 ansible-playbook -i $network/inventory/inventory.ini playbooks/tasks/collect_enodes.yml

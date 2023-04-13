@@ -1,11 +1,11 @@
-eth1_client_name: nethermind
-eth1_image_name: nethermindeth/nethermind:gnosis
-execution_endpoint: http://127.0.0.1:{{eth1_engine_snoop_port}}
-snoop_command: "./json_rpc_snoop -p {{eth1_engine_snoop_port}} http://127.0.0.1:{{eth1_engine_port}}"
+execution_client_name: nethermind
+execution_image_name: nethermindeth/nethermind:gnosis
+execution_endpoint: http://127.0.0.1:{{execution_engine_snoop_port}}
+snoop_command: "./json_rpc_snoop -p {{execution_engine_snoop_port}} http://127.0.0.1:{{execution_engine_port}}"
 
 home_dir: "/home/{{ansible_user}}"
 
-eth1_github_external_user_pubkeys:
+execution_github_external_user_pubkeys:
   - MarekM25
   - avalonche
   - DockBoss
@@ -14,39 +14,39 @@ eth1_github_external_user_pubkeys:
   - jmederosalvarado
   - cbermudez97
 
-eth1_memory: 5000M
-eth1_kernel_memory: 5500M
+execution_memory: 5000M
+execution_kernel_memory: 5500M
 
 # websocket with upgrade
 eth1endpoint_ws: http://127.0.0.1:8546
 
-eth1_volumes:
+execution_volumes:
   - "{{execution_node_dir}}:/eth1data"
   - "{{testnet_dir}}:/networkdata"
   - "{{home_dir}}/jwtsecret:/jwtsecret"
 
-eth1_start_args: >
+execution_start_args: >
   --config=chiado
   --datadir="/eth1data"
   --Init.WebSocketsEnabled=true
   --Init.DiagnosticMode="None"
   --JsonRpc.Enabled=true
   --JsonRpc.Host=0.0.0.0
-  --JsonRpc.Port={{eth1_rpc_port}}
-  --JsonRpc.EnginePort={{eth1_engine_port}}
-  --JsonRpc.WebSocketsPort={{eth1_ws_rpc_port}}
+  --JsonRpc.Port={{execution_rpc_port}}
+  --JsonRpc.EnginePort={{execution_engine_port}}
+  --JsonRpc.WebSocketsPort={{execution_ws_rpc_port}}
   --JsonRpc.JwtSecretFile=/jwtsecret
-  --JsonRpc.AdditionalRpcUrls="http://localhost:{{eth1_engine_port_no_auth}}|http;ws|net;eth;consensus;subscribe;web3;admin;txpool;debug;tracing;parity|no-auth"
+  --JsonRpc.AdditionalRpcUrls="http://localhost:{{execution_engine_port_no_auth}}|http;ws|net;eth;consensus;subscribe;web3;admin;txpool;debug;tracing;parity|no-auth"
   --Merge.Enabled=true
-  --Network.DiscoveryPort={{eth1_p2p_port}}
-  --Network.P2PPort={{eth1_p2p_port}}
-  --Network.Bootnodes="{{ eth1_bootnode_enode | join(',') }}"
-  --Discovery.Bootnodes="{{ eth1_bootnode_enode | join(',') }}"
+  --Network.DiscoveryPort={{execution_p2p_port}}
+  --Network.P2PPort={{execution_p2p_port}}
+  --Network.Bootnodes="{{ execution_bootnode_enode | join(',') }}"
+  --Discovery.Bootnodes="{{ execution_bootnode_enode | join(',') }}"
   --EthStats.Enabled={{ethstats_nethermind_enabled}}
   --EthStats.Name={{inventory_hostname}}
   --EthStats.Secret={{ethstats_password}}
   --EthStats.Server=wss://{{ethstats_host}}/api/
-  --Metrics.ExposePort={{eth1_metrics_port}}
+  --Metrics.ExposePort={{execution_metrics_port}}
   --Metrics.Enabled=true
   --Metrics.NodeName={{inventory_hostname}}
   --Metrics.PushGatewayUrl="{{nethermind_push_gateway_url}}"
@@ -77,4 +77,4 @@ eth1_start_args: >
   {% endif %}
 
 # run as root, the nethermind image doesn't handle running regular user well
-eth1_user_id: "0:0"
+execution_user_id: "0:0"

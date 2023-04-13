@@ -7,8 +7,8 @@ global:
 {% if eth2_client_name is defined %}
     consensus_client: "{{ eth2_client_name }}"
 {% endif %}
-{% if eth1_client_name is defined %}
-    execution_client: "{{ eth1_client_name }}"
+{% if execution_client_name is defined %}
+    execution_client: "{{ execution_client_name }}"
 {% endif %}
     instance: "{{ inventory_hostname }}"
     testnet: "{{ eth2_network_name }}"
@@ -77,10 +77,10 @@ scrape_configs:
 
 {% endif %}
 
-{% if eth1_client_name is defined %}
+{% if execution_client_name is defined %}
 
   - job_name: execution_node
-{% if eth1_client_name == "geth" or eth1_client_name == "erigon" %}
+{% if execution_client_name == "geth" or execution_client_name == "erigon" %}
     metrics_path: /debug/metrics/prometheus
 {% endif %}
     static_configs:
@@ -88,7 +88,7 @@ scrape_configs:
         instance: "{{ inventory_hostname }}"
         scrape_location: execution
       targets:
-      - localhost:{{ eth1_metrics_port }}
+      - localhost:{{ execution_metrics_port }}
 
 {% endif %}
 

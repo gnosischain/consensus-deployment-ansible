@@ -67,7 +67,7 @@ beacon_start_args: >
   --enable-debug-rpc-endpoints
   --jwt-secret=/jwtsecret
   --suggested-fee-recipient={{fee_recipient}}
-  --contract-deployment-block={{eth1_deposit_contract_first_block}}
+  --contract-deployment-block={{execution_deposit_contract_first_block}}
   --grpc-max-msg-size 153877500
 
 # --grpc-max-msg-size 153877500 required to poll indexes on more than 2.5k keys

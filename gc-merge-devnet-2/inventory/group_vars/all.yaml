@@ -50,7 +50,7 @@ bootnode_enrs:
     "enr:-Ly4QLOAaiVxnbi0rtux0vm7Z_A9Q0xz1NqLqHGcct3xqSO0eW4KJhtWPt7KFUfx7ZT3dsoZPOJSyzrggKDJrk4jZpQBh2F0dG5ldHOIAAAAAAAAAACEZXRoMpAqoHgYIQAQKQEAAAAAAAAAgmlkgnY0gmlwhKRcRjuJc2VjcDI1NmsxoQNxTiMrqZDnZnARRbiF8laTm-L20xcsA6ewNKXPQP-4xohzeW5jbmV0cwCDdGNwgiMog3VkcIIjKA",
   ]
 
-eth1_bootnode_enode:
+execution_bootnode_enode:
   [
     "enode://8cf9911df4cca9a15b8dbbca8ad5642083cf17645bb83b98962f5b3865ef7772d2f9b1305c0a9d2c811211cbc8babf0f08342b1a182d0b126cbacbfefee5d3fa@137.184.184.250:30303",
     "enode://f9b704067670b4594f68731cbb447cd79ed9c41b5c0228c92929ca93d1b195e4330dc19c66aa88c2e8e39be29fa818456d783ea7eb3ea078d7e89391d42f54eb@137.184.125.112:30303",
@@ -63,7 +63,7 @@ mining_addresses:
   - "0x1258c99E6a9F61bB29264966B45972C4C428A48F"
 
 # Note: 0 is correct, but due to an underflow bug (being fixed), doesn't work.
-eth1_deposit_contract_first_block: 1
+execution_deposit_contract_first_block: 1
 
 ##############################################
 # metric information
@@ -87,12 +87,12 @@ ethstats_host: "ethstats.gcmergedevnet0.ethdevops.io"
 ##############################################
 # ports to configure
 ##############################################
-eth1_rpc_port: 8545
-eth1_ws_rpc_port: 8546
-eth1_engine_port_no_auth: 8550
-eth1_engine_port: 8551
-eth1_engine_snoop_port: 8560
-eth1_engine_ws_port: 8552
+execution_rpc_port: 8545
+execution_ws_rpc_port: 8546
+execution_engine_port_no_auth: 8550
+execution_engine_port: 8551
+execution_engine_snoop_port: 8560
+execution_engine_ws_port: 8552
 nimbus_rpc_port: 4009
 beacon_api_port: 4000
 beacon_grpc_port: 4001
@@ -102,7 +102,7 @@ validator_metrics_port: 8001
 validator_rpc_port: 4002
 node_exporter_web_listen_address: "0.0.0.0:9100"
 prometheus_web_listen_address: "0.0.0.0:9090"
-eth1_metrics_port: 8002
+execution_metrics_port: 8002
 eth_metrics_exporter_port: 8003
 cadvisor_port: 9280
 promtail_port: 9080
@@ -116,7 +116,7 @@ snoop_container_name: snooper
 ##############################################
 # name of the validator to display
 ##############################################
-graffiti: "{{eth2_client_name}}-{{eth1_client_name}}"
+graffiti: "{{eth2_client_name}}-{{execution_client_name}}"
 
 ##############################################
 # local data directories
@@ -128,7 +128,7 @@ local_forkmondata_host_archive: "{{inventory_dir}}/../forkmondata.tar.gz"
 local_custom_config_data_host_dir: "{{inventory_dir}}/../custom_config_data"
 local_custom_config_data_host_archive: "{{inventory_dir}}/../custom_config_data.tar.gz"
 local_eth2_config_filepath: "{{local_custom_config_data_host_dir}}/config.yaml"
-local_eth1_genesis_filepath: "{{local_custom_config_data_host_dir}}/nethermind_genesis.json"
+local_execution_genesis_filepath: "{{local_custom_config_data_host_dir}}/nethermind_genesis.json"
 local_mnemonics_filepath: "{{local_custom_config_data_host_dir}}/mnemonics.yaml"
 # private dirs
 # Validator assignments
