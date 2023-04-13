@@ -10,7 +10,7 @@ execution_explorer_image_name: "skylenet/blockscout:v4.0.0-beta"
 explorer_first_block: 1
 explorer_execution_source_hostname: "merge-devnet-1-ethx-explorer-lighthouse-nethermind-1"
 explorer_execution_source_ip_address: "{{hostvars[explorer_execution_source_hostname].ansible_host}}"
-explorer_eth2_source_ip_address: "{{explorer_execution_source_ip_address}}"
+explorer_beacon_source_ip_address: "{{explorer_execution_source_ip_address}}"
 
 explorer_postgres_container_name: postgres
 explorer_postgres_image_name: "postgres:12.0"
@@ -45,8 +45,8 @@ execution_explorer_genesis_cont_path: /data/genesis.json
 execution_explorer_volumes:
   - "{{explorer_host_dir}}:/data"
 
-beacon_explorer_config_host_path: "{{explorer_host_dir}}/eth2_config.yaml"
-beacon_explorer_config_cont_path: /data/eth2_config.yaml
+beacon_explorer_config_host_path: "{{explorer_host_dir}}/beacon_config.yaml"
+beacon_explorer_config_cont_path: /data/beacon_config.yaml
 beacon_explorer_volumes:
   - "{{explorer_host_dir}}:/data"
 

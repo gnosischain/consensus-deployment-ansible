@@ -255,7 +255,7 @@ denver-lighthouse-nethermind-11 | CHANGED | rc=0 >>
 # How to shadow-fork
 
 - Pick a TTD value at some time in the future. Set in `gc-shadow-fork-3/custom_config_data/config.yaml:17` and `gc-shadow-fork-3/inventory/group_vars/all.yaml:66`. Must allow enough time for nodes to sync mainnet.
-- Change `eth2_network_name` value
+- Change `beacon_network_name` value
 
 # Tricks + suggestions
 

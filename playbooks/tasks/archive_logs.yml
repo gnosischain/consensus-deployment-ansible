@@ -7,10 +7,10 @@
         path: "{{archived_logs_dir}}/beacon"
         state: directory
     - name: Archive lodestar logs
-      when: eth2_client_name == 'lodestar'
+      when: beacon_client_name == 'lodestar'
       shell: cp -r {{beacon_node_dir}}/beacon*.log {{archived_logs_dir}}/beacon/
     - name: Archive non-lodestar logs
-      when: not eth2_client_name == 'lodestar'
+      when: not beacon_client_name == 'lodestar'
       shell: docker logs {{beacon_container_name}} >& {{archived_logs_dir}}/beacon/docker_logs.txt
       args:
         executable: /bin/bash

@@ -667,8 +667,8 @@ CREATE TABLE stats_process (
                                client_version		 	character varying(25)	 	not null,
                                client_build		 	int 				not null,
 
-                               sync_eth2_fallback_configured  bool 				not null,
-                               sync_eth2_fallback_connected 	bool	 			not null,
+                               sync_beacon_fallback_configured  bool 				not null,
+                               sync_beacon_fallback_connected 	bool	 			not null,
 
                                meta_id 	 		bigint    			not null,
 
@@ -685,7 +685,7 @@ CREATE TABLE stats_add_beaconnode (
                                       network_libp2p_bytes_total_transmit  	bigint	 		not null,
                                       network_peers_connected 		int	 		not null,
                                       sync_eth1_connected	 		bool	 		not null,
-                                      sync_eth2_synced 			bool	 		not null,
+                                      sync_beacon_synced 			bool	 		not null,
                                       sync_beacon_head_slot	 		bigint	 		not null,
                                       sync_eth1_fallback_configured  bool	 			not null,
                                       sync_eth1_fallback_connected 	bool	 			not null,

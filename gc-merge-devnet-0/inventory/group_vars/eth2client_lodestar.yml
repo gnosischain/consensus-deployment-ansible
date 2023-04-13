@@ -1,14 +1,14 @@
 ##############################################
 # image name and image location
 ##############################################
-eth2_client_name: lodestar
+beacon_client_name: lodestar
 
 # TODO: switch to merge f2f, but mainnet preset
 beacon_image_name: chainsafe/lodestar@sha256:dec9f1cabcb11cc11f1399236099a1b27ced084781b8ec266e14502b6a7486b1
 validator_image_name: chainsafe/lodestar@sha256:dec9f1cabcb11cc11f1399236099a1b27ced084781b8ec266e14502b6a7486b1
 beacon_endpoint: "http://127.0.0.1:{{beacon_api_port}}"
 
-eth2_github_external_user_pubkeys:
+beacon_github_external_user_pubkeys:
   - dapplion
   - wemeetagain
   - tuyennhv

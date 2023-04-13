@@ -7,20 +7,20 @@ database:
   password: "{{explorer_beacon_postgres_password}}"
 # Chain network configuration
 chain:
-  slotsPerEpoch: {{eth2_config['SLOTS_PER_EPOCH']}}
-  secondsPerSlot: {{eth2_config['SECONDS_PER_SLOT']}}
-  minGenesisActiveValidatorCount: {{eth2_config['MIN_GENESIS_ACTIVE_VALIDATOR_COUNT']}}
-  genesisTimestamp: {{ eth2_config['MIN_GENESIS_TIME']|int + eth2_config['GENESIS_DELAY']|int }}
+  slotsPerEpoch: {{beacon_config['SLOTS_PER_EPOCH']}}
+  secondsPerSlot: {{beacon_config['SECONDS_PER_SLOT']}}
+  minGenesisActiveValidatorCount: {{beacon_config['MIN_GENESIS_ACTIVE_VALIDATOR_COUNT']}}
+  genesisTimestamp: {{ beacon_config['MIN_GENESIS_TIME']|int + beacon_config['GENESIS_DELAY']|int }}
   mainnet: false # hide mainnet staking pool etc. info
   phase0path: "{{explorer_beacon_config_cont_path}}"
-  altairForkEpoch: {{eth2_config['ALTAIR_FORK_EPOCH']}}
+  altairForkEpoch: {{beacon_config['ALTAIR_FORK_EPOCH']}}
 # Note: It is possible to run either the frontend or the indexer or both at the same time
 # Frontend config
 frontend:
   enabled: true # Enable or disable to web frontend
   imprint: "./imprint.html" # Path to the imprint page content
-  siteName: "{{eth2_network_name}}" # Name of the site, displayed in the title tag
-  siteSubtitle: "{{eth2_network_name}}" # Subtitle shown on the main page
+  siteName: "{{beacon_network_name}}" # Name of the site, displayed in the title tag
+  siteSubtitle: "{{beacon_network_name}}" # Subtitle shown on the main page
   csrfAuthKey: "0123456789abcdef000000000000000000000000000000000000000000000000"
   jwtSigningSecret: "0123456789abcdef000000000000000000000000000000000000000000000000"
   jwtIssuer: "localblockexplorer"
@@ -47,6 +47,6 @@ indexer:
     type: "lighthouse" # can be either prysm or lighthouse
     pageSize: 100 # the amount of entries to fetch per paged rpc call, TODO set to 500
   eth1Endpoint: "http://{{explorer_source_node_execution_ip_address}}:{{execution_rpc_port}}"
-  eth1DepositContractAddress: "{{eth2_config['DEPOSIT_CONTRACT_ADDRESS']}}"
+  eth1DepositContractAddress: "{{beacon_config['DEPOSIT_CONTRACT_ADDRESS']}}"
   # Note: 0 is correct, but due to an underflow bug (being fixed), doesn't work.
   eth1DepositContractFirstBlock: {{execution_deposit_contract_first_block}}

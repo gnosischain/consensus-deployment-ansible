@@ -34,8 +34,8 @@ beacon_api_endpoint: "http://127.0.0.1:{{beacon_api_port}}"
 # testnet specific information
 ##############################################
 testnet_type: custom
-eth2_network_name: gc-merge-devnet-1
-eth2_network_name_pretty: GC merge devnet 1
+beacon_network_name: gc-merge-devnet-1
+beacon_network_name_pretty: GC merge devnet 1
 chainID: 1
 # 0xfffffffffffffffffffffffffffffffe difficulty / block
 # 735009912549227081080889152052619336740640 = 2160 blocks = 10800 seconds = 3 hours
@@ -81,7 +81,7 @@ prometheus_config_file: "prometheus/prometheus.yml.j2"
 remote_write_enabled: true
 prometheus_enabled: true
 remote_write_auth: true
-eth2_validator_metrics_enabled: true
+beacon_validator_metrics_enabled: true
 eth_metrics_exporter_enabled: true
 eth_metrics_exporter_name: "metrics-exporter"
 eth_metrics_exporter_image: samcm/ethereum-metrics-exporter:0.11.0
@@ -119,7 +119,7 @@ snoop_container_name: snooper
 ##############################################
 # name of the validator to display
 ##############################################
-graffiti: "{{eth2_client_name}}-{{execution_client_name}}"
+graffiti: "{{beacon_client_name}}-{{execution_client_name}}"
 
 ##############################################
 # local data directories
@@ -130,7 +130,7 @@ local_forkmondata_host_dir: "{{inventory_dir}}/../forkmondata"
 local_forkmondata_host_archive: "{{inventory_dir}}/../forkmondata.tar.gz"
 local_custom_config_data_host_dir: "{{inventory_dir}}/../custom_config_data"
 local_custom_config_data_host_archive: "{{inventory_dir}}/../custom_config_data.tar.gz"
-local_eth2_config_filepath: "{{local_custom_config_data_host_dir}}/config.yaml"
+local_beacon_config_filepath: "{{local_custom_config_data_host_dir}}/config.yaml"
 local_execution_genesis_filepath: "{{local_custom_config_data_host_dir}}/nethermind_genesis.json"
 local_mnemonics_filepath: "{{local_custom_config_data_host_dir}}/mnemonics.yaml"
 # private dirs

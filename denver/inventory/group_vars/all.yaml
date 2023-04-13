@@ -44,11 +44,11 @@ beacon_api_endpoint: "http://127.0.0.1:{{beacon_api_port}}"
 # testnet specific information
 ##############################################
 testnet_type: custom
-eth2_network_name: denver
+beacon_network_name: denver
 chainID: 100101
 
 # To allow using the deposit contract
-eth2_genesis_eth1data_blockhash: "0x203e164cf3b6f6765abf2f0355a4d09e5eaf6a777243bc4407b569431cd95cb3"
+beacon_genesis_eth1data_blockhash: "0x203e164cf3b6f6765abf2f0355a4d09e5eaf6a777243bc4407b569431cd95cb3"
 
 # 0xfffffffffffffffffffffffffffffffe difficulty / block
 # 735009912549227081080889152052619336740640 = 2160 blocks = 10800 seconds = 3 hours
@@ -139,7 +139,7 @@ remote_write_auth: true
 cadvisor_enabled: true
 promtail_enabled: true
 promtail_loki_server_url: "https://136217:{{loki_pusher_api_key}}@logs-prod-us-central1.grafana.net/loki/api/v1/push"
-eth2_validator_metrics_enabled: true
+beacon_validator_metrics_enabled: true
 eth_metrics_exporter_enabled: true
 eth_metrics_exporter_name: "metrics-exporter"
 eth_metrics_exporter_image: samcm/ethereum-metrics-exporter:0.11.0
@@ -195,7 +195,7 @@ snoop_container_name: snooper
 ##############################################
 # name of the validator to display
 ##############################################
-graffiti: "{{eth2_client_name}}-{{execution_client_name}}"
+graffiti: "{{beacon_client_name}}-{{execution_client_name}}"
 
 ##############################################
 # local data directories
@@ -206,7 +206,7 @@ local_forkmondata_host_dir: "{{inventory_dir}}/../forkmondata"
 local_forkmondata_host_archive: "{{inventory_dir}}/../forkmondata.tar.gz"
 local_custom_config_data_host_dir: "{{inventory_dir}}/../custom_config_data"
 local_custom_config_data_host_archive: "{{inventory_dir}}/../custom_config_data.tar.gz"
-local_eth2_config_filepath: "{{local_custom_config_data_host_dir}}/config.yaml"
+local_beacon_config_filepath: "{{local_custom_config_data_host_dir}}/config.yaml"
 local_execution_genesis_filepath: "{{local_custom_config_data_host_dir}}/nethermind_genesis.json"
 local_mnemonics_filepath: "{{local_custom_config_data_host_dir}}/mnemonics.yaml"
 # private dirs
