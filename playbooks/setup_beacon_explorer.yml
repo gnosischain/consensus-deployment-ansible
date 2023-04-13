@@ -1,0 +1,119 @@
+- name: Upload beacon explorer data
+  hosts: beacon_explorer
+  gather_facts: false
+  tasks:
+    - name: Creates explorer dir
+      file:
+        path: "{{beacon_explorer_host_dir}}"
+        state: directory
+
+    - name: Template config
+      template:
+        src: "./templates/beacon_explorer/config.yaml"
+        dest: "{{beacon_explorer_host_dir}}/config.yaml"
+    - name: Copy imprint.html
+      copy:
+        src: "./templates/beacon_explorer/imprint.html"
+        dest: "{{beacon_explorer_host_dir}}/imprint.html"
+    - name: Copy tables.sql
+      copy:
+        src: "./templates/beacon_explorer/tables.sql"
+        dest: "{{beacon_explorer_host_dir}}/tables.sql"
+    - name: Copy eth2 config
+      copy:
+        src: "{{local_eth2_config_filepath}}"
+        dest: "{{beacon_explorer_host_dir}}/eth2_config.yaml"
+
+- name: Start beacon explorer postgres db
+  hosts: beacon_explorer
+  gather_facts: false
+  tasks:
+    - name: Create postgres storage dir
+      file:
+        path: "{{beacon_explorer_postgres_host_dir}}"
+        state: directory
+
+    - name: Start Postgres database
+      docker_container:
+        name: "{{ beacon_explorer_postgres_container_name }}"
+        state: started
+        image: "{{ beacon_explorer_postgres_image_name }}"
+        pull: true
+        restart_policy: unless-stopped
+        network_mode: host
+        expose:
+          - "{{beacon_explorer_postgres_port}}"
+        restart: "{{ beacon_explorer_postgres_require_restart | default(false) }}"
+        memory: "{{beacon_explorer_postgres_memory}}"
+        command: "{{ beacon_explorer_postgres_start_args }}"
+        volumes: "{{beacon_explorer_postgres_volumes}}"
+        env:
+          POSTGRES_PASSWORD: "{{ beacon_explorer_postgres_password }}"
+          POSTGRES_USER: postgres
+          POSTGRES_PORT: "{{beacon_explorer_postgres_port}}"
+          POSTGRES_DB: db
+          PGDATA: "/postgresql/data"
+        log_options: "{{ common_log_options }}"
+        log_driver: "{{ common_log_driver }}"
+
+- name: Init explorer sql tables
+  hosts: beacon_explorer
+  gather_facts: false
+  tasks:
+    - name: Sleep for 15 seconds and continue with play
+      wait_for:
+        timeout: 15
+      delegate_to: localhost
+    - name: Run psql table creation
+      docker_container:
+        name: "postgres_tmp"
+        state: started
+        image: "{{ beacon_explorer_postgres_image_name }}"
+        pull: true
+        restart_policy: no
+        auto_remove: false
+        detach: no
+        network_mode: host
+        volumes: "{{ beacon_explorer_postgres_init_volumes }}"
+        command: "{{ beacon_explorer_postgres_init_args }}"
+        env:
+          PGPASSWORD: "{{ beacon_explorer_postgres_password }}"
+        log_options: "{{ common_log_options }}"
+        log_driver: "{{ common_log_driver }}"
+
+- name: Start beacon explorer statistics
+  hosts: beacon_explorer
+  gather_facts: false
+  tasks:
+    - name: Start beacon explorer statistics
+      docker_container:
+        name: "{{ beacon_explorer_stats_container_name }}"
+        state: started
+        image: "{{ beacon_explorer_image_name }}"
+        pull: true
+        restart_policy: unless-stopped
+        network_mode: host
+        restart: "{{ beacon_explorer_stats_require_restart | default(false) }}"
+        command: "{{ beacon_explorer_stats_start_args }}"
+        volumes: "{{beacon_explorer_stats_volumes}}"
+        log_options: "{{ common_log_options }}"
+        log_driver: "{{ common_log_driver }}"
+
+- name: Start beacon explorer
+  hosts: beacon_explorer
+  gather_facts: false
+  tasks:
+    - name: Start beacon explorer
+      docker_container:
+        name: "{{ beacon_explorer_container_name }}"
+        state: started
+        image: "{{ beacon_explorer_image_name }}"
+        pull: true
+        restart_policy: unless-stopped
+        network_mode: host
+        restart: "{{ explorer_require_restart | default(false) }}"
+        memory: "{{ beacon_explorer_memory }}"
+        command: "{{ beacon_explorer_start_args }}"
+        volumes: "{{beacon_explorer_volumes}}"
+        log_options: "{{ common_log_options }}"
+        log_driver: "{{ common_log_driver }}"

@@ -1,0 +1,71 @@
+- name: Upload execution explorer data
+  hosts: execution_explorer
+  gather_facts: true
+  tasks:
+    - name: Creates explorer dir
+      file:
+        path: "{{execution_explorer_host_dir}}"
+        state: directory
+    - name: Move the execution explorer config j2 template to remote
+      template:
+        src: execution_explorer/blockscout.env.j2
+        dest: "{{execution_explorer_host_dir}}/blockscout.env"
+        mode: "755"
+    # Note: explicitly copying the file instead of relying on uploading the entire custom_config_data tar
+    # ensures that the playbook errors if paths are not correct.
+    - name: Copy genesis JSON file
+      copy:
+        src: "{{local_execution_genesis_filepath}}"
+        dest: "{{execution_explorer_genesis_host_path}}"
+
+- name: Start execution explorer postgres db
+  hosts: execution_explorer
+  gather_facts: false
+  tasks:
+    - name: Create postgres storage dir
+      file:
+        path: "{{execution_explorer_postgres_host_dir}}"
+        state: directory
+
+    - name: Start Postgres database
+      docker_container:
+        name: "{{ execution_explorer_postgres_container_name }}"
+        state: started
+        image: "{{ execution_explorer_postgres_image_name }}"
+        pull: true
+        restart_policy: unless-stopped
+        network_mode: host
+        expose:
+          - "{{execution_explorer_postgres_port}}"
+        restart: "{{ execution_explorer_postgres_require_restart | default(false) }}"
+        memory: "{{execution_explorer_postgres_memory}}"
+        command: "{{ execution_explorer_postgres_start_args }}"
+        volumes: "{{execution_explorer_postgres_volumes}}"
+        env:
+          POSTGRES_PASSWORD: "{{ execution_explorer_postgres_password }}"
+          POSTGRES_USER: postgres
+          POSTGRES_PORT: "{{execution_explorer_postgres_port}}"
+          POSTGRES_DB: db
+          PGDATA: "/postgresql/data"
+        log_options: "{{ common_log_options }}"
+        log_driver: "{{ common_log_driver }}"
+
+- name: Start execution explorer
+  hosts: execution_explorer
+  gather_facts: false
+  tasks:
+    - name: Start execution explorer
+      docker_container:
+        name: "{{ execution_explorer_container_name }}"
+        state: started
+        image: "{{ execution_explorer_image_name }}"
+        pull: true
+        restart_policy: unless-stopped
+        network_mode: host
+        restart: "{{ explorer_require_restart | default(false) }}"
+        memory: "{{ execution_explorer_memory }}"
+        command: "{{ execution_explorer_start_args }}"
+        volumes: "{{ execution_explorer_volumes }}"
+        env_file: "{{execution_explorer_host_dir}}/blockscout.env"
+        log_options: "{{ common_log_options }}"
+        log_driver: "{{ common_log_driver }}"

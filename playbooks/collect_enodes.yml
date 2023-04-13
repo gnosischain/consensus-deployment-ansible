@@ -1,0 +1,31 @@
+- name: Collect enodes
+  hosts: bootnode_execution
+  gather_facts: false
+  tasks:
+    - name: Get enode from logs
+      shell: >
+        {%if inventory_hostname in groups['eth1client_openethereum'] %}
+        curl http://localhost:{{execution_rpc_port}} -X POST -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"parity_enode","params":[],"id":1}'
+        {% else %}
+        curl http://localhost:{{execution_rpc_port}} -X POST -H "Content-Type: application/json" -d '{"jsonrpc":"2.0","method":"net_localEnode","params":[],"id":1}'
+        {% endif %}
+      register: parity_enode_result
+    - name: Set host enode
+      set_fact:
+        execution_enode: "{{ (parity_enode_result.stdout | from_json)['result'] }}"
+        inventory_dir: "{{ inventory_dir }}"
+- name: Write enodes
+  hosts: localhost
+  gather_facts: true
+  tasks:
+    - name: Create a map with all node's enodes
+      when: groups.bootnode_execution is defined
+      with_items: "{{ groups['bootnode_execution'] }}"
+      set_fact:
+        execution_enodes: "{{ execution_enodes | default({}) | combine( {item: hostvars[item]['execution_enode']} ) }}"
+        inventory_dirs: "{{ inventory_dirs | default([]) | union([hostvars[item]['inventory_dir']]) }}"
+    - name: Write enodes
+      with_items: "{{ inventory_dirs }}"
+      copy:
+        content: "{{ execution_enodes | to_nice_json }}"
+        dest: "{{ item }}/data/bootnodes-execution.json"

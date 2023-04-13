@@ -1,0 +1,40 @@
+---
+- name: Start txfuzz
+  hosts: txfuzz:&execution
+  gather_facts: false
+  tasks:
+    - name: Log txfuzz account balance
+      when: txfuzzer_keyi is defined
+      block:
+        - shell: curl -X POST --data '{"jsonrpc":"2.0","method":"eth_getBalance","params":["{{ txfuzz_data[txfuzzer_keyi].address }}", "latest"], "id":0}' http://localhost:{{execution_rpc_port}}
+          register: result
+        - debug:
+            msg: "{{ result.stdout }}"
+
+    - name: Clone txfuzz repository
+      when: txfuzzer_keyi is defined
+      git:
+        dest: "{{ home_dir }}/txfuzz"
+        repo: "https://github.com/{{ txfuzz_gh_repo }}"
+        version: "{{ txfuzz_git_ref | default('master') }}"
+
+    - name: Stop and delete txfuzz
+      docker_container:
+        name: "{{ txfuzz_container_name }}"
+        state: absent
+
+    - name: Start txfuzz
+      when: txfuzzer_keyi is defined
+      docker_container:
+        name: "{{ txfuzz_container_name }}"
+        state: started
+        image: "{{ txfuzz_image_name }}"
+        restart_policy: unless-stopped
+        network_mode: host
+        volumes:
+          - "{{ home_dir }}/execution/rpc.sock:/rpc.sock"
+          - "{{ home_dir }}/txfuzz:/txfuzz"
+        working_dir: "/txfuzz"
+        command: "{{ txfuzz_command }}"
+        log_options: "{{ common_log_options }}"
+        log_driver: "{{ common_log_driver }}"

@@ -1,0 +1,42 @@
+---
+- name: Start validator node
+  hosts: validator:!eth2client_teku:!eth2client_nimbus
+  gather_facts: false
+  tasks:
+    - name: Stop validator node container
+      when: wipe | default(false)
+      community.docker.docker_container:
+        name: "{{ validator_container_name }}"
+        state: absent
+    - name: Delete validator node datadir
+      when: wipe | default(false)
+      file:
+        path: "{{ validator_node_dir }}"
+        state: absent
+    - name: Creates validator data dir
+      file:
+        path: "{{validator_node_dir}}"
+        state: directory
+    - name: Modify permissions to match user-group inside docker image
+      file:
+        path: "{{validator_node_dir}}"
+        group: "{{validator_user_id.split(':')[0]}}"
+        owner: "{{validator_user_id.split(':')[1]}}"
+        recurse: true
+      become: true
+    - name: Start validator node container
+      community.docker.docker_container:
+        name: "{{ validator_container_name }}"
+        state: started
+        image: "{{ validator_image_name }}"
+        pull: true
+        stop_timeout: 90
+        restart_policy: unless-stopped
+        network_mode: host
+        restart: "{{ validator_require_restart | default(false) }}"
+        volumes: "{{ validator_volumes }}"
+        command: "{{ validator_start_args }}"
+        log_options: "{{ loki_log_options }}"
+        log_driver: "{{ loki_log_driver }}"
+        env: "{{ validator_env | default({}) }}"
+        user: "{{ validator_user_id }}"

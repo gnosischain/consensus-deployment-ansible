@@ -11,9 +11,10 @@
         restart_policy: unless-stopped
         network_mode: bridge
         published_ports:
-          - "{{ public_ethstats }}:{{ public_ethstats }}" # just the container port exposed within the host, for the nginx setup
+          - "{{ ethstats_port }}:{{ ethstats_port }}"
         env:
           WS_SECRET: "{{ ethstats_secret }}"
           NODE_OPTIONS: "--max-old-space-size=4096"
+          PORT: "{{ ethstats_port }}"
         log_options: "{{ common_log_options }}"
         log_driver: "{{ common_log_driver }}"

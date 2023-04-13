@@ -1,0 +1,72 @@
+{% raw %}
+import os
+from prometheus_client import CollectorRegistry, Gauge, write_to_textfile
+{% endraw %}
+
+EXECUTION_DATADIR = "{{execution_node_dir}}"
+NETH_DIR = os.path.join(EXECUTION_DATADIR, "db")
+BEACON_DATADIR = "{{beacon_node_dir}}"
+VALIDATOR_DATADIR = "{{validator_node_dir}}"
+EXPORT_PATH = "{{prometheus_node_exporter_data_host_dir}}"
+
+{% raw %}
+def get_dir_size(path):
+    total = 0
+    with os.scandir(path) as it:
+        for entry in it:
+            if entry.is_file():
+                total += entry.stat().st_size
+            elif entry.is_dir():
+                total += get_dir_size(entry.path)
+    return total
+
+
+def update_size_bytes(path, gauge):
+    if os.path.exists(path) and os.path.isdir(path):
+        gauge.set(get_dir_size(path))
+    else:
+        gauge.set(0)
+
+
+registry = CollectorRegistry()
+
+execution_data_dir_size = Gauge(
+    "node_execution_data_directory_size_bytes",
+    "Execution data directory size in bytes",
+    registry=registry,
+)
+update_size_bytes(EXECUTION_DATADIR, execution_data_dir_size)
+
+# Collect NethermindDB state directory size
+if os.path.exists(NETH_DIR) and os.path.isdir(NETH_DIR):
+    state_dir_size = Gauge(
+        "node_nethermind_db_state_size_bytes",
+        "NethermindDB state directory size in bytes",
+        registry=registry,
+        labelnames=["nethermind_db_state"],
+    )
+    for state_folder in os.listdir(os.path.join(NETH_DIR, "state")):
+        state_path = os.path.join(NETH_DIR, "state", state_folder)
+        if not os.path.isdir(state_path):
+            continue
+        update_size_bytes(state_path, state_dir_size.labels(state_folder))
+
+beacon_data_dir_size = Gauge(
+    "node_beacon_data_directory_size_bytes",
+    "Beacon data directory size in bytes",
+    registry=registry,
+)
+update_size_bytes(BEACON_DATADIR, beacon_data_dir_size)
+
+validator_data_dir_size = Gauge(
+    "node_validator_data_directory_size_bytes",
+    "Validator data directory size in bytes",
+    registry=registry,
+)
+update_size_bytes(VALIDATOR_DATADIR, validator_data_dir_size)
+
+write_to_textfile(
+    os.path.join(EXPORT_PATH, "node_exporter_collector.prom"),
+    registry,
+)
+{% endraw %}

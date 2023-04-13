@@ -1,0 +1,51 @@
+- name: Setup grafana
+  hosts: grafana
+  gather_facts: true
+  tasks:
+    - name: Create grafana dir
+      file:
+        path: "{{grafana_host_dir}}"
+        state: directory
+    - name: Create grafana data dir with permissions
+      file:
+        path: "{{grafana_data_host_dir}}"
+        state: directory
+        mode: '777'
+    - name: Create grafana provisioning dirs
+      with_items: "{{grafana_provisioning_dirs}}"
+      file:
+        path: "{{item}}"
+        state: directory
+    - name: Upload grafana config file
+      template:
+        src: grafana/config.ini.j2
+        dest: "{{grafana_host_dir}}/config.ini"
+        mode: '755'
+    - name: Upload grafana datasources file
+      template:
+        src: grafana/datasources/datasources.yml.j2
+        dest: "{{grafana_datasources_host_dir}}/datasources.yml"
+        mode: '755'
+    - name: Upload contact points
+      template:
+        src: grafana/alerting/contacts.yml.j2
+        dest: "{{grafana_alerting_host_dir}}/contacts.yml"
+        mode: '755'
+    - name: Upload dashboards
+      copy:
+        src: "./templates/grafana/dashboards/"
+        dest: "{{grafana_dashboards_host_dir}}"
+    - name: Start grafana container
+      docker_container:
+        name: "{{grafana_container_name}}"
+        state: started
+        image: "{{grafana_image_name}}"
+        pull: true
+        restart_policy: unless-stopped
+        network_mode: host 
+        restart: "{{grafana_require_restart | default(false)}}"
+        memory: "{{grafana_memory}}"
+        command: "{{grafana_start_args}}"
+        volumes: "{{grafana_volumes}}"
+        log_options: "{{common_log_options}}"
+        log_driver: "{{common_log_driver}}"

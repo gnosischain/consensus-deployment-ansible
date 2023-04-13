@@ -1,0 +1,4 @@
+Groups,Label,Tags,Hostname/IP,Protocol,Port
+{% for host in groups['all']%}
+,{{hostvars[host].inventory_hostname}},,{{hostvars[host].ansible_host}},ssh,
+{% endfor %}
