@@ -1,0 +1,19 @@
+prometheus_memory: 3000m
+prometheus_image_name: "prom/prometheus"
+prometheus_require_restart: true
+prometheus_http_listen_port: 8085
+prometheus_container_name: prometheus
+
+prometheus_host_dir: "{{home_dir}}/prometheus"
+prometheus_data_host_dir: "{{home_dir}}/prometheus_data"
+
+prometheus_volumes:
+  - "{{prometheus_host_dir}}/prometheus.yml:/prometheus.yml"
+  - "{{prometheus_data_host_dir}}:/prometheus"
+
+prometheus_start_args: >
+  --config.file=/prometheus.yml
+  --web.listen-address=0.0.0.0:{{prometheus_http_listen_port}}
+  --storage.tsdb.path=/prometheus
+
+prometheus_debug_level: info

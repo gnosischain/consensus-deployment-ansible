@@ -1,0 +1,14 @@
+0-500 Nethermind-NE-LH-0
+500-1000 Nethermind-NE-LH-1
+1000-1500 Nethermind-NE-Teku-0
+1500-2000 Nethermind-NE-Teku-1
+2000-2500 Nethermind-NE-Lodestar-0
+2500-3750 Gateway-NE-LH-0
+3750-5000 Gateway-NE-LH-1
+5000-6250 Gateway-Erigon-LH-0
+6150-7500 Gateway-Erigon-LH-1
+7500-8125 Gnosis-NE-LH
+8125-8750 Gnosis-NE-LH2
+8750-9375 Gnosis-Erigon-LH
+9375-10000 Gnosis-NE-Teku
+

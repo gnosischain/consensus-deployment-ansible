@@ -1,0 +1,276 @@
+---
+##############################################
+# generic ansible config information
+##############################################
+ansible_user: root
+bootstrap_user: root
+initial_remote_user: root
+
+# Gnosis: dapplion, alebanzas
+# Gnosis devops: giacomolicari, riccardo-gnosis, gMonty030, Stavfilipps
+# POA: igorbarinov
+# Gateway: mandrigin, sibuser
+# EF: gballet, parithosh
+# Nethermind: jmederosalvarado
+github_user_pubkeys:
+  - dapplion
+  - giacomolicari
+  - alebanzas
+  - igorbarinov
+  - parithosh
+  - mandrigin
+  - sibuser
+  - riccardo-gnosis
+  - gMonty030
+  - Stavfilipps
+  - gballet
+  - MarekM25
+  - kamilchodola
+  - LukaszRozmej
+  - marcindsobczak
+  - asdacap
+  - rubo
+  - smartprogrammer93
+  - cbermudez97
+  - jmederosalvarado
+  - AntiD2ta
+
+ansible_python_interpreter: /usr/bin/python3
+oh_my_zsh_config:
+  PROMPT: "%{$fg[yellow]%}%n%{$fg[white]%}@%{$fg[red]%}%m%{$reset_color%} ${PROMPT}"
+
+terminal_total_difficulty: "0"
+fee_recipient: "0x1BecDF6300b41Cc87F2cbE7788b0b06CCd099bf6"
+
+# Ensure that this list correctly match with real keystores and addresses
+mining_addresses:
+  - "0x14747a698ec1227e6753026c08b29b4d5d3bc484"
+miner_keystore_filename:
+  - "miner-0x14747a698ec1227e6753026c08b29b4d5d3bc484.json"
+
+##############################################
+# eth1 endpoints
+##############################################
+# nimbus requires a websocket endpoint (http support unstable)
+# note: also used for execution engine endpoint in nimbus
+consensus_endpoint_nimbus: ws://127.0.0.1:8551
+eth1endpoint: http://127.0.0.1:8545
+beacon_api_endpoint: http://127.0.0.1:{{beacon_api_port}}
+
+# Merge Engine endpoints
+# TODO change IP?
+# TODO: some engines might start using the 8550 port (or 8551 for ws)
+
+##############################################
+# testnet specific information
+##############################################
+testnet_type: custom
+beacon_network_name: gnosis-withdrawals-devnet-4
+coin_tag: XDAI
+chain_id: 10235
+inventory_dirname: "{{inventory_dir.split('/')[-2]}}"
+beacon_config: "{{ lookup('file', local_beacon_config_filepath) | from_yaml }}"
+# Must match the latest fork $ in config.yaml where `$_FORK_EPOCH = 0`
+beacon_genesis_fork: phase0 # To generate genesis.ssz, possible values: phase0,altair,bellatrix,capella
+
+# To allow using the deposit contract
+beacon_genesis_eth1data_blockhash: "0xc293f148710642320209fa0f2d630ee54df5468b1eff25e972a468271157510e"
+
+# Note: 0 is correct, but due to an underflow bug (being fixed), doesn't work.
+execution_deposit_contract_first_block: 1
+# Block from which to start indexing. Set to a higher value for shadow-forks
+explorer_execution_first_block: 1
+
+##############################################
+# metric information
+##############################################
+# enter pushgateway config if needed
+prometheus_config_file: prometheus/prometheus.yml.j2
+
+prometheus_remote_write_configs:
+  # NOTE: For some reason DO hosts can't resolve themerge-monitoring.gnosischainscan.com domain
+  - url: https://themerge-monitoring.gnosischainscan.com/prometheus/api/v1/write/
+    username: themergeprometheusremotewrite
+    password: "{{themergemonitoring_remote_write_password}}"
+  - url: https://hostedmetrics.com/s/cQ4UMmFc/prometheus/remote/write/
+    username: cQ4UMmFc
+    password: "{{hostedmetrics_remote_write_password}}"
+
+beacon_validator_metrics_enabled: true
+eth_metrics_exporter_enabled: true
+eth_metrics_exporter_name: metrics-exporter
+eth_metrics_exporter_image: samcm/ethereum-metrics-exporter:0.11.0
+
+no_validator_keys: false
+ethstats_enabled: false
+ethstats_host: ""
+execution_metrics_enabled: true
+execution_seq_enabled: true
+
+# Skip "propagate official prometheus and promtool binaries" step.
+# It freezes forever and when it works it's extremely slow.
+# Binaries are downloaded from Github to the ansible controller host, them uploaded from there.
+prometheus_skip_install: true
+prometheus_binary_url: https://d1zrfxp177ra46.cloudfront.net/prometheus-2.37.0.linux-amd64
+
+##############################################
+# ports to configure
+##############################################
+execution_rpc_port: 8545
+execution_ws_rpc_port: 8546
+execution_engine_port_no_auth: 8550
+execution_engine_port: 8551
+execution_engine_snoop_port: 8560
+execution_engine_ws_port: 8552
+nimbus_rpc_port: 4009
+beacon_api_port: 4000
+beacon_grpc_port: 4001
+beacon_metrics_port: 8000
+beacon_p2p_port: 9000
+validator_metrics_port: 8001
+validator_rpc_port: 4002
+node_exporter_web_listen_address: 0.0.0.0:9100
+prometheus_web_listen_address: 0.0.0.0:9090
+execution_metrics_port: 8002
+execution_p2p_port: 30303
+eth_metrics_exporter_port: 8003
+cadvisor_port: 9280
+promtail_port: 9080
+public_ethstats: 3000
+
+##############################################
+# Command for JSON RPC snooper
+##############################################
+snoop_image_name: parithoshj/json_rpc_snoop:v1.0.0-x86
+snoop_container_name: snooper
+
+##############################################
+# name of the validator to display
+##############################################
+graffiti: "{{execution_client_name}}-{{beacon_client_name}}"
+
+##############################################
+# local data directories
+##############################################
+local_explorerdata_host_dir: "{{inventory_dir}}/../explorerdata"
+local_explorerdata_host_archive: "{{inventory_dir}}/../explorerdata.tar.gz"
+local_forkmondata_host_dir: "{{inventory_dir}}/../forkmondata"
+local_forkmondata_host_archive: "{{inventory_dir}}/../forkmondata.tar.gz"
+local_custom_config_data_host_dir: "{{inventory_dir}}/../custom_config_data"
+local_custom_config_data_host_archive: "{{inventory_dir}}/../custom_config_data.tar.gz"
+local_beacon_config_filepath: "{{local_custom_config_data_host_dir}}/config.yaml"
+local_execution_genesis_filepath: "{{local_custom_config_data_host_dir}}/chainspec.json"
+local_mnemonics_filepath: "{{local_custom_config_data_host_dir}}/mnemonics.yaml"
+# private dirs
+# Validator assignments
+local_validator_host_dir: "{{inventory_dir}}/../validator_prep/{{inventory_hostname}}"
+local_validator_host_archive: "{{inventory_dir}}/../validator_prep/{{inventory_hostname}}.tar.gz"
+
+##############################################
+# remote host data directories
+##############################################
+home_dir: /root
+beacon_node_dir: "{{home_dir}}/beacon"
+validator_node_dir: "{{home_dir}}/validator"
+testnet_dir: "{{home_dir}}/custom_config_data"
+execution_node_dir: "{{home_dir}}/execution"
+execution_miner_keystore_dir: "{{testnet_dir}}/miner_keystores"
+execution_source_dir: "{{home_dir}}/execution_source"
+execution_source_dockerfile_dir: "{{execution_source_dir}}/Dockerfile"
+execution_source_repo_dir: "{{execution_source_dir}}/{{execution_client_name}}"
+keystore_password_filename: keystores_password.txt
+
+##############################################
+# common log config
+##############################################
+beacon_log_level: info
+common_log_options:
+  max-file: "10"
+  max-size: 500m
+  mode: non-blocking
+  max-buffer-size: 4m
+common_log_driver: json-file
+loki_log_options:
+  loki-url: "{{'http://127.0.0.1:3100' if (groups['grafana'] | length) <= 0 else 'http://'~hostvars[groups['grafana'][0]].ansible_host~':'~hostvars[groups['grafana'][0]].grafana_loki_http_port}}/loki/api/v1/push"
+  loki-batch-size: "400"
+  loki-external-labels: "instance={{inventory_hostname}},ip_address={{ansible_host}},network={{beacon_network_name}},inventory={{inventory_dirname}},{%raw%}container_name={{.Name}}{%endraw%}"
+loki_log_driver: loki
+
+##############################################
+# container names
+##############################################
+beacon_container_name: beacon
+validator_container_name: validator
+execution_container_name: execution
+hi_peer_count: 100
+separate_validator_process_enabled: true
+
+firewall_allowed_tcp_ports:
+  - 22
+  - 80
+  - 443
+  - 8080
+  - "{{execution_p2p_port}}"
+  - "{{beacon_p2p_port}}"
+  - "{{execution_rpc_port}}"
+  - "{{execution_metrics_port}}"
+  - "{{explorer_execution_public_port}}"
+  - "{{explorer_beacon_public_port}}"
+  - "{{public_ethstats}}"
+
+firewall_allowed_udp_ports:
+  - "{{execution_p2p_port}}"
+  - "{{beacon_p2p_port}}"
+
+### Bootnodes Configs
+bootnode_enodes_source: "{{ lookup('file', inventory_dir~'/data/bootnodes-execution.json') | from_json }}"
+bootnode_enodes:
+  [
+    "enode://01a0358d5acda73ce7866e516a982d35d0c5ec45f93df851126b0cb395d8a0376810ab6b12ad5ed349e91d436af27612ca89011ab86bf547620c2565ec7b3165@74.207.236.163:30303",
+    "enode://dd06a2adea709c0650ca392bbe259c5ce65f192b81b69febf38dbc919052f0baa593d0f542fb015871383ee7e5f72f451c0e6421e0f02e35ac3afc96dcb4d887@170.187.158.76:30303",
+    "enode://f7e7f5193bdcf4b0657ffe6eb81f45f24a8419bc597d0452ac956c0b0840f6b2616fe913330d072605a9b871c6013235abd39287ab40e3706f967b7bf319206e@172.105.148.71:30303",
+    "enode://31db2c6012688e04ed34eb6d74561a5096caddc5ea6fda5e22a77da62c0086b47d165e2e0640df725e3db6d97fd84baf0c1408f9565be77fce4810977227ce7b@74.207.236.103:30303",
+    "enode://da24047246962c677aedf5dcb024a29022f4d05f3feeb8b899d3872d4907be5c66cc68a5f6d3355a340e51e8622aa0bf6cd5f09bc6857f37c191cff5b5aff0d8@172.105.148.167:30303",
+    "enode://bfcd0a62f5c8550ab777592a2ede7bb42974f97fbd81672095e2a2a49c62ba869a770466f4cdc0f4dfbca86dc36038ae2de14d82be6dee6b25d1fb94e2ddbc78@74.207.236.233:30303",
+    "enode://025179bc7594f41992ed2fb8c10557a8a9ed33b90d9c2c61050ecc072e1ddfbf7edd4ce4f32fd2b4e99a9d105fe572c09d1c4dbb34e148f8d6b5832702f50193@170.187.158.59:30303",
+  ]
+bootnode_enrs_source: "{{ lookup('file', inventory_dir~'/data/bootnodes-beacon.json') | from_json }}"
+bootnode_enrs:
+  [
+    "enr:-Ly4QEVcg3vk9KBL2X3edOKJf-INvVecrwqmQQ27R2RxYA21JVmKpiwQqf_8tsEmFuny8KdZp_EzuMcfAzsMiQAk341Ih2F0dG5ldHOI__________-EZXRoMpBjnEyXAwAAcv__________gmlkgnY0gmlwhErP7KOJc2VjcDI1NmsxoQNKvUR2s4PkF7gyIpWoY0IrZWAkl1tob5YQ5Rd2H9-LUYhzeW5jbmV0cw-DdGNwgiMog3VkcIIjKA",
+    "enr:-Ly4QBW0W0ntlG9Mi45Yz_-JGHjwZ7Q40Pchc7QGxA5QNfurLphTCFGvVx6G3A3duYKxPWYzQ5OqwcH9U7IiH4cdYM9Ih2F0dG5ldHOI__________-EZXRoMpBjnEyXAwAAcv__________gmlkgnY0gmlwhKq7nkyJc2VjcDI1NmsxoQKkRxaD7KrNuctWhBrQuX5eww0425mq7WZrLXtfRV9xbIhzeW5jbmV0cw-DdGNwgiMog3VkcIIjKA",
+    "enr:-Ly4QDEB82LcmGMdXmH09_cmSdw10VDnj5vuF8nG_1E0mZxSY9glorn7ioRImMWe0xmH9GDN0n4RQkERCndEFfgmQFkLh2F0dG5ldHOI__________-EZXRoMpBjnEyXAwAAcv__________gmlkgnY0gmlwhKxplMCJc2VjcDI1NmsxoQMJjN0oQLg86s0ZRAjMlyAj0zsGgjieLmQMcafc5z2QH4hzeW5jbmV0cw-DdGNwgiMog3VkcIIjKA",
+    "enr:-Ly4QNHviEsGclP-abyoYbkYrWYoSq-HU7W1o9ky3ZEBJjgcG2UWUGN8p4rciWrAF5zUM3llC1HyPvDhNL-ucepo5LkXh2F0dG5ldHOI__________-EZXRoMpBjnEyXAwAAcv__________gmlkgnY0gmlwhKxplEeJc2VjcDI1NmsxoQKQynxM_k4ocQ2l2urP-WCXMz_EfZ3iFpVi8ddj-n_DY4hzeW5jbmV0cw-DdGNwgiMog3VkcIIjKA",
+    "enr:-Ly4QHOZGE2S4Ixl4APejwR6AG8XJR0xvcmPEm7fuAZHswwuQAs62JawPb_xjx1FIXgDqwEfsa6QSd-miqTB7quBZKRIh2F0dG5ldHOI__________-EZXRoMpBjnEyXAwAAcv__________gmlkgnY0gmlwhErP7GeJc2VjcDI1NmsxoQPrQXC3kJ57zqbJK54DT1WgvTSpk21Gzec_o-Mzm0_qoIhzeW5jbmV0cw-DdGNwgiMog3VkcIIjKA",
+    "enr:-Ly4QIGDS1KKobFIfLREH9ZlgLlQdn4hEFq7zMkD-14rqDqPBztVkco0s6lmSLmuLAoHubJchZ8uZFAcqvBSirs2lTlIh2F0dG5ldHOI__________-EZXRoMpBjnEyXAwAAcv__________gmlkgnY0gmlwhKxplKeJc2VjcDI1NmsxoQMx0iGV8csRKUYYuVm7RwT0zwF0XMLWVAWliditZcITIIhzeW5jbmV0cw-DdGNwgiMog3VkcIIjKA",
+    "enr:-Ly4QMen2EPcVdI08S9c5N_y87LtHTrRxwsWhZlvlp02A82WQHbZqWRP8TOIENQeVFbfIf90ABWsKh2g53D1p58u2IELh2F0dG5ldHOI__________-EZXRoMpBjnEyXAwAAcv__________gmlkgnY0gmlwhErP7OmJc2VjcDI1NmsxoQPQ6EfT_OKgCNmgocvghIXmMxMhVpIfEmQbhHaUB0sTmYhzeW5jbmV0cw-DdGNwgiMog3VkcIIjKA",
+    "enr:-Ly4QOHGz8h2FiR0Q9GHp9a7eXKi-PBkQNpftHvEoeXAZACtMWnfLwN5gC4TreJOBDypTxlEo6R05pOUZpv6mZdBjXQXh2F0dG5ldHOI__________-EZXRoMpBjnEyXAwAAcv__________gmlkgnY0gmlwhKq7njuJc2VjcDI1NmsxoQJC5nGcV0S3ESFPLG_hgAje-O_gX9vRyqoSAdwgnzZ6WohzeW5jbmV0cw-DdGNwgiMog3VkcIIjKA",
+  ]
+
+### Prometheus Node Exporter Configs
+prometheus_node_exporter_container_name: "node_exporter"
+prometheus_node_exporter_image: "quay.io/prometheus/node-exporter:latest"
+prometheus_node_exporter_port: 9100
+prometheus_node_exporter_address: "0.0.0.0:{{prometheus_node_exporter_port}}"
+prometheus_node_exporter_data_host_dir: "{{home_dir}}/node_exporter_data"
+
+### Participation rates exporter
+pr_exporter_enabled: true
+pr_exporter_container_name: "pr_exporter"
+pr_exporter_image: "dapplion/beacon-metrics-gazer"
+pr_exporter_port: 9101
+pr_exporter_address: "0.0.0.0"
+pr_exporter_range: |
+  0-500 Nethermind-NE-LH-0
+  500-1000 Nethermind-NE-LH-1
+  1000-1500 Nethermind-NE-Teku-0
+  1500-2000 Nethermind-NE-Teku-1
+  2000-2500 Nethermind-NE-Lodestar-0
+  2500-3750 Gateway-NE-LH-0
+  3750-5000 Gateway-NE-LH-1
+  5000-6250 Gateway-Erigon-LH-0
+  6150-7500 Gateway-Erigon-LH-1
+  7500-8125 Gnosis-NE-LH
+  8125-8750 Gnosis-NE-LH2
+  8750-9375 Gnosis-Erigon-LH
+  9375-10000 Gnosis-NE-Teku

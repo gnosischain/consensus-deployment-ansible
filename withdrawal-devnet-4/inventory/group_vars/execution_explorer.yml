@@ -1,0 +1,34 @@
+# Execution explorer only needs to connect to an execution node
+explorer_source_node_execution_ip_address: "{{hostvars[ explorer_execution if explorer_execution is defined else groups['eth1client_nethermind'][0]].ansible_host}}"
+explorer_docker_network_name: explorernet
+execution_explorer_container_name: blockscout
+execution_explorer_memory: 9000m
+execution_explorer_image_name: "blockscout/blockscout:4.1.8"
+execution_explorer_public_port: 8082
+
+# Paths
+execution_explorer_host_dir: "{{home_dir}}/execution_explorer_data"
+execution_explorer_postgres_host_dir: "{{home_dir}}/execution_explorer_postgres_data"
+
+# Blockscout explorer
+execution_explorer_genesis_host_path: "{{execution_explorer_host_dir}}/genesis.json"
+execution_explorer_genesis_cont_path: /data/genesis.json
+execution_explorer_volumes:
+  - "{{execution_explorer_host_dir}}:/data"
+execution_explorer_start_args: 'sh -c "echo $DATABASE_URL && bin/blockscout eval \"Elixir.Explorer.ReleaseTasks.create_and_migrate()\" && bin/blockscout start" '
+
+# Postgress dedicated to blockscout
+execution_explorer_postgres_container_name: postgres_execution_explorer
+execution_explorer_postgres_image_name: "postgres:14"
+execution_explorer_postgres_memory: 9000m
+execution_explorer_postgres_port: "5431"
+execution_explorer_postgres_ip: "127.0.0.1"
+execution_explorer_postgres_user: postgres
+execution_explorer_postgres_volumes:
+  - "{{execution_explorer_postgres_host_dir}}:/postgresql/data"
+execution_explorer_postgres_start_args: "-i -h {{execution_explorer_postgres_ip}} -p {{execution_explorer_postgres_port}}"
+execution_explorer_postgres_init_volumes:
+  - "{{execution_explorer_host_dir}}:/src"
+
+# Set in secrets.yaml
+execution_explorer_postgres_password: "{{ explorers_postgres_password }}"

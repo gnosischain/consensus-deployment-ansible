@@ -1,0 +1,106 @@
+---
+##############################################
+# image name and image location
+##############################################
+beacon_client_name: lodestar
+
+# TODO: switch to merge f2f, but mainnet preset
+beacon_image_name: chainsafe/lodestar
+validator_image_name: chainsafe/lodestar
+beacon_endpoint: http://127.0.0.1:{{beacon_api_port}}
+
+beacon_github_external_user_pubkeys:
+  - dapplion
+  - wemeetagain
+  - tuyennhv
+  - g11tech
+  - dadepo
+  - philknows
+
+beacon_env:
+  LODESTAR_PRESET: mainnet
+
+validator_env:
+  LODESTAR_PRESET: mainnet
+
+##############################################
+# volume mappings on remote host
+##############################################
+beacon_volumes:
+  - "{{beacon_node_dir}}:/beacondata"
+  - "{{testnet_dir}}:/custom_config_data"
+  - "{{home_dir}}/jwtsecret:/jwtsecret"
+
+validator_volumes:
+  - "{{validator_node_dir}}:/validatordata"
+  - "{{testnet_dir}}:/custom_config_data"
+##############################################
+# arguments to run the containers with
+##############################################
+beacon_start_args: >
+  beacon
+  --preset=gnosis
+  --network=gnosis
+  --dataDir=/beacondata
+  --paramsFile=/custom_config_data/config.yaml
+  --genesisStateFile=/custom_config_data/genesis.ssz
+  {% if (bootnode_enrs is defined) and bootnode_enrs %}
+  {% for bootnode_enr in bootnode_enrs %}
+  --bootnodes="{{ bootnode_enr }}"
+  {% endfor %}
+  {% endif %}
+  --network.connectToDiscv5Bootnodes
+  --discv5
+  --eth1
+  --jwt-secret="/jwtsecret"
+  --execution.urls={{execution_endpoint}}
+  --eth1.providerUrls={{eth1endpoint}}
+  --eth1.depositContractDeployBlock=14675001
+  --enr.ip={{ansible_host}}
+  --port={{beacon_p2p_port}}
+  --discoveryPort={{beacon_p2p_port}}
+  --rest.port={{beacon_api_port}}
+  --rest
+  --rest.address=0.0.0.0
+  --rest.cors="*"
+  {% if terminal_total_difficulty is defined %}
+  --terminal-total-difficulty-override={{terminal_total_difficulty}}
+  {% endif %}
+  --logLevel={{ beacon_log_level | lower }}
+  --logFile=/beacondata/beacon.log
+  --logFileLevel=debug
+  --logFileDailyRotate=5
+  --metrics
+  --metrics.port={{ beacon_metrics_port }}
+  {% if checkpoint_sync_url is defined%}
+  --checkpoint-sync-url={{checkpoint_sync_url}}
+  {% endif %}
+
+validator_start_args: >
+  validator
+  --preset=gnosis
+  --network=gnosis
+  --dataDir=/validatordata
+  --paramsFile=/custom_config_data/config.yaml
+  --keystoresDir=/validatordata/keystores
+  --secretsDir=/validatordata/secrets/
+  --server={{beacon_endpoint}}
+  --logFile=/validatordata/validator.log
+  --logFileLevel=debug
+  --logFileDailyRotate=5
+  --graffiti={{graffiti}}
+  --metrics
+  --metrics.port={{validator_metrics_port}}
+  --metrics.address=0.0.0.0
+
+##############################################
+# memory limits
+##############################################
+validator_memory: 2000M
+validator_kernel_memory: 2500M
+validator_user_id: "1000:1000"
+beacon_memory: 7000M
+beacon_kernel_memory: 7500M
+beacon_user_id: "1000:1000"
+
+separate_validator_process_enabled: true
