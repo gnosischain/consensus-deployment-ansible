@@ -1,0 +1,11 @@
+apiVersion: 1
+
+contactPoints:
+  - orgId: 1
+    name: Telegram Alerts
+    receivers:
+      - uid: telegram_alerts
+        type: telegram
+        settings:
+          bottoken: "{{grafana_telegram_alerts_token}}"
+          chatid: "{{grafana_telegram_alerts_channel}}"

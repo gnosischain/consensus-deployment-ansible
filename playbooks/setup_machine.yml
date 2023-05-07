@@ -1,0 +1,54 @@
+- name: Run bootstrap playbook to ensure basic stuff works and add oh-my-zsh
+  hosts: all
+  gather_facts: true
+  become: true
+
+  roles:
+    # Prepare system to be managed by Ansible.
+    - role: robertdebock.update_package_cache
+    - role: robertdebock.bootstrap
+    - role: robertdebock.fail2ban
+      vars:
+        - fail2ban_loglevel: INFO
+        - fail2ban_logtarget: /var/log/fail2ban.log
+        - fail2ban_maxretry: 10
+        - fail2ban_bantime: 6000
+    - role: gantsign.oh-my-zsh
+      users:
+        - username: "{{ bootstrap_user }}"
+          theme: powerlevel9k/powerlevel9
+    - role: geerlingguy.pip
+      pip_install_packages:
+        - name: docker
+    - role: geerlingguy.docker
+
+  tasks:
+    - name: Install apt packages
+      apt:
+        name:
+          - jq
+        state: present
+        update_cache: yes
+
+    - name: Install grafana loki plugin
+      community.docker.docker_plugin:
+        alias: loki
+        plugin_name: grafana/loki-docker-driver
+        state: enable
+
+    - name: Set custom .zshrc config
+      lineinfile:
+        dest: "/{{ bootstrap_user }}/.zshrc"
+        state: present
+        regexp: "^{{ item.key }}="
+        line: '{{ item.key }}="{{ item.value }}"'
+      loop: "{{ oh_my_zsh_config | dict2items }}"
+
+    - name: Set hostname
+      hostname:
+        name: "{{ inventory_hostname }}"
+    - name: add myself to /etc/hosts
+      lineinfile:
+        dest: /etc/hosts
+        regexp: "^{{ ansible_host }}="
+        line: "{{ ansible_host }} {{ inventory_hostname }}"

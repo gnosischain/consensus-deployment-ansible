@@ -1,0 +1,93 @@
+- name: Setup Prometheus Node Exporters
+  hosts: execution:beacon:validator
+  gather_facts: true
+  tasks:
+    - name: Create Prometheus Node Exporter data directory
+      file:
+        path: "{{prometheus_node_exporter_data_host_dir}}"
+        state: directory
+    - name: Install collector dependencies
+      pip:
+        name: "prometheus-client"
+    - name: Upload collector script
+      template:
+        src: "prometheus/node_exporter_collector.py.j2"
+        dest: "{{prometheus_node_exporter_data_host_dir}}/node_exporter_collector.py"
+    - name: Start cron job for collector
+      cron:
+        name: "node exporter collector"
+        job: "python3 {{prometheus_node_exporter_data_host_dir}}/node_exporter_collector.py > /dev/null"
+    - name: Start Prometheus Node Exporter
+      docker_container:
+        name: "{{prometheus_node_exporter_container_name}}"
+        state: started
+        image: "{{prometheus_node_exporter_image}}"
+        pull: true
+        restart_policy: unless-stopped
+        network_mode: host
+        pid_mode: host
+        restart: "{{prometheus_require_restart | default(false)}}"
+        volumes:
+          - "/:/host:ro,rslave"
+          - "{{prometheus_node_exporter_data_host_dir}}:/collectors_data"
+        command: >
+          --path.rootfs=/host
+          --web.listen-address="{{prometheus_node_exporter_address}}"
+          --collector.textfile.directory="/collectors_data"
+        log_options: "{{common_log_options}}"
+        log_driver: "{{common_log_driver}}"
+
+- name : Setup Participation Rates collector
+  hosts: beacon
+  gather_facts: true
+  tasks:
+    - name: Start Participation Rates collector
+      when: (pr_exporter_enabled is defined and pr_exporter_enabled | bool) | default(false)
+      docker_container:
+        name: "{{pr_exporter_container_name}}"
+        state: started
+        image: "{{pr_exporter_image}}"
+        pull: true
+        restart_policy: unless-stopped
+        network_mode: host
+        restart: "{{prometheus_require_restart | default(false)}}"
+        command: >
+          --address={{pr_exporter_address}}
+          --port={{pr_exporter_port}}
+          --ranges='{{pr_exporter_range}}'
+          http://localhost:{{beacon_api_port}}
+        log_options: "{{common_log_options}}"
+        log_driver: "{{common_log_driver}}"
+
+- name: Setup prometheus
+  hosts: prometheus
+  gather_facts: true
+  tasks:
+    - name: Create prometheus dir
+      file:
+        path: "{{prometheus_host_dir}}"
+        state: directory
+    - name: Create prometheus data dir with permissions
+      file:
+        path: "{{prometheus_data_host_dir}}"
+        state: directory
+        mode: '777'
+    - name: Upload prometheus config file
+      template:
+        src: prometheus/prometheus.yml.j2
+        dest: "{{prometheus_host_dir}}/prometheus.yml"
+        mode: '755'
+    - name: Start prometheus container
+      docker_container:
+        name: "{{prometheus_container_name}}"
+        state: started
+        image: "{{prometheus_image_name}}"
+        pull: true
+        restart_policy: unless-stopped
+        network_mode: host 
+        restart: "{{prometheus_require_restart | default(false)}}"
+        memory: "{{prometheus_memory}}"
+        command: "{{prometheus_start_args}}"
+        volumes: "{{prometheus_volumes}}"
+        log_options: "{{common_log_options}}"
+        log_driver: "{{common_log_driver}}"

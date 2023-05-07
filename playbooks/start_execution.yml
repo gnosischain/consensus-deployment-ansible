@@ -1,0 +1,93 @@
+---
+- name: Start execution node
+  hosts: execution
+  gather_facts: false
+  tasks:
+    - name: Stop execution node container
+      when: wipe | default(false)
+      community.docker.docker_container:
+        name: "{{ execution_container_name }}"
+        state: absent
+    - name: Delete execution node datadir
+      when: wipe | default(false)
+      file:
+        path: "{{ execution_node_dir }}"
+        state: absent
+
+    - name: Create dir to store stuff needed to run from source
+      when: el_git_ref is defined | default(false)
+      file:
+        path: "{{ execution_source_dir}}"
+        state: directory
+    - name: Create dockerfile for running from source
+      when: el_git_ref is defined | default(false)
+      copy:
+        dest: "{{execution_source_dockerfile_dir}}"
+        content: "{{ execution_runtime_dockerfile }}"
+    - name: Build docker image
+      when: el_git_ref is defined | default(false)
+      community.docker.docker_image:
+        name: "{{ execution_client_name }}-runtime"
+        source: build
+        state: present
+        force_source: "{{ rebuild_images is defined | default(false) }}"
+        build:
+          path: "{{ execution_source_dir }}"
+    - name: Clone source repository
+      when: el_git_ref is defined | default(false)
+      git:
+        dest: "{{ execution_source_repo_dir }}"
+        repo: "https://github.com/{{ execution_client_gh_repo }}"
+        version: "{{ el_git_ref }}"
+
+    - name: Creates execution data dir
+      file:
+        path: "{{execution_node_dir}}"
+        state: directory
+    - name: Modify permissions to match user-group inside docker image
+      file:
+        path: "{{execution_node_dir}}"
+        group: "{{execution_user_id.split(':')[0]}}"
+        owner: "{{execution_user_id.split(':')[1]}}"
+        recurse: true
+      become: true
+
+    - name: Start execution node container
+      community.docker.docker_container:
+        name: "{{ execution_container_name }}"
+        state: started
+        image: "{{ execution_client_name~'-runtime'  if (el_git_ref is defined | default(false)) else execution_image_name }}"
+        pull: "{{el_git_ref is not defined | default(true)}}"
+        stop_timeout: 90
+        restart_policy: unless-stopped
+        network_mode: host
+        restart: "{{ execution_require_restart | default(false) }}"
+        volumes: "{{ execution_volumes + ([ execution_source_repo_dir ~ ':/source'] if (el_git_ref is defined | default(false)) else []) }}"
+        command: "{{ execution_start_args }}"
+        log_options: "{{ loki_log_options }}"
+        log_driver: "{{ loki_log_driver }}"
+        env: "{{ execution_env | default({}) }}"
+        user: "{{execution_user_id}}"
+
+    - name: Setup EthStats Agent
+      when:
+        - (ethstats_enabled is defined) and ethstats_enabled
+        - "not inventory_hostname in groups['eth1client_nethermind']"
+      community.docker.docker_container:
+        name: ethstats-agent
+        state: started
+        image: swarmpit/ethstats-agent:latest
+        pull: true
+        stop_timeout: 90
+        restart_policy: unless-stopped
+        network_mode: host
+        restart: false
+        log_options: "{{ common_log_options }}"
+        log_driver: "{{ common_log_driver }}"
+        env:
+          RPC_HOST: "127.0.0.1"
+          RPC_PORT: "8545"
+          INSTANCE_NAME: "{{inventory_hostname}}"
+          WS_SERVER: "wss://{{ethstats_host}}/api/"
+          WS_SECRET: "{{ethstats_password}}"
+          VERBOSITY: "2"

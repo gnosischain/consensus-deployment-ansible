@@ -1,0 +1,22 @@
+[{
+  "name": "{{ beacon_network_name }}",
+  "chain": "{{ unit_name }}",
+  "icon": "ethereum",
+  "rpc": [
+    "{{faucet_rpc_url}}"
+  ],
+  "faucets": [],
+  "nativeCurrency": {
+    "name": "{{ unit_name }}",
+    "symbol": "{{ unit_name }}",
+    "decimals": 18
+  },
+  "infoURL": "https://ethereum.org",
+  "shortName": "eth",
+  "chainId": {{ chain_id }},
+  "networkId": {{ chain_id }},
+  "slip44": 60,
+  "ens": {
+    "registry":"0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e"
+  }
+}]

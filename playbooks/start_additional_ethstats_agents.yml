@@ -1,0 +1,23 @@
+- name: Start Additional Ethstats Agents
+  hosts: execution
+  tasks:
+    - name: Setup EthStats Agent
+      loop: "{{ groups['ethstats_server'] }}"
+      community.docker.docker_container:
+        name: "{{hostvars[item].inventory_hostname}}-agent"
+        state: started
+        image: swarmpit/ethstats-agent:latest
+        pull: true
+        stop_timeout: 90
+        restart_policy: unless-stopped
+        network_mode: host
+        restart: false
+        log_options: "{{ common_log_options }}"
+        log_driver: "{{ common_log_driver }}"
+        env:
+          RPC_HOST: "127.0.0.1"
+          RPC_PORT: "8545"
+          INSTANCE_NAME: "{{inventory_hostname}}"
+          WS_SERVER: "ws://{{hostvars[item].ansible_host}}:{{hostvars[item].ethstats_port}}/api"
+          WS_SECRET: "{{ethstats_password}}"
+          VERBOSITY: "2"

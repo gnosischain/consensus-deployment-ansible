@@ -1,3 +1,0 @@
-# Inventory: inventory.ini
-
-- import_playbook: ../../tasks/start_bootnode.yml

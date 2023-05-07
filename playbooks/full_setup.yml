@@ -1,0 +1,54 @@
+# Add authorized ssh keys
+- import_playbook: add_github_authorized_keys.yml
+# Setup machines
+- import_playbook: setup_machine.yml
+# Setup Loki
+- import_playbook: setup_grafana_loki.yml
+# Setup prometheus
+- import_playbook: setup_prometheus.yml
+# Generate Eth2 Genesis
+- import_playbook: generate_beacon_genesis.yml
+# Upload config files
+- import_playbook: upload_configs.yml
+# Start execution node
+- import_playbook: start_execution.yml
+# Collect execution bootnode enodes
+- name: Wait for execution node api
+  hosts: execution
+  gather_facts: false
+  tasks:
+    - pause:
+        seconds: 10
+- import_playbook: collect_enodes.yml
+# Start execution nodes with bootnodes
+- import_playbook: start_execution.yml
+# Start snooper
+- import_playbook: start_snooper.yml
+# Generate validator keystores
+- import_playbook: generate_beacon_keys.yml
+# Start beacon nodes
+- import_playbook: start_beacon.yml
+# Collect enrs
+- name: Wait for beacons node api
+  hosts: beacon
+  gather_facts: false
+  tasks:
+    - pause:
+        seconds: 10
+- import_playbook: collect_enrs.yml
+# Start beacon nodes with bootnodes
+- import_playbook: start_beacon.yml
+# Start Validators
+- import_playbook: start_validator.yml
+# Start forkmon
+- import_playbook: setup_forkmon.yml
+# Start ethstats servers
+- import_playbook: setup_ethstats_server.yml
+# Start additional ethstats Agents
+- import_playbook: start_additional_ethstats_agents.yml
+# Setup blockscout
+- import_playbook: setup_execution_explorer.yml
+# Setup beaconchain explorer
+- import_playbook: setup_beacon_explorer.yml
+# Setup grafana
+- import_playbook: setup_grafana.yml

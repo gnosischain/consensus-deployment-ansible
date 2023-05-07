@@ -1,0 +1,26 @@
+- name: Collect enrs
+  hosts: bootnodes_beacon
+  gather_facts: false
+  tasks:
+    - name: Get enr from logs
+      shell: curl http://localhost:{{beacon_api_port}}/eth/v1/node/identity
+      register: enr_result
+    - name: Set host enr
+      set_fact:
+        beacon_enr: "{{ (enr_result.stdout | from_json)['data']['enr'] }}"
+        inventory_dir: "{{ inventory_dir }}"
+- name: Write enrs
+  hosts: localhost
+  gather_facts: true
+  tasks:
+    - name: Create a map with all node's enrs
+      when: groups.bootnodes_beacon is defined
+      with_items: "{{ groups['bootnodes_beacon'] }}"
+      set_fact:
+        beacon_enrs: "{{ beacon_enrs | default({}) | combine( {item: hostvars[item]['beacon_enr']} ) }}"
+        inventory_dirs: "{{ inventory_dirs | default([]) | union([hostvars[item]['inventory_dir']]) }}"
+    - name: Write enrs
+      with_items: "{{ inventory_dirs }}"
+      copy:
+        content: "{{ beacon_enrs | to_nice_json }}"
+        dest: "{{ item }}/data/bootnodes-beacon.json"

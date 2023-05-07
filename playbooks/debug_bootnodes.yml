@@ -1,0 +1,13 @@
+- name: Collect enodes
+  hosts: execution
+  gather_facts: false
+  tasks:
+    - name: Print bootnodes collected
+      delegate_to: localhost
+      debug:
+        var: bootnode_enodes_source
+
+    - name: Print bootnodes filtered
+      delegate_to: localhost
+      debug:
+        var: bootnode_enodes

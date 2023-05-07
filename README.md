@@ -143,24 +143,10 @@ mnemonic_0: "giant issue aisle success illegal bike spike question tent bar rely
 
 Execute the following playbooks only if you want to make Dockerd collect logs using a custom logging driver, e.g. fluentd (make sure to check-out the requirements in `Use docker logs with custom logging drivers`).
 
-```
-ansible-playbook -i $network/inventory/inventory.ini playbooks/setup_logging_capability.yml
-```
-
 > **Note**: AuRa does not handle well starting with multiple validating nodes. Set a single `mining_keyi=0` on first deployment. Then after some blocks (enough to sync), edit inventory to add more validating nodes and re-deploy execution.
 
-First, set `ansible_user: "root"` in `$network/inventory/group_vars/all.yaml` to gain access for the first time. Then run:
-
 ```
-ansible-playbook -i $network/inventory/inventory.ini playbooks/tasks/create_bootstrap_user_only.yml
-```
-
-Then, revert `ansible_user: "devops"` in `$network/inventory/group_vars/all.yaml`.
-
-Now deploy everything from scratch
-
-```
-ansible-playbook -i $network/inventory/inventory.ini playbooks/deploy_devnet_from_scratch.yml
+ansible-playbook -i $network/inventory/inventory.ini playbooks/full_setup.yml
 ```
 
 **3. Set bootnodes**
@@ -174,14 +160,14 @@ ansible-playbook -i $network/inventory/inventory.ini playbooks/tasks/collect_eno
 Grab beacon node's ENRs with command below and paste some of them into `$network/inventory/group_vars/all.yaml` to act as bootnodes in variable `bootnode_enrs`
 
 ```
-ansible-playbook -i $network/inventory/inventory.ini playbooks/tasks/collect_enrs.yml
+ansible-playbook -i $network/inventory/inventory.ini playbooks/collect_enrs.yml
 ```
 
 Then re-deploy execution and beacon nodes to connect them
 
 ```
-ansible-playbook -i $network/inventory/inventory.ini playbooks/tasks/start_beacon.yml
-ansible-playbook -i $network/inventory/inventory.ini playbooks/tasks/start_execution_node.yml
+ansible-playbook -i $network/inventory/inventory.ini playbooks/start_beacon.yml
+ansible-playbook -i $network/inventory/inventory.ini playbooks/start_execution.yml
 ```
 
 - **6. Extra tooling**

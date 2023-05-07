@@ -1,0 +1,13 @@
+instance_name="{{inventory_hostname}}"
+
+[server]
+protocol=http
+http_addr="0.0.0.0"
+http_port="{{grafana_http_listen_port}}"
+
+[database]
+type=sqlite3
+
+[security]
+admin_user="{{grafana_admin_user}}"
+admin_password="{{grafana_admin_password}}"

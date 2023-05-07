@@ -1,0 +1,35 @@
+- name: Setup grafana
+  hosts: grafana
+  gather_facts: false
+  tasks:
+    - name: Create grafana dir
+      file:
+        path: "{{grafana_host_dir}}"
+        state: directory
+
+    - name: Create grafana data dir with permissions
+      file:
+        path: "{{grafana_loki_data_host_dir}}"
+        state: directory
+        mode: '777'
+
+    - name: Upload grafana config file
+      template:
+        src: grafana/loki_config.yaml.j2
+        dest: "{{grafana_host_dir}}/loki_config.yaml"
+        mode: '755'
+
+    - name: Start loki container
+      docker_container:
+        name: "{{grafana_loki_container_name}}"
+        state: started
+        image: "{{grafana_loki_image_name}}"
+        pull: true
+        restart_policy: unless-stopped
+        network_mode: host 
+        restart: "{{grafana_loki_require_restart | default(false)}}"
+        memory: "{{grafana_memory}}"
+        command: "{{grafana_loki_start_args}}"
+        volumes: "{{grafana_loki_volumes}}"
+        log_options: "{{common_log_options}}"
+        log_driver: "{{common_log_driver}}"
