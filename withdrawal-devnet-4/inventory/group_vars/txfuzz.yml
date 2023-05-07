@@ -1,0 +1,13 @@
+txfuzz_container_name: txfuzz
+
+txfuzz_rpc_url: http://127.0.0.1:{{ execution_rpc_port }}
+
+txfuzz_gh_repo: "nethermindeth/txfuzz"
+txfuzz_git_ref: "main"
+txfuzz_image_name: "golang:1.18"
+txfuzz_command: 'go run ./main "ws://127.0.0.1:8546" {{ txfuzz_data[txfuzzer_keyi].privkey }} "{{ txfuzz_data[txfuzzer_keyi].mnemonic }}" {{ txfuzz_data[txfuzzer_keyi].range }}'
+# txfuzz_image_name: kurtosistech/tx-fuzz:latest
+# txfuzz_command: "spam 0 no-al {{ txfuzz_data[txfuzzer_keyi].privkey }}"
+
+# txfuzz_address: Defined in secrets.yml
+# txfuzz_privkey: Defined in secrets.yml

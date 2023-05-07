@@ -1,0 +1,51 @@
+# Beacon explorer needs to connect to both execution node and consensus node
+explorer_source_node_execution_ip_address: "{{hostvars[ explorer_execution if explorer_execution is defined else groups['eth1client_nethermind'][0]].ansible_host}}"
+explorer_source_node_consensus_ip_address: "{{hostvars[ explorer_beacon if explorer_beacon is defined else groups['beacon'][0]].ansible_host}}"
+
+explorer_docker_network_name: explorernet
+beacon_explorer_container_name: explorer
+beacon_explorer_memory: 9000m
+beacon_explorer_image_name: "parithoshj/beacon-explorer:print-chain-id"
+beacon_explorer_public_port: 8083
+
+# Paths
+beacon_explorer_host_dir: "{{home_dir}}/beacon_explorer_data"
+beacon_explorer_postgres_host_dir: "{{home_dir}}/beacon_explorer_postgres_data"
+
+# beaconcha.in explorer
+beacon_explorer_postgres_init_args: >
+  psql
+  -f /src/tables.sql
+  -d db
+  -h {{beacon_explorer_postgres_ip}}
+  -p {{beacon_explorer_postgres_port}}
+  -U {{beacon_explorer_postgres_user}}
+
+beacon_explorer_config_host_path: "{{beacon_explorer_host_dir}}/beacon_config.yaml"
+beacon_explorer_config_cont_path: /data/beacon_config.yaml
+beacon_explorer_volumes:
+  - "{{beacon_explorer_host_dir}}:/data"
+beacon_explorer_start_args: "./explorer --config=/data/config.yaml"
+
+# Stats to support explorer
+beacon_explorer_stats_container_name: explorerstats
+beacon_explorer_stats_volumes:
+  - "{{beacon_explorer_host_dir}}:/data"
+beacon_explorer_stats_start_args: "./statistics --config=/data/config.yaml"
+beacon_explorer_extra_args: "--slots-per-archive-point=64"
+
+# Postgress dedicated to beacon explorer
+beacon_explorer_postgres_container_name: postgres_beacon_explorer
+beacon_explorer_postgres_image_name: "postgres:12.0"
+beacon_explorer_postgres_memory: 9000m
+beacon_explorer_postgres_port: "5432"
+beacon_explorer_postgres_ip: "127.0.0.1"
+beacon_explorer_postgres_user: postgres
+beacon_explorer_postgres_volumes:
+  - "{{beacon_explorer_postgres_host_dir}}:/postgresql/data"
+beacon_explorer_postgres_start_args: "-i -h {{beacon_explorer_postgres_ip}} -p {{beacon_explorer_postgres_port}}"
+beacon_explorer_postgres_init_volumes:
+  - "{{beacon_explorer_host_dir}}:/src"
+
+# Set in secrets.yaml
+beacon_explorer_postgres_password: "{{ explorers_postgres_password }}"

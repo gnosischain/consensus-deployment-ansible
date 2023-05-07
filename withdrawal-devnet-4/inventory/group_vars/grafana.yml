@@ -1,0 +1,38 @@
+grafana_memory: 3000m
+grafana_image_name: "grafana/grafana-oss"
+grafana_require_restart: true
+grafana_http_listen_port: 8084
+grafana_container_name: grafana
+
+grafana_loki_image_name: "grafana/loki"
+grafana_loki_require_restart: true
+grafana_loki_volumes:
+  - "{{grafana_host_dir}}/loki_config.yaml:/config.yaml"
+  - "{{grafana_loki_data_host_dir}}:/data"
+grafana_loki_http_port: 3100
+grafana_loki_container_name: grafana_loki
+grafana_loki_start_args: "-config.file=/config.yaml"
+
+grafana_host_dir: "{{home_dir}}/grafana"
+grafana_dashboards_host_dir: "{{grafana_host_dir}}/dashboards"
+grafana_alerting_host_dir: "{{grafana_host_dir}}/alerting"
+grafana_datasources_host_dir: "{{grafana_host_dir}}/datasources"
+grafana_data_host_dir: "{{home_dir}}/grafana_data"
+grafana_loki_data_host_dir: "{{home_dir}}/grafana_loki_data"
+
+grafana_provisioning_dirs:
+  - "{{grafana_alerting_host_dir}}"
+  - "{{grafana_datasources_host_dir}}"
+  - "{{grafana_dashboards_host_dir}}"
+
+grafana_volumes:
+  - "{{grafana_host_dir}}/config.ini:/config.ini"
+  - "{{grafana_datasources_host_dir}}:/etc/grafana/provisioning/datasources"
+  - "{{grafana_dashboards_host_dir}}:/etc/grafana/provisioning/dashboards"
+  - "{{grafana_alerting_host_dir}}:/etc/grafana/provisioning/alerting"
+  - "{{grafana_data_host_dir}}:/var/lib/grafana"
+
+grafana_start_args: >
+  --config /config.ini
+
+grafana_debug_level: info

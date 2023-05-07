@@ -1,0 +1,5 @@
+ethstats_image_name: puppeth/ethstats:latest
+
+ethstats_container_name: ethstats
+ethstats_secret: "{{ethstats_password}}"
+ethstats_port: "8081"

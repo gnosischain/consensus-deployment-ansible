@@ -1,0 +1,65 @@
+---
+execution_client_name: geth
+execution_image_name: ethereum/client-go:latest
+execution_endpoint: http://127.0.0.1:{{execution_engine_snoop_port}}
+snoop_command: ./json_rpc_snoop -p {{execution_engine_snoop_port}} http://127.0.0.1:{{execution_engine_port}}
+
+execution_client_gh_repo: ethereum/go-ethereum
+
+execution_github_external_user_pubkeys:
+  - MarekM25
+  - avalonche
+  - DockBoss
+  - LukaszRozmej
+  - marcindsobczak
+  - jmederosalvarado
+  - cbermudez97
+
+execution_memory: 5000M
+execution_kernel_memory: 5500M
+
+light_sync_enabled: false
+full_sync_enabled: true
+snap_sync_enabled: false
+
+execution_volumes:
+  - "{{execution_node_dir}}:/eth1data"
+  - "{{testnet_dir}}:/networkdata"
+  - "{{home_dir}}/jwtsecret:/jwtsecret"
+
+execution_start_args: >
+  --identity={{inventory_hostname}}
+  --mainnet
+  --datadir="/eth1data"
+  --http
+  --ws
+  --http.addr=0.0.0.0
+  --authrpc.addr=0.0.0.0
+  --ws.addr=0.0.0.0
+  --http.port={{execution_rpc_port}}
+  --authrpc.port={{execution_engine_port}}
+  --ws.port={{execution_ws_rpc_port}}
+  --ipcpath="/eth1data/rpc.sock"
+  --authrpc.jwtsecret=/jwtsecret
+  --port={{execution_p2p_port}}
+  {% if (disable_discovery is defined) and disable_discovery|bool %}
+  --nodiscover
+  {% endif %}
+  {% if (bootnode_enodes is defined) and bootnode_enodes %}
+  --bootnodes="{{ bootnode_enodes | join(',') }}"
+  {% endif %}
+  --metrics={{execution_metrics_enabled}}
+  --metrics.addr=0.0.0.0
+  --metrics.port={{execution_metrics_port}}
+  {% if snap_sync_enabled %}
+  --syncmode=snap
+  {% elif full_sync_enabled %}
+  --syncmode=full
+  {% elif light_sync_enabled %}
+  --syncmode=light
+  {% endif %}
+  {% if pruning_mode is defined %}
+  --Pruning.Mode={{pruning_mode}}
+  {% endif %}
+
+execution_user_id: "0:0"

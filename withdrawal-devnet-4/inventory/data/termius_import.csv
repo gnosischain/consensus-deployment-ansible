@@ -1,0 +1,6 @@
+Groups,Label,Tags,Hostname/IP,Protocol,Port
+,gnosis-wd-3-nethouse-0,,194.195.210.229,ssh,
+,gnosis-wd-3-nethouse-1,,194.195.215.98,ssh,
+,gnosis-wd-3-neku-0,,45.79.220.126,ssh,
+,gnosis-wd-3-neku-1,,45.79.220.38,ssh,
+,gnosis-wd-3-nethstar-0,,194.195.215.144,ssh,

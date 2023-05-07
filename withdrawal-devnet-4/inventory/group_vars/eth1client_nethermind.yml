@@ -1,0 +1,108 @@
+---
+execution_client_name: nethermind
+execution_image_name: nethermindeth/nethermind:aura-withdrawals
+execution_endpoint: http://127.0.0.1:{{execution_engine_snoop_port}}
+snoop_command: ./json_rpc_snoop -p {{execution_engine_snoop_port}} http://127.0.0.1:{{execution_engine_port}}
+
+execution_client_gh_repo: NethermindEth/nethermind
+
+execution_github_external_user_pubkeys:
+  - MarekM25
+  - avalonche
+  - DockBoss
+  - LukaszRozmej
+  - marcindsobczak
+  - jmederosalvarado
+  - cbermudez97
+
+execution_memory: 5000M
+execution_kernel_memory: 5500M
+
+fast_sync_enabled: false
+snap_sync_enabled: false
+
+execution_runtime_dockerfile: |
+  FROM mcr.microsoft.com/dotnet/sdk:7.0-jammy
+
+  RUN apt-get update && apt-get -y install libsnappy-dev libc6-dev libc6
+
+  # Fix rocksdb issue in ubuntu 22.04 (assumes amd64)
+  RUN ln -s /usr/lib/x86_64-linux-gnu/libdl.so.2 /usr/lib/x86_64-linux-gnu/libdl.so > /dev/null 2>&1
+
+execution_volumes:
+  - "{{execution_node_dir}}:/eth1data"
+  - "{{testnet_dir}}:/networkdata"
+  - "{{home_dir}}/jwtsecret:/jwtsecret"
+
+execution_start_args: >
+  {% if el_git_ref is defined %}
+  dotnet run --project /source/src/Nethermind/Nethermind.Runner
+  {% endif %}
+  --config=none
+  --datadir="/eth1data"
+  --Init.ChainSpecPath=/networkdata/chainspec.json
+  --Init.WebSocketsEnabled=true
+  --Init.DiagnosticMode="None"
+  --Init.AutoDump=All
+  --Init.LogRules="Consensus.AuRa.*:DEBUG;Consensus.AuRa.AuRaBlockFinalizationManager:TRACE;Consensus.AuRa.Validators.*:TRACE;Consensus.AuRa.*Validator:TRACE"
+  --JsonRpc.Enabled=true
+  --JsonRpc.Host=0.0.0.0
+  --JsonRpc.Port={{execution_rpc_port}}
+  --JsonRpc.EnginePort={{execution_engine_port}}
+  --JsonRpc.WebSocketsPort={{execution_ws_rpc_port}}
+  --JsonRpc.IpcUnixDomainSocketPath="/eth1data/rpc.sock"
+  --JsonRpc.JwtSecretFile=/jwtsecret
+  --JsonRpc.AdditionalRpcUrls="http://localhost:{{execution_engine_port_no_auth}}|http;ws|net;eth;consensus;subscribe;web3;admin;txpool;debug;tracing;parity|no-auth"
+  --JsonRpc.EnabledModules="net,eth,consensus,subscribe,web3,admin,debug,parity{%if execution_extra_modules is defined%},{{execution_extra_modules}}{% endif %}"
+  --Network.DiscoveryPort={{execution_p2p_port}}
+  --Network.P2PPort={{execution_p2p_port}}
+  --Merge.Enabled=true
+  {% if terminal_total_difficulty is defined %}
+  --Merge.TerminalTotalDifficulty={{terminal_total_difficulty}}
+  {% endif %}
+  {% if (disable_discovery is defined) and disable_discovery|bool %}
+  --Init.DiscoveryEnabled=false
+  {% endif %}
+  {% if (bootnode_enodes is defined) and bootnode_enodes %}
+  --Network.Bootnodes="{{ bootnode_enodes | join(',') }}"
+  --Discovery.Bootnodes="{{ bootnode_enodes | join(',') }}"
+  --Network.StaticPeers="{{ bootnode_enodes | join(',') }}"
+  {% endif %}
+  --EthStats.Enabled={{ethstats_enabled}}
+  {% if ethstats_enabled %}
+  --EthStats.Name={{inventory_hostname}}
+  --EthStats.Secret={{ethstats_password}}
+  --EthStats.Server=wss://{{ethstats_host}}/api/
+  {% endif %}
+  --Metrics.Enabled={{execution_metrics_enabled}}
+  --Metrics.ExposePort={{execution_metrics_port}}
+  --Metrics.NodeName={{inventory_hostname}}
+  {% if execution_seq_enabled|bool and (nethermind_seq_api_key is defined) %}
+  --Seq.MinLevel="Info"
+  --Seq.ServerUrl="https://seq.nethermind.io/"
+  --Seq.ApiKey="{{nethermind_seq_api_key}}"
+  {% endif %}
+  {% if mining_keyi is defined %}
+  --Init.IsMining=true
+  --Mining.Enabled=true
+  --Mining.MinGasPrice=1
+  --KeyStore.BlockAuthorAccount={{mining_addresses[mining_keyi]}}
+  --KeyStore.PasswordFiles=/networkdata/{{keystore_password_filename}}
+  --KeyStore.KeyStoreDirectory=/networkdata/miner_keystores
+  --KeyStore.UnlockAccounts={{mining_addresses[mining_keyi]}}
+  {% endif %}
+  {% if (aura_starter is defined) and aura_starter|bool %}
+  --Aura.AllowAuRaPrivateChains=true
+  {% endif %}
+  --Sync.FastSync={{fast_sync_enabled}}
+  --Sync.SnapSync={{snap_sync_enabled}}
+  {% if pruning_mode is defined %}
+  --Pruning.Mode={{pruning_mode}}
+  {% endif %}
+  {% if execution_eflags is defined %}
+  {% for eflag in execution_eflags %}
+  {{eflag}}
+  {% endfor %}
+  {% endif %}
+
+execution_user_id: "0:0"
